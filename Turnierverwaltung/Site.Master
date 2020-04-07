@@ -47,13 +47,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Anwendungsname</a>
+                    <a class="navbar-brand" runat="server" href="~/">Turnierverwaltung</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Startseite</a></li>
-                        <li><a runat="server" href="~/About">Informationen</a></li>
-                        <li><a runat="server" href="~/Contact">Kontakt</a></li>
+                        <li><a runat="server" href="~/Personenverwaltung">Personenverwaltung</a></li>
                     </ul>
                 </div>
             </div>
