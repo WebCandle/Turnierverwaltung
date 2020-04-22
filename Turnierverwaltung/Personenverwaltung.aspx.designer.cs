@@ -7,11 +7,27 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace Turnierverwaltung
-{
-
-
-    public partial class Personenverwaltung
-    {
+namespace Turnierverwaltung {
+    
+    
+    public partial class Personenverwaltung {
+        
+        /// <summary>
+        /// RadioButtonList1-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
+        
+        /// <summary>
+        /// Button1-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
     }
 }
