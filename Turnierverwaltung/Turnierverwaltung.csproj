@@ -221,18 +221,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Modelle\Bundesliga.cs" />
     <Compile Include="Modelle\Enum.cs" />
     <Compile Include="Modelle\FussballSpieler.cs" />
     <Compile Include="Modelle\HandballSpieler.cs" />
     <Compile Include="Modelle\Mannschaft.cs" />
     <Compile Include="Modelle\Person.cs" />
     <Compile Include="Modelle\Physiotherapeut.cs" />
-    <Compile Include="Modelle\Spieler.cs" />
     <Compile Include="Modelle\TennisSpieler.cs" />
     <Compile Include="Modelle\Trainer.cs" />
-    <Compile Include="Modelle\Turnier.cs" />
-    <Compile Include="Modelle\Verein.cs" />
     <Compile Include="Personenverwaltung.aspx.cs">
       <DependentUpon>Personenverwaltung.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -12,46 +12,38 @@ using System.Threading.Tasks;
 
 namespace Turnierverwaltung
 {
-    public class HandballSpieler : Spieler
+    public class HandballSpieler : Person
     {
         #region Eigenschaften
-        private bool _Ersatzmann;
-        private Position _Position;
+        private int _Spiele;
+        private int _Tore;
+        private string _Position;
         #endregion
+
 
         #region Accessoren/Modifiers
-        public bool Ersatzmann { get => _Ersatzmann; set => _Ersatzmann = value; }
-        public Position Position { get => _Position; set => _Position = value; }
+        public int Spiele { get => _Spiele; set => _Spiele = value; }
+        public int Tore { get => _Tore; set => _Tore = value; }
+        public string Position { get => _Position; set => _Position = value; }
         #endregion
 
-        #region Konstruktoren
+        #region Konstruktorn
         public HandballSpieler() : base()
         {
-            Ersatzmann = false;
             Name = "<Neuer HandballSpieler>";
         }
-        public HandballSpieler(HandballSpieler handballSpieler) : base(handballSpieler)
+        public HandballSpieler(string name, string vorname, DateTime geburtsdatum, Geschlecht geschlecht, int spiele, int tore, string position) : base(name, vorname, geburtsdatum, geschlecht)
         {
-            Ersatzmann = handballSpieler.Ersatzmann;
-        }
-        public HandballSpieler(string name, int alt, Geschlecht geschlecht, int nummer, bool ersatzmann,int erfolg) : base(name, alt, geschlecht, nummer,erfolg)
-        {
-            Ersatzmann = ersatzmann;
+            Spiele = spiele;
+            Tore = tore;
+            Position = position;
         }
         #endregion
 
         #region Worker
-        public void PositionAendern(Position position)
+        public void PositionAendern(string position)
         {
             Position = position;
-        }
-        public void SpielerUmtauchen()
-        {
-            Ersatzmann = !Ersatzmann;
-        }
-        public void VereinWechseln(Verein verein)
-        {
-
         }
         #endregion
     }

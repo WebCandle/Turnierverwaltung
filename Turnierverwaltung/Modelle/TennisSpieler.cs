@@ -12,40 +12,32 @@ using System.Threading.Tasks;
 
 namespace Turnierverwaltung
 {
-    public class TennisSpieler : Spieler
+    public class TennisSpieler : Person
     {
         #region Eigenschaften
-        private int _Score;
+        private int _Spiele;
+        private int _Tore;
         #endregion
 
         #region Accessoren/Modifiers
-        public int Score { get => _Score; set => _Score = value; }
+        public int Spiele { get => _Spiele; set => _Spiele = value; }
+        public int Tore { get => _Tore; set => _Tore = value; }
         #endregion
 
-        #region Konstruktoren
+        #region Konstruktorn
         public TennisSpieler() : base()
         {
             Name = "<Neuer TennisSpieler>";
         }
-        public TennisSpieler(TennisSpieler tennisspieler) : base(tennisspieler)
+        public TennisSpieler(string name, string vorname, DateTime geburtsdatum, Geschlecht geschlecht, int spiele, int tore) : base(name, vorname, geburtsdatum, geschlecht)
         {
-
-        }
-        public TennisSpieler(string name, int alt, Geschlecht geschlecht, int nummer,int erfolg) : base(name, alt, geschlecht, nummer,erfolg)
-        {
-
+            Spiele = spiele;
+            Tore = tore;
         }
         #endregion
 
         #region Worker
-        public void ScoreAendern(int score)
-        {
-            Score = score;
-        }
-        public void VereinWechseln( Verein verein)
-        {
 
-        }
         #endregion
     }
 }

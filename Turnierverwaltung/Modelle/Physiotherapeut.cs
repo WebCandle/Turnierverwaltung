@@ -15,11 +15,13 @@ namespace Turnierverwaltung
     public class Physiotherapeut : Person
     {
         #region Eigenschaften
-        private decimal _Gehalt;
+        private int _Jahre;
+        private string _Sportart;
         #endregion
 
         #region Accessoren/Modifiers
-        public decimal Gehalt { get => _Gehalt; set => _Gehalt = value; }
+        public int Jahre { get => _Jahre; set => _Jahre = value; }
+        public string Sportart { get => _Sportart; set => _Sportart = value; }
         #endregion
 
         #region Konstuktoren
@@ -29,22 +31,18 @@ namespace Turnierverwaltung
         }
         public Physiotherapeut(Physiotherapeut physiotherapeut) : base(physiotherapeut)
         {
-            Gehalt = physiotherapeut.Gehalt;
+            Jahre = physiotherapeut.Jahre;
+            Sportart = physiotherapeut.Sportart;
         }
-        public Physiotherapeut(string name, int alt, Geschlecht geschlecht, decimal gehalt) : base(name, alt, geschlecht)
+        public Physiotherapeut(string name, string vorname, DateTime geburtsdatum, Geschlecht geschlecht, int jahre, string sportart) : base(name, vorname, geburtsdatum, geschlecht)
         {
-            Gehalt = gehalt;
+            Jahre = jahre;
+            Sportart = sportart;
         }
         #endregion
 
         #region Worker
-        public void Behandel(FussballSpieler spieler)
-        {
-        }
-        public override int CompareByName(Person person)
-        {
-            return string.Compare(Name, person.Name);
-        }
+
         #endregion
     }
 }

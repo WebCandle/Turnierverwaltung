@@ -49,21 +49,21 @@ namespace Turnierverwaltung
         public void SortMitgliederByName()
         {
             //Sort-Alguritmus basiert auf Bubblesort
-            bool PaarSortiert;
-            do
-            {
-                PaarSortiert = true;
-                for (int i = 0; i < Mitglieder.Count - 1; i++)
-                {
-                    if (Mitglieder.ElementAt(i).CompareByName(Mitglieder.ElementAt(i + 1)) == 1)
-                    {
-                        Person temp = Mitglieder[i];
-                        Mitglieder[i] = Mitglieder[i + 1];
-                        Mitglieder[i + 1] = temp;
-                        PaarSortiert = false;
-                    }
-                }
-            } while (!PaarSortiert);
+            //bool PaarSortiert;
+            //do
+            //{
+            //    PaarSortiert = true;
+            //    for (int i = 0; i < Mitglieder.Count - 1; i++)
+            //    {
+            //        if (Mitglieder.ElementAt(i).CompareByName(Mitglieder.ElementAt(i + 1)) == 1)
+            //        {
+            //            Person temp = Mitglieder[i];
+            //            Mitglieder[i] = Mitglieder[i + 1];
+            //            Mitglieder[i + 1] = temp;
+            //            PaarSortiert = false;
+            //        }
+            //    }
+            //} while (!PaarSortiert);
         }
         #endregion
     }
