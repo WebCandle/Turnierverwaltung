@@ -1,9 +1,9 @@
-﻿<%@ Page Title="Personenverwaltung" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Personenverwaltung.aspx.cs" Inherits="Turnierverwaltung.Personenverwaltung" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Personenverwaltung.aspx.cs" Inherits="Turnierverwaltung.Personenverwaltung" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>Personenverwaltung</h1>
+        <h1>Personenverwaltung</h1>
     <h2 style="font-weight:bold">Hinzufügen oder Bearbeiten von Personen</h2>
     <h1>Auswahl des Personen Typs:</h1>
-    <asp:RadioButtonList ID="RadioButtonListPersonenType" runat="server" AutoPostBack="True" OnSelectedIndexChanged="changed">
+    <asp:RadioButtonList ID="RadioButtonListPersonenType" runat="server" AutoPostBack="True" OnSelectedIndexChanged="RadioButtonListPersonenType_SelectedIndexChanged">
         <asp:ListItem Selected="True" Value="Fussballspieler">&nbsp;Fussballspieler</asp:ListItem>
         <asp:ListItem Value="Handballspieler">&nbsp;Handballspieler</asp:ListItem>
         <asp:ListItem Value="Tennisspieler">&nbsp;Tennisspieler</asp:ListItem>
@@ -50,7 +50,7 @@
         </table>
     </div>
     <hr />
-    <asp:Button ID="Button1" runat="server" OnClick="BtnSichern_Click1" Text="Button" />
+    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
     <br />
     <asp:Table ID="Tbl" runat="server" BorderStyle="Dotted" Width="100%">
         <asp:TableHeaderRow>
@@ -69,4 +69,5 @@
             <asp:TableHeaderCell>Entfernen</asp:TableHeaderCell>
         </asp:TableHeaderRow>
     </asp:Table>
+
 </asp:Content>

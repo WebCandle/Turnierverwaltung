@@ -9,18 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mannschaftsverwaltung
+namespace Turnierverwaltung
 {
     public enum Geschlecht
     {
         Weiblich = 1,
         Maenlich = 2
-    }
-    public enum Position
-    {
-        Stuermer = 1,
-        Verteidiger = 2,
-        Mittelfeld = 3,
-        Torwart = 4,
     }
 }

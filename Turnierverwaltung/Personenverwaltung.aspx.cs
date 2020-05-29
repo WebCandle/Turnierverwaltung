@@ -16,13 +16,14 @@ namespace Turnierverwaltung
             Sportart.Items.Add("Handball");
             Sportart.Items.Add("Tennis");
 
-            if(Session["Personen"] == null)
+            if (Session["Personen"] == null)
             {
                 Session["Personen"] = new List<Person>();
             }
+
         }
 
-        protected void changed(object sender, EventArgs e)
+        protected void RadioButtonListPersonenType_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
             {
@@ -48,7 +49,7 @@ namespace Turnierverwaltung
                     Lbl3.Visible = true;
                     Txt3.Visible = true;
                 }
-                else if(RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
+                else if (RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
                 {
                     Lbl1.Text = "Anzahl Spiele";
                     Lbl2.Text = "	Gewonnene Spiele";
@@ -97,8 +98,10 @@ namespace Turnierverwaltung
                 }
 
             }
+
         }
-        protected void BtnSichern_Click1(object sender, EventArgs e)
+
+        protected void Button1_Click(object sender, EventArgs e)
         {
             if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
             {
@@ -139,10 +142,6 @@ namespace Turnierverwaltung
                 //Lbl3.Text = "Sportart";
                 //Sportart.Visible = true;
             }
-        }
-
-        protected void Button1_Click(object sender, EventArgs e)
-        {
 
         }
     }

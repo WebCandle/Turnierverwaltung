@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1062
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierverwaltung", "Turnierverwaltung\Turnierverwaltung.csproj", "{21F8064C-3DC4-4F7F-901A-2C7262DEED4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turnierverwaltung", "Turnierverwaltung\Turnierverwaltung.csproj", "{FFE380F4-05A3-4426-9388-4D57BB69CD29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{21F8064C-3DC4-4F7F-901A-2C7262DEED4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21F8064C-3DC4-4F7F-901A-2C7262DEED4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21F8064C-3DC4-4F7F-901A-2C7262DEED4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21F8064C-3DC4-4F7F-901A-2C7262DEED4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE380F4-05A3-4426-9388-4D57BB69CD29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE380F4-05A3-4426-9388-4D57BB69CD29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE380F4-05A3-4426-9388-4D57BB69CD29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE380F4-05A3-4426-9388-4D57BB69CD29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D1342CD3-1418-43D4-91FB-891B59402A99}
+		SolutionGuid = {6B53219E-EF3A-4EB4-838C-D83E0DACD9C1}
 	EndGlobalSection
 EndGlobal
