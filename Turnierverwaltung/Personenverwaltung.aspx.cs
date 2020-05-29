@@ -15,6 +15,11 @@ namespace Turnierverwaltung
             Sportart.Items.Add("Fussball");
             Sportart.Items.Add("Handball");
             Sportart.Items.Add("Tennis");
+
+            if(Session["Personen"] == null)
+            {
+                Session["Personen"] = new List<Person>();
+            }
         }
 
         protected void changed(object sender, EventArgs e)
@@ -92,6 +97,53 @@ namespace Turnierverwaltung
                 }
 
             }
+        }
+        protected void BtnSichern_Click1(object sender, EventArgs e)
+        {
+            if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
+            {
+                FussballSpieler fussballSpieler = new FussballSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Txt3.Text);
+            }
+            else if (RadioButtonListPersonenType.SelectedItem.Value == "Handballspieler")
+            {
+                HandballSpieler handballSpieler = new HandballSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Txt3.Text);
+            }
+            else if (RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
+            {
+                TennisSpieler tennisSpieler = new TennisSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text));
+            }
+            else if (RadioButtonListPersonenType.SelectedItem.Value == "anderer Spielertyp")
+            {
+                //Lbl1.Text = "Anzahl Spiele";
+                //Lbl2.Text = "Gewonnene Spiele";
+                //Lbl2.Visible = true;
+                //Txt2.Visible = true;
+                //Lbl3.Visible = true;
+                //Lbl3.Text = "Sportart";
+                //Sportart.Visible = true;
+            }
+            else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
+            {
+                Physiotherapeut physiotherapeut = new Physiotherapeut(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Txt3.Text);
+            }
+            else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
+            {
+                Trainer trainer = new Trainer(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Txt3.Text);
+            }
+            else if (RadioButtonListPersonenType.SelectedItem.Value == "Person mit anderen Aufgaben")
+            {
+                //Lbl1.Text = "Aufgaben";
+                //Lbl2.Visible = false;
+                //Txt2.Visible = false;
+                //Lbl3.Visible = true;
+                //Lbl3.Text = "Sportart";
+                //Sportart.Visible = true;
+            }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

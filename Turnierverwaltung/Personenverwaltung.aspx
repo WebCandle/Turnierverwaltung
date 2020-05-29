@@ -50,7 +50,7 @@
         </table>
     </div>
     <hr />
-    <asp:Button ID="BtnSichern" runat="server" Text="Eingaben Sichern" />
+    <asp:Button ID="Button1" runat="server" OnClick="BtnSichern_Click1" Text="Button" />
     <br />
     <asp:Table ID="Tbl" runat="server" BorderStyle="Dotted" Width="100%">
         <asp:TableHeaderRow>
