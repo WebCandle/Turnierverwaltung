@@ -11,35 +11,86 @@ namespace Turnierverwaltung
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DropDownList_Sportart.Items.Add("Fussball");
-            DropDownList_Sportart.Items.Add("Handball");
-            DropDownList_Sportart.Items.Add("Tennis");
+            Sportart.Items.Clear();
+            Sportart.Items.Add("Fussball");
+            Sportart.Items.Add("Handball");
+            Sportart.Items.Add("Tennis");
         }
 
         protected void changed(object sender, EventArgs e)
         {
             if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
             {
-
+                Lbl1.Text = "Anzahl Spiele";
+                Lbl2.Text = "Geschossene Tore";
+                Lbl2.Visible = true;
+                Txt2.Visible = true;
+                Lbl3.Visible = true;
+                Txt3.Visible = true;
+                Lbl3.Text = "Spielposition";
+                Sportart.Visible = false;
             }
             else
             {
-                Lbl_Anzahl_Spiele.Visible = false;
-                Txt_Anzahl_Spiele.Visible = false;
-                Lbl_Geschossene_Tore.Visible = false;
-                Txt_Geschossene_Tore.Visible = false;
-                Lbl_Spielposition.Visible = false;
-                Txt_Spielposition.Visible = false;
 
                 if (RadioButtonListPersonenType.SelectedItem.Value == "Handballspieler")
                 {
-                    Lbl_Anzahl_Spiele.Visible = true;
-                    Txt_Anzahl_Spiele.Visible = true;
-                    Lbl_Geworfene_Tore.Visible = true;
-                    Txt_Geworfene_Tore.Visible = true;
-                    Lbl_Einsatzbereich.Visible = true;
-                    Txt_Einsatzbereich.Visible = true;
+                    Lbl1.Text = "Anzahl Spiele";
+                    Lbl2.Text = "	Geworfene Tore";
+                    Lbl3.Text = "Einsatzbereich";
+                    Lbl2.Visible = true;
+                    Txt2.Visible = true;
+                    Lbl3.Visible = true;
+                    Txt3.Visible = true;
                 }
+                else if(RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
+                {
+                    Lbl1.Text = "Anzahl Spiele";
+                    Lbl2.Text = "	Gewonnene Spiele";
+                    Lbl2.Visible = true;
+                    Txt2.Visible = true;
+                    Lbl3.Visible = false;
+                    Txt3.Visible = false;
+                    Sportart.Visible = false;
+                }
+                else if (RadioButtonListPersonenType.SelectedItem.Value == "anderer Spielertyp")
+                {
+                    Lbl1.Text = "Anzahl Spiele";
+                    Lbl2.Text = "Gewonnene Spiele";
+                    Lbl2.Visible = true;
+                    Txt2.Visible = true;
+                    Lbl3.Visible = true;
+                    Lbl3.Text = "Sportart";
+                    Sportart.Visible = true;
+                }
+                else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
+                {
+                    Lbl1.Text = "Anzahl Jahre";
+                    Lbl2.Visible = false;
+                    Txt2.Visible = false;
+                    Lbl3.Visible = true;
+                    Sportart.Visible = true;
+                    Lbl3.Text = "Sportart";
+                }
+                else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
+                {
+                    Lbl1.Text = "Anzahl Vereine";
+                    Lbl2.Visible = false;
+                    Txt2.Visible = false;
+                    Lbl3.Text = "Sportart";
+                    Lbl3.Visible = true;
+                    Sportart.Visible = true;
+                }
+                else if (RadioButtonListPersonenType.SelectedItem.Value == "Person mit anderen Aufgaben")
+                {
+                    Lbl1.Text = "Aufgaben";
+                    Lbl2.Visible = false;
+                    Txt2.Visible = false;
+                    Lbl3.Visible = true;
+                    Lbl3.Text = "Sportart";
+                    Sportart.Visible = true;
+                }
+
             }
         }
     }

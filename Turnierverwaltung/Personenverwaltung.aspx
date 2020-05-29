@@ -4,13 +4,13 @@
     <h2 style="font-weight:bold">Hinzufügen oder Bearbeiten von Personen</h2>
     <h1>Auswahl des Personen Typs:</h1>
     <asp:RadioButtonList ID="RadioButtonListPersonenType" runat="server" AutoPostBack="True" OnSelectedIndexChanged="changed">
-        <asp:ListItem Selected="True">Fussballspieler</asp:ListItem>
-        <asp:ListItem>Handballspieler</asp:ListItem>
-        <asp:ListItem>Tennisspieler</asp:ListItem>
-        <asp:ListItem Value="anderer Spielertyp">anderer Spielertyp</asp:ListItem>
-        <asp:ListItem>Physiotherapeut</asp:ListItem>
-        <asp:ListItem>Trainer</asp:ListItem>
-        <asp:ListItem>Person mit anderen Aufgaben</asp:ListItem>
+        <asp:ListItem Selected="True" Value="Fussballspieler">&nbsp;Fussballspieler</asp:ListItem>
+        <asp:ListItem Value="Handballspieler">&nbsp;Handballspieler</asp:ListItem>
+        <asp:ListItem Value="Tennisspieler">&nbsp;Tennisspieler</asp:ListItem>
+        <asp:ListItem Value="anderer Spielertyp">&nbsp;anderer Spielertyp</asp:ListItem>
+        <asp:ListItem Value="Physiotherapeut">&nbsp;Physiotherapeut</asp:ListItem>
+        <asp:ListItem Value="Trainer">&nbsp;Trainer</asp:ListItem>
+        <asp:ListItem Value="Person mit anderen Aufgaben">&nbsp;Person mit anderen Aufgaben</asp:ListItem>
     </asp:RadioButtonList>
     <br />
     <div>
@@ -24,40 +24,49 @@
                 <td><asp:TextBox ID="Txt_Datum" runat="server" TextMode="Date"></asp:TextBox></td>
             </tr>
             <tr>
+                <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+            </tr>
+            <tr>
                 <td>
-                    <asp:Label ID="Lbl_Anzahl_Spiele" runat="server" Text="Anzahl Spiele"></asp:Label>
-                    <asp:Label ID="Lbl_Anzahl_Jahre" runat="server" Text="Anzahl Jahre" Visible="False"></asp:Label>
-                    <asp:Label ID="Lbl_Anzahl_Vereine" runat="server" Text="Anzahl Vereine" Visible="False"></asp:Label>
-                    <asp:Label ID="Lbl_Aufgabe" runat="server" Text="Aufgabe" Visible="False"></asp:Label>
+                    <asp:Label ID="Lbl1" runat="server" Text="Anzahl Spiele"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="Txt_Anzahl_Spiele" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="Txt_Anzahl_Jahre" runat="server" Visible="False"></asp:TextBox>
-                    <asp:TextBox ID="Txt_Anzahl_Vereine" runat="server" Visible="False"></asp:TextBox>
-                    <asp:TextBox ID="Txt_Aufgabe" runat="server" Visible="False"></asp:TextBox>
+                    <asp:TextBox ID="Txt1" runat="server"></asp:TextBox>
                 </td>
                 <td>
-                    <asp:Label ID="Lbl_Geschossene_Tore" runat="server" Text="Geschossene Tore"></asp:Label>
-                    <asp:Label ID="Lbl_Geworfene_Tore" runat="server" Text="Geworfene Tore" Visible="False"></asp:Label>
-                    <asp:Label ID="Lbl_Gewonnene_Spiele" runat="server" Text="Gewonnene Spiele" Visible="False"></asp:Label>
+                    <asp:Label ID="Lbl2" runat="server" Text="Geschossene Tore"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="Txt_Geschossene_Tore" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="Txt_Geworfene_Tore" runat="server" Visible="False"></asp:TextBox>
-                    <asp:TextBox ID="Txt_Gewonnene_Spiele" runat="server" Visible="False"></asp:TextBox>
+                    <asp:TextBox ID="Txt2" runat="server"></asp:TextBox>
                 </td>
                 <td>
-                    <asp:Label ID="Lbl_Spielposition" runat="server" Text="Spielposition"></asp:Label>
-                    <asp:Label ID="Lbl_Einsatzbereich" runat="server" Text="Einsatzbereich" Visible="False"></asp:Label>
-                    <asp:Label ID="Lbl_Sportart" runat="server" Text="Sportart" Visible="false"></asp:Label>
+                    <asp:Label ID="Lbl3" runat="server" Text="Spielposition"></asp:Label>
                 </td>
                 <td>
-                    <asp:TextBox ID="Txt_Spielposition" runat="server"></asp:TextBox>
-                    <asp:TextBox ID="Txt_Einsatzbereich" runat="server" Visible="False"></asp:TextBox>
-                    <asp:DropDownList ID="DropDownList_Sportart" runat="server" Visible="false"></asp:DropDownList>
+                    <asp:TextBox ID="Txt3" runat="server"></asp:TextBox>
+                    <asp:DropDownList ID="Sportart" runat="server" Visible="false"></asp:DropDownList>
                 </td>
             </tr>
         </table>
     </div>
-
+    <hr />
+    <asp:Button ID="BtnSichern" runat="server" Text="Eingaben Sichern" />
+    <br />
+    <asp:Table ID="Tbl" runat="server" BorderStyle="Dotted" Width="100%">
+        <asp:TableHeaderRow>
+            <asp:TableHeaderCell>ID</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Name</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Vorname</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Geburtsdatum</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Sportart</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Anzahl Spiele</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Erzielte Tore</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Gewonnene Spiele</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Anzahl Jahre</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Anzahl Vereine</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Einsatz Bereich</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Bearbeiten</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Entfernen</asp:TableHeaderCell>
+        </asp:TableHeaderRow>
+    </asp:Table>
 </asp:Content>
