@@ -11,11 +11,14 @@ namespace Turnierverwaltung
 {
     public class Global : HttpApplication
     {
+        public static List<Person> Personen;
         void Application_Start(object sender, EventArgs e)
         {
             // Code, der beim Anwendungsstart ausgeführt wird
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Personen = new List<Person>();
         }
     }
 }

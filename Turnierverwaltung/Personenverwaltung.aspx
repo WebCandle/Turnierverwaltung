@@ -50,7 +50,9 @@
         </table>
     </div>
     <hr />
-    <asp:Button ID="Button1" runat="server" Text="Button" OnClick="Button1_Click" />
+    <asp:Label ID="Lbl_Msg" runat="server" Text=""></asp:Label>
+    <br />
+    <asp:Button ID="Button1" runat="server" Text="Hinzufügen" OnClick="Button1_Click" />
     <br />
     <asp:Table ID="Tbl" runat="server" BorderStyle="Dotted" Width="100%">
         <asp:TableHeaderRow>
