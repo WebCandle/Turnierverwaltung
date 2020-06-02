@@ -67,6 +67,7 @@ namespace Turnierverwaltung
                     Txt2.Visible = true;
                     Lbl3.Visible = true;
                     Lbl3.Text = "Sportart";
+                    Txt3.Visible = false;
                     Sportart.Visible = true;
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
@@ -77,12 +78,14 @@ namespace Turnierverwaltung
                     Lbl3.Visible = true;
                     Sportart.Visible = true;
                     Lbl3.Text = "Sportart";
+                    Txt3.Visible = false;
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
                 {
                     Lbl1.Text = "Anzahl Vereine";
                     Lbl2.Visible = false;
                     Txt2.Visible = false;
+                    Txt3.Visible = false;
                     Lbl3.Text = "Sportart";
                     Lbl3.Visible = true;
                     Sportart.Visible = true;
@@ -95,8 +98,8 @@ namespace Turnierverwaltung
                     Lbl3.Visible = true;
                     Lbl3.Text = "Sportart";
                     Sportart.Visible = true;
+                    Txt3.Visible = false;
                 }
-
             }
 
         }
@@ -122,13 +125,9 @@ namespace Turnierverwaltung
             }
             else if (RadioButtonListPersonenType.SelectedItem.Value == "anderer Spielertyp")
             {
-                //Lbl1.Text = "Anzahl Spiele";
-                //Lbl2.Text = "Gewonnene Spiele";
-                //Lbl2.Visible = true;
-                //Txt2.Visible = true;
-                //Lbl3.Visible = true;
-                //Lbl3.Text = "Sportart";
-                //Sportart.Visible = true;
+                Spieler spieler = new Spieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Sportart.Text);
+                Global.Personen.Add(spieler);
+
             }
             else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
             {
@@ -142,12 +141,8 @@ namespace Turnierverwaltung
             }
             else if (RadioButtonListPersonenType.SelectedItem.Value == "Person mit anderen Aufgaben")
             {
-                //Lbl1.Text = "Aufgaben";
-                //Lbl2.Visible = false;
-                //Txt2.Visible = false;
-                //Lbl3.Visible = true;
-                //Lbl3.Text = "Sportart";
-                //Sportart.Visible = true;
+                Mitarbeiter mitarbeiter = new Mitarbeiter(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Txt1.Text, Sportart.Text);
+                Global.Personen.Add(mitarbeiter);
             }
             Txt_Name.Text = "";
             Txt_Vorname.Text = "";
@@ -218,7 +213,7 @@ namespace Turnierverwaltung
                 cell3.Text = p.Vorname;
                 row.Cells.Add(cell3);
                 TableCell cell4 = new TableCell();
-                cell4.Text = p.Geburtsdatum.ToString();
+                cell4.Text = p.Geburtsdatum.ToShortDateString();
                 row.Cells.Add(cell4);
 
                 if (p is FussballSpieler)
@@ -276,7 +271,7 @@ namespace Turnierverwaltung
                     TableCell cell5 = new TableCell();
                     cell5.Text = "TennisSpieler";
                     row.Cells.Add(cell5);
-                    TennisSpieler t = p as TennisSpieler;
+                    Spieler t = p as Spieler;
                     TableCell cell6 = new TableCell();
                     cell6.Text = t.Spiele.ToString();
                     row.Cells.Add(cell6);
@@ -349,7 +344,10 @@ namespace Turnierverwaltung
                 else
                 {
                     TableCell cell5 = new TableCell();
-                    cell5.Text = p.GetType().ToString();
+                    if (p is Spieler)
+                        cell5.Text = "Spieler";
+                    else if( p is Mitarbeiter)
+                        cell5.Text = "Mitarbeiter";
                     row.Cells.Add(cell5);
                     TableCell cell6 = new TableCell();
                     cell6.Text = "";

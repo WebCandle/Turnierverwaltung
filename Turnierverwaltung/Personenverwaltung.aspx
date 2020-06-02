@@ -7,10 +7,10 @@
         <asp:ListItem Selected="True" Value="Fussballspieler">&nbsp;Fussballspieler</asp:ListItem>
         <asp:ListItem Value="Handballspieler">&nbsp;Handballspieler</asp:ListItem>
         <asp:ListItem Value="Tennisspieler">&nbsp;Tennisspieler</asp:ListItem>
-        <asp:ListItem Value="anderer Spielertyp">&nbsp;anderer Spielertyp</asp:ListItem>
+        <asp:ListItem Value="anderer Spielertyp">&nbsp;Anderer Spielertyp(Spieler)</asp:ListItem>
         <asp:ListItem Value="Physiotherapeut">&nbsp;Physiotherapeut</asp:ListItem>
         <asp:ListItem Value="Trainer">&nbsp;Trainer</asp:ListItem>
-        <asp:ListItem Value="Person mit anderen Aufgaben">&nbsp;Person mit anderen Aufgaben</asp:ListItem>
+        <asp:ListItem Value="Person mit anderen Aufgaben">&nbsp;Person mit anderen Aufgaben(Miarbeiter)</asp:ListItem>
     </asp:RadioButtonList>
     <br />
     <div>

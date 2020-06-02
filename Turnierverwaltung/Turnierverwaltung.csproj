@@ -191,8 +191,10 @@
     <Compile Include="Modelle\FussballSpieler.cs" />
     <Compile Include="Modelle\HandballSpieler.cs" />
     <Compile Include="Modelle\Mannschaft.cs" />
+    <Compile Include="Modelle\Mitarbeiter.cs" />
     <Compile Include="Modelle\Person.cs" />
     <Compile Include="Modelle\Physiotherapeut.cs" />
+    <Compile Include="Modelle\Spieler.cs" />
     <Compile Include="Modelle\TennisSpieler.cs" />
     <Compile Include="Modelle\Trainer.cs" />
     <Compile Include="Personenverwaltung.aspx.cs">
