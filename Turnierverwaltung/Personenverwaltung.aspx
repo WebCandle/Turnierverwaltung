@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Personenverwaltung.aspx.cs" Inherits="Turnierverwaltung.Personenverwaltung" %>
+﻿<%@ Page Title="Personenverwaltung" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Personenverwaltung.aspx.cs" Inherits="Turnierverwaltung.Personenverwaltung" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
         <h1>Personenverwaltung</h1>
     <h2 style="font-weight:bold">Hinzufügen oder Bearbeiten von Personen</h2>
-    <h1>Auswahl des Personen Typs:</h1>
+    <asp:Label ID="lblTitle" runat="server" Text="Auswahl des Personen Typs:" Font-Bold="True" Font-Size="X-Large"></asp:Label>
     <asp:RadioButtonList ID="RadioButtonListPersonenType" runat="server" AutoPostBack="True" OnSelectedIndexChanged="RadioButtonListPersonenType_SelectedIndexChanged">
         <asp:ListItem Selected="True" Value="Fussballspieler">&nbsp;Fussballspieler</asp:ListItem>
         <asp:ListItem Value="Handballspieler">&nbsp;Handballspieler</asp:ListItem>
@@ -52,7 +52,9 @@
     <hr />
     <asp:Label ID="Lbl_Msg" runat="server" Text=""></asp:Label>
     <br />
-    <asp:Button ID="Button1" runat="server" Text="Hinzufügen" OnClick="Button1_Click" />
+    <asp:Button ID="Btn_Add" runat="server" Text="Hinzufügen" OnClick="Add_Click" />&nbsp;
+    <asp:Button ID="Btn_Bearbeiten" runat="server" Text="Sichern" OnClick="Btn_Bearbeiten_Click" />&nbsp;&nbsp;
+    <asp:Button ID="Btn_Cancel" runat="server" Text="Abbrechen" OnClick="Btn_Cancel_Click" />
     <br />
     <asp:Table ID="Tbl" runat="server" BorderStyle="Dotted" Width="100%">
         <asp:TableHeaderRow>

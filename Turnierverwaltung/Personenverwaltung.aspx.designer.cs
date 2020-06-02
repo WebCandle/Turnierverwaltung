@@ -13,6 +13,15 @@ namespace Turnierverwaltung {
     public partial class Personenverwaltung {
         
         /// <summary>
+        /// lblTitle-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTitle;
+        
+        /// <summary>
         /// RadioButtonListPersonenType-Steuerelement
         /// </summary>
         /// <remarks>
@@ -148,13 +157,31 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Label Lbl_Msg;
         
         /// <summary>
-        /// Button1-Steuerelement
+        /// Btn_Add-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button Btn_Add;
+        
+        /// <summary>
+        /// Btn_Bearbeiten-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Bearbeiten;
+        
+        /// <summary>
+        /// Btn_Cancel-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Cancel;
         
         /// <summary>
         /// Tbl-Steuerelement
