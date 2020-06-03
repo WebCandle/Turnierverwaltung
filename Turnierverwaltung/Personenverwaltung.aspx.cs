@@ -13,82 +13,96 @@ namespace Turnierverwaltung
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if(Page.IsCallback == false)
+            if (Page.IsCallback == false)
             {
+                if (Request.QueryString["do"] == "entfernen")
+                {
+                    int item = Convert.ToInt32(Request.QueryString["item"]);
+                    Global.Personen.RemoveAt(item);
+                    Response.Redirect("~/Personenverwaltung.aspx");
+                }
+                else if (Request.QueryString["do"] == "bearbeiten")
+                {
+                    RadioButtonListPersonenType.Visible = false;
+                    lblTitle.Visible = false;
+                    Btn_Add.Visible = false;
+                    Btn_Bearbeiten.Visible = true;
+                    Btn_Cancel.Visible = true;
+                    int item = Convert.ToInt32(Request.QueryString["item"]);
+                    Person person = Global.Personen.ElementAt(item);
+                    if (person is FussballSpieler)
+                    {
+                        RenderFussballForm();
+                        FussballSpieler s = person as FussballSpieler;
+                        Txt1.Text = s.Spiele.ToString();
+                        Txt2.Text = s.Tore.ToString();
+                        Txt3.Text = s.Position;
+                    }
+                    else if (person is HandballSpieler)
+                    {
+                        RenderHandballForm();
+                        HandballSpieler s = person as HandballSpieler;
+                        Txt1.Text = s.Spiele.ToString();
+                        Txt2.Text = s.Tore.ToString();
+                        Txt3.Text = s.Position;
+                    }
+                    else if (person is TennisSpieler)
+                    {
+                        RenderTennisForm();
+                        TennisSpieler s = person as TennisSpieler;
+                        Txt1.Text = s.Spiele.ToString();
+                        Txt2.Text = s.Tore.ToString();
+                    }
+                    else if (person is Spieler)
+                    {
+                        RenderSpielerForm();
+                        Spieler s = person as Spieler;
+                        Txt1.Text = s.Spiele.ToString();
+                        Txt2.Text = s.Tore.ToString();
+                        Sportart.Text = s.Sportart;
+                    }
+                    else if (person is Mitarbeiter)
+                    {
+                        RenderMitarbeiterForm();
+                        Mitarbeiter m = person as Mitarbeiter;
+                        Txt1.Text = m.Aufgabe;
+                        Sportart.Text = m.Sportart;
+                    }
+                    else if (person is Physiotherapeut)
+                    {
+                        RenderPhysiotherapeutForm();
+                        Physiotherapeut ph = person as Physiotherapeut;
+                        Txt1.Text = ph.Jahre.ToString();
+                        Sportart.Text = ph.Sportart;
+                    }
+                    else if (person is Trainer)
+                    {
+                        RenderTrainerForm();
+                        Trainer t = person as Trainer;
+                        Txt1.Text = t.Vereine.ToString();
+                        Sportart.Text = t.Sportart;
+                    }
+                    Txt_Name.Text = person.Name;
+                    Txt_Vorname.Text = person.Vorname;
+                    Txt_Datum.Text = person.Geburtsdatum.ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    RadioButtonListPersonenType.Visible = true;
+                    lblTitle.Visible = true;
+                    Btn_Add.Visible = true;
+                    Btn_Bearbeiten.Visible = false;
+                    Btn_Cancel.Visible = false;
+                }
+
                 Sportart.Items.Clear();
                 Sportart.Items.Add("Fussball");
                 Sportart.Items.Add("Handball");
                 Sportart.Items.Add("Tennis");
-                Txt_Datum.Text = DateTime.Now.ToShortDateString();
+                Txt_Datum.Text = DateTime.Now.ToString("yyyy-MM-dd"); ;
             }
             Lbl_Msg.Visible = false;
-            if(Request.QueryString["do"] == "bearbeiten")
-            {
-                RadioButtonListPersonenType.Visible = false;
-                lblTitle.Visible = false;
-                int item = Convert.ToInt32(Request.QueryString["item"]);
-                Person person = Global.Personen.ElementAt(item);
-                if(person is FussballSpieler)
-                {
-                    RenderFussballForm();
-                    FussballSpieler s = person as FussballSpieler;
-                    Txt1.Text = s.Spiele.ToString();
-                    Txt2.Text = s.Tore.ToString();
-                    Txt3.Text = s.Position;
-                }
-                else if(person is HandballSpieler)
-                {
-                    RenderHandballForm();
-                    HandballSpieler s = person as HandballSpieler;
-                    Txt1.Text = s.Spiele.ToString();
-                    Txt2.Text = s.Tore.ToString();
-                    Txt3.Text = s.Position;
-                }
-                else if(person is TennisSpieler)
-                {
-                    RenderTennisForm();
-                    TennisSpieler s = person as TennisSpieler;
-                    Txt1.Text = s.Spiele.ToString();
-                    Txt2.Text = s.Tore.ToString();
-                }
-                else if(person is Spieler)
-                {
-                    RenderSpielerForm();
-                    Spieler s = person as Spieler;
-                    Txt1.Text = s.Spiele.ToString();
-                    Txt2.Text = s.Tore.ToString();
-                    Sportart.Text = s.Sportart;
-                }
-                else if(person is Mitarbeiter)
-                {
-                    RenderMitarbeiterForm();
-                    Mitarbeiter m = person as Mitarbeiter;
-                    Txt1.Text = m.Aufgabe;
-                    Sportart.Text = m.Sportart;
-                }
-                else if(person is Physiotherapeut)
-                {
-                    RenderPhysiotherapeutForm();
-                    Physiotherapeut ph = person as Physiotherapeut;
-                    Txt1.Text = ph.Jahre.ToString();
-                    Sportart.Text = ph.Sportart;
-                }
-                else if(person is Trainer)
-                {
-                    RenderTrainerForm();
-                    Trainer t = person as Trainer;
-                    Txt1.Text = t.Vereine.ToString();
-                    Sportart.Text = t.Sportart;
-                }
-                Txt_Name.Text = person.Name;
-                Txt_Vorname.Text = person.Vorname;
-                Txt_Datum.Text = person.Geburtsdatum.ToShortDateString();
-            }
-            else
-            {
-                RadioButtonListPersonenType.Visible = true;
-                lblTitle.Visible = true;
-            }
+
             Render();
 
 
@@ -186,7 +200,7 @@ namespace Turnierverwaltung
             else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
             {
                 RenderPhysiotherapeutForm();
-                }
+            }
             else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
             {
                 RenderTrainerForm();
@@ -238,12 +252,6 @@ namespace Turnierverwaltung
                 Mitarbeiter mitarbeiter = new Mitarbeiter(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Txt1.Text, Sportart.Text);
                 Global.Personen.Add(mitarbeiter);
             }
-            //Txt_Name.Text = "";
-            //Txt_Vorname.Text = "";
-            //Txt1.Text = "";
-            //Txt2.Text = "";
-            //Txt3.Text = "";
-            //Render();
             Response.Redirect("~/Personenverwaltung.aspx");
         }
         private void Render()
@@ -299,7 +307,7 @@ namespace Turnierverwaltung
             {
                 TableRow row = new TableRow();
                 TableCell cell1 = new TableCell();
-                cell1.Text = k.ToString(); 
+                cell1.Text = k.ToString();
                 row.Cells.Add(cell1);
                 TableCell cell2 = new TableCell();
                 cell2.Text = p.Name;
@@ -366,7 +374,7 @@ namespace Turnierverwaltung
                     TableCell cell5 = new TableCell();
                     cell5.Text = "TennisSpieler";
                     row.Cells.Add(cell5);
-                    Spieler t = p as Spieler;
+                    TennisSpieler t = p as TennisSpieler;
                     TableCell cell6 = new TableCell();
                     cell6.Text = t.Spiele.ToString();
                     row.Cells.Add(cell6);
@@ -441,7 +449,7 @@ namespace Turnierverwaltung
                     TableCell cell5 = new TableCell();
                     if (p is Spieler)
                         cell5.Text = "Spieler";
-                    else if( p is Mitarbeiter)
+                    else if (p is Mitarbeiter)
                         cell5.Text = "Mitarbeiter";
                     row.Cells.Add(cell5);
                     TableCell cell6 = new TableCell();
@@ -491,54 +499,54 @@ namespace Turnierverwaltung
             if (person is FussballSpieler)
             {
                 FussballSpieler s = person as FussballSpieler;
-                s.Spiele = Convert.ToInt32(Txt1.Text);
-                s.Tore = Convert.ToInt32(Txt2.Text);
-                s.Position = Txt3.Text;
+                s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
+                s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
+                s.Position = Request.Form["ctl00$MainContent$Txt3"];
             }
             else if (person is HandballSpieler)
             {
                 HandballSpieler s = person as HandballSpieler;
-                s.Spiele = Convert.ToInt32(Txt1.Text);
-                s.Tore = Convert.ToInt32(Txt2.Text);
-                s.Position = Txt3.Text;
+                s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
+                s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
+                s.Position = Request.Form["ctl00$MainContent$Txt3"];
             }
             else if (person is TennisSpieler)
             {
                 TennisSpieler s = person as TennisSpieler;
-                s.Spiele = Convert.ToInt32(Txt1.Text);
-                s.Tore = Convert.ToInt32(Txt2.Text);
+                s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
+                s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
             }
             else if (person is Spieler)
             {
                 Spieler s = person as Spieler;
-                s.Spiele = Convert.ToInt32(Txt1.Text);
-                s.Tore = Convert.ToInt32(Txt2.Text);
-                s.Sportart = Sportart.Text;
+                s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
+                s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
+                s.Sportart = Request.Form["ctl00$MainContent$Sportart"];
             }
             else if (person is Mitarbeiter)
             {
                 RenderMitarbeiterForm();
                 Mitarbeiter m = person as Mitarbeiter;
-                m.Aufgabe = Txt1.Text;
-                m.Sportart = Sportart.Text;
+                m.Aufgabe = Request.Form["ctl00$MainContent$Txt1"];
+                m.Sportart = Request.Form["ctl00$MainContent$Sportart"];
             }
             else if (person is Physiotherapeut)
             {
                 RenderPhysiotherapeutForm();
                 Physiotherapeut ph = person as Physiotherapeut;
-                ph.Jahre = Convert.ToInt32(Txt1.Text);
-                Sportart.Text = ph.Sportart;
+                ph.Jahre = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
+                Sportart.Text = Request.Form["ctl00$MainContent$Sportart"];
             }
             else if (person is Trainer)
             {
                 RenderTrainerForm();
                 Trainer t = person as Trainer;
-                t.Vereine = Convert.ToInt32(Txt1.Text);
-                t.Sportart = Sportart.Text;
+                t.Vereine = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
+                t.Sportart = Request.Form["ctl00$MainContent$Sportart"];
             }
-            person.Name = Txt_Name.Text;
-            person.Vorname = Txt_Vorname.Text;
-            person.Geburtsdatum = Convert.ToDateTime(Txt_Datum.Text);
+            person.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+            person.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+            person.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
             Response.Redirect("~/Personenverwaltung.aspx");
         }
 

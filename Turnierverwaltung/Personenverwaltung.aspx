@@ -10,7 +10,7 @@
         <asp:ListItem Value="anderer Spielertyp">&nbsp;Anderer Spielertyp(Spieler)</asp:ListItem>
         <asp:ListItem Value="Physiotherapeut">&nbsp;Physiotherapeut</asp:ListItem>
         <asp:ListItem Value="Trainer">&nbsp;Trainer</asp:ListItem>
-        <asp:ListItem Value="Person mit anderen Aufgaben">&nbsp;Person mit anderen Aufgaben(Miarbeiter)</asp:ListItem>
+        <asp:ListItem Value="Person mit anderen Aufgaben">&nbsp;Person mit anderen Aufgaben(Mitarbeiter)</asp:ListItem>
     </asp:RadioButtonList>
     <br />
     <div>
@@ -51,12 +51,11 @@
     </div>
     <hr />
     <asp:Label ID="Lbl_Msg" runat="server" Text=""></asp:Label>
-    <br />
     <asp:Button ID="Btn_Add" runat="server" Text="Hinzufügen" OnClick="Add_Click" />&nbsp;
-    <asp:Button ID="Btn_Bearbeiten" runat="server" Text="Sichern" OnClick="Btn_Bearbeiten_Click" />&nbsp;&nbsp;
-    <asp:Button ID="Btn_Cancel" runat="server" Text="Abbrechen" OnClick="Btn_Cancel_Click" />
-    <br />
-    <asp:Table ID="Tbl" runat="server" BorderStyle="Dotted" Width="100%">
+    <asp:Button ID="Btn_Bearbeiten" runat="server" Text="Sichern" OnClick="Btn_Bearbeiten_Click" Visible="false" />&nbsp;&nbsp;
+    <asp:Button ID="Btn_Cancel" runat="server" Text="Abbrechen" OnClick="Btn_Cancel_Click" Visible="false" />
+    <br /><br />
+    <asp:Table ID="Tbl" runat="server" BorderStyle="Double" Width="100%" GridLines="Both">
         <asp:TableHeaderRow>
             <asp:TableHeaderCell>ID</asp:TableHeaderCell>
             <asp:TableHeaderCell>Name</asp:TableHeaderCell>
