@@ -9,9 +9,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Turnierverwaltung
 {
+    [XmlInclude(typeof(FussballSpieler))]
+    [XmlInclude(typeof(HandballSpieler))]
+    [XmlInclude(typeof(TennisSpieler))]
+    [XmlInclude(typeof(Spieler))]
+    [XmlInclude(typeof(Physiotherapeut))]
+    [XmlInclude(typeof(Trainer))]
+    [XmlInclude(typeof(Mitarbeiter))]
+    [Serializable]
     public abstract class Person
     {
         #region Eigenschaften

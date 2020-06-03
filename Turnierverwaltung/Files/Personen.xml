@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Turnier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Mitglieder>
+    <Person xsi:type="HandballSpieler">
+      <Name>al abbasi</Name>
+      <Geburtsdatum>2020-06-03T00:00:00</Geburtsdatum>
+      <Geschlecht>Maenlich</Geschlecht>
+      <Vorname>maher</Vorname>
+      <Spiele>12</Spiele>
+      <Tore>11</Tore>
+      <Position>defa3</Position>
+    </Person>
+    <Person xsi:type="Physiotherapeut">
+      <Name>al abbasi</Name>
+      <Geburtsdatum>2020-06-03T00:00:00</Geburtsdatum>
+      <Geschlecht>Maenlich</Geschlecht>
+      <Vorname>maher</Vorname>
+      <Jahre>12</Jahre>
+      <Sportart>Fussball</Sportart>
+    </Person>
+    <Person xsi:type="Trainer">
+      <Name>al abbasi</Name>
+      <Geburtsdatum>2020-06-03T00:00:00</Geburtsdatum>
+      <Geschlecht>Maenlich</Geschlecht>
+      <Vorname>maher</Vorname>
+      <Vereine>12</Vereine>
+      <Sportart>Fussball</Sportart>
+    </Person>
+  </Mitglieder>
+</Turnier>

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Turnierverwaltung
 {
+    [Serializable]
     public class Mannschaft
     {
         #region Eigenschaften

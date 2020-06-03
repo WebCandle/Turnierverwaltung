@@ -197,6 +197,7 @@
     <Compile Include="Modelle\Spieler.cs" />
     <Compile Include="Modelle\TennisSpieler.cs" />
     <Compile Include="Modelle\Trainer.cs" />
+    <Compile Include="Modelle\Turnier.cs" />
     <Compile Include="Personenverwaltung.aspx.cs">
       <DependentUpon>Personenverwaltung.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -229,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

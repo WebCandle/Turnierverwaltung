@@ -72,5 +72,6 @@
             <asp:TableHeaderCell>Entfernen</asp:TableHeaderCell>
         </asp:TableHeaderRow>
     </asp:Table>
-
+    <br />
+    <asp:Button ID="Btn_XMLDownload" runat="server" Text="Als XML Herunterladen" OnClick="Btn_XMLDownload_Click"  />
 </asp:Content>
