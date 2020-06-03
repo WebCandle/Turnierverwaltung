@@ -12,6 +12,7 @@ namespace Turnierverwaltung
     public class Global : HttpApplication
     {
         public static List<Person> Personen;
+        public static List<Mannschaft> Mannschaften;
         void Application_Start(object sender, EventArgs e)
         {
             // Code, der beim Anwendungsstart ausgeführt wird
@@ -19,6 +20,7 @@ namespace Turnierverwaltung
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Personen = new List<Person>();
+            Mannschaften = new List<Mannschaft>();
         }
     }
 }

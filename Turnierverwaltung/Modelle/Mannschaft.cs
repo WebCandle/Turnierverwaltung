@@ -18,11 +18,13 @@ namespace Turnierverwaltung
         #region Eigenschaften
         private string _Name;
         private List<Person> _Mitglieder;
+        private string _Sportart;
         #endregion
 
         #region Accessoren/Modifiers
         public string Name { get => _Name; set => _Name = value; }
         public List<Person> Mitglieder { get => _Mitglieder; set => _Mitglieder = value; }
+        public string Sportart { get => _Sportart; set => _Sportart = value; }
         #endregion
 
         #region Konstruktoren

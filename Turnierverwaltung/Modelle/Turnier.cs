@@ -17,10 +17,12 @@ namespace Turnierverwaltung
     {
         #region Eigenschaften
         private List<Person> _Mitglieder;
+        private List<Mannschaft> _Mannschaften;
         #endregion
 
         #region Accessoren/Modifiers
         public List<Person> Mitglieder { get => _Mitglieder; set => _Mitglieder = value; }
+        public List<Mannschaft> Mannschaften { get => _Mannschaften; set => _Mannschaften = value; }
         #endregion
 
         #region Konstruktoren
@@ -30,6 +32,10 @@ namespace Turnierverwaltung
         public Turnier(List<Person> mitglieder)
         {
             Mitglieder = mitglieder;
+        }
+        public Turnier(List<Mannschaft> mannschaften)
+        {
+            Mannschaften = mannschaften;
         }
         #endregion
 

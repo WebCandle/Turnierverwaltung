@@ -125,6 +125,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Mannschaftsverwaltung.aspx" />
     <Content Include="Personenverwaltung.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -186,6 +187,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Mannschaftsverwaltung.aspx.cs">
+      <DependentUpon>Mannschaftsverwaltung.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Mannschaftsverwaltung.aspx.designer.cs">
+      <DependentUpon>Mannschaftsverwaltung.aspx</DependentUpon>
     </Compile>
     <Compile Include="Modelle\Enum.cs" />
     <Compile Include="Modelle\FussballSpieler.cs" />
