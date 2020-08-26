@@ -22,5 +22,9 @@ namespace Turnierverwaltung
             Personen = new List<Person>();
             Mannschaften = new List<Mannschaft>();
         }
+        protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+        {
+            
+        }
     }
 }

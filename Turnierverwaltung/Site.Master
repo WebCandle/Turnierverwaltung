@@ -53,7 +53,11 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/Personenverwaltung.aspx">Personenverwaltung</a></li>
                         <li><a runat="server" href="~/Mannschaftsverwaltung.aspx">Mannschaftsverwaltung</a></li>
-                        <li><a runat="server" href="~/Contact">Kontakt</a></li>
+                        <% if (Session["auth"] != null && !(bool)Session["auth"]) { %>
+                        <li><a runat="server" href="~/Login.aspx">Login</a></li>
+                        <% }; if (Session["auth"] != null && (bool)Session["auth"]) { %>
+                        <li><a runat="server" href="~/Login.aspx?do=logout">Logout</a></li>
+                        <% } %>
                     </ul>
                 </div>
             </div>

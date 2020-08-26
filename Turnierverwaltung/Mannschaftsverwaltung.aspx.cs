@@ -13,49 +13,57 @@ namespace Turnierverwaltung
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Page.IsPostBack == false)
+            if(Session["auth"] == null || !(bool)Session["auth"])
             {
-                Sportart.Items.Clear();
-                Sportart.Items.Add("Fussball");
-                Sportart.Items.Add("Handball");
-                Sportart.Items.Add("Tennis");
-
-                int k = 0;
-                LstBxP.Items.Clear();
-                foreach (var person in Global.Personen)
-                {
-                    ListItem item = new ListItem(person.Name, k.ToString());
-                    LstBxP.Items.Add(item);
-                    k++;
-                }
-
-                if (Request.QueryString["do"] == "entfernen")
-                {
-                    int item = Convert.ToInt32(Request.QueryString["item"]);
-                    Global.Mannschaften.RemoveAt(item);
-                    Response.Redirect("~/Mannschaftsverwaltung.aspx");
-                }
-                else if (Request.QueryString["do"] == "bearbeiten")
-                {
-                    personentbl.Visible = false;
-                    Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
-                    Txt_Name.Text = mannschaft.Name;
-                    Sportart.Text = mannschaft.Sportart;
-
-                    Btn_Add.Visible = false;
-                    Btn_Sichern.Visible = true;
-                    Btn_Abbrechen.Visible = true;
-                }
-                else
-                {
-                   personentbl.Visible = true;
-                    Btn_Add.Visible = true;
-                    Btn_Sichern.Visible = false;
-                    Btn_Abbrechen.Visible = false;
-                }
+                Response.Redirect("~/Login.aspx", true);
             }
-            
-            Render();
+            else
+            {
+                if (Page.IsPostBack == false)
+                {
+                    Sportart.Items.Clear();
+                    Sportart.Items.Add("Fussball");
+                    Sportart.Items.Add("Handball");
+                    Sportart.Items.Add("Tennis");
+
+                    int k = 0;
+                    LstBxP.Items.Clear();
+                    foreach (var person in Global.Personen)
+                    {
+                        ListItem item = new ListItem(person.Name, k.ToString());
+                        LstBxP.Items.Add(item);
+                        k++;
+                    }
+
+                    if (Request.QueryString["do"] == "entfernen")
+                    {
+                        int item = Convert.ToInt32(Request.QueryString["item"]);
+                        Global.Mannschaften.RemoveAt(item);
+                        Response.Redirect("~/Mannschaftsverwaltung.aspx");
+                    }
+                    else if (Request.QueryString["do"] == "bearbeiten")
+                    {
+                        personentbl.Visible = false;
+                        Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
+                        Txt_Name.Text = mannschaft.Name;
+                        Sportart.Text = mannschaft.Sportart;
+
+                        Btn_Add.Visible = false;
+                        Btn_Sichern.Visible = true;
+                        Btn_Abbrechen.Visible = true;
+                    }
+                    else
+                    {
+                        personentbl.Visible = true;
+                        Btn_Add.Visible = true;
+                        Btn_Sichern.Visible = false;
+                        Btn_Abbrechen.Visible = false;
+                    }
+                }
+
+                Render();
+            }
+
         }
 
         private void Render()
