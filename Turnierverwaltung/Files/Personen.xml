@@ -1,10 +1,4 @@
 <?xml version="1.0"?>
 <Turnier xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Mannschaften>
-    <Mannschaft>
-      <Name>al abbasi</Name>
-      <Mitglieder />
-      <Sportart>Fussball</Sportart>
-    </Mannschaft>
-  </Mannschaften>
+  <Mitglieder />
 </Turnier>

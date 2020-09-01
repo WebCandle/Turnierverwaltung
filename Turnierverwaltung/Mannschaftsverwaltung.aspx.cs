@@ -151,31 +151,51 @@ namespace Turnierverwaltung
 
         protected void Btn_add(object sender, EventArgs e)
         {
-            Mannschaft mannschaft = new Mannschaft();
-            mannschaft.Name = Txt_Name.Text;
-            mannschaft.Sportart = Sportart.Text;
-            foreach (ListItem item in LstBxM.Items)
+            if(Has_Permission("admin"))
             {
-                Person person = Global.Personen.ElementAt(Convert.ToInt32(item.Value));
-                mannschaft.MitgliedAnnehmen(person);
+                Mannschaft mannschaft = new Mannschaft();
+                mannschaft.Name = Txt_Name.Text;
+                mannschaft.Sportart = Sportart.Text;
+                foreach (ListItem item in LstBxM.Items)
+                {
+                    Person person = Global.Personen.ElementAt(Convert.ToInt32(item.Value));
+                    mannschaft.MitgliedAnnehmen(person);
+                }
+                Global.Mannschaften.Add(mannschaft);
+                Render();
             }
-            Global.Mannschaften.Add(mannschaft);
-            Render();
+            else
+            {
+                Access_Denied();
+            }
         }
-
         protected void Btn_Abbrechen_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/Mannschaftsverwaltung.aspx");
         }
-
+        public bool Has_Permission(string rolle)
+        {
+            return (string)Session["rolle"] == rolle;
+        }
+        public void Access_Denied()
+        {
+            string script = string.Format("alert('{0}');", "Sie haben keine Berichtigung!");
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+        }
         protected void Btn_Sichern_Click(object sender, EventArgs e)
         {
-            Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
-            mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-            mannschaft.Sportart = Request.Form["ctl00$MainContent$Sportart"];
-            Response.Redirect("~/Mannschaftsverwaltung.aspx");
+            if (Has_Permission("admin"))
+            {
+                Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
+                mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                mannschaft.Sportart = Request.Form["ctl00$MainContent$Sportart"];
+                Response.Redirect("~/Mannschaftsverwaltung.aspx");
+            }
+            else
+            {
+                Access_Denied();
+            }
         }
-
         protected void Btn_XMLDownload_Click(object sender, EventArgs e)
         {
             Turnier turnier = new Turnier(Global.Mannschaften);

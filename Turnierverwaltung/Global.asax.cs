@@ -6,6 +6,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace Turnierverwaltung
 {
@@ -13,6 +15,7 @@ namespace Turnierverwaltung
     {
         public static List<Person> Personen;
         public static List<Mannschaft> Mannschaften;
+        public static string mySqlConnectionString;
         void Application_Start(object sender, EventArgs e)
         {
             // Code, der beim Anwendungsstart ausgeführt wird
@@ -21,7 +24,9 @@ namespace Turnierverwaltung
 
             Personen = new List<Person>();
             Mannschaften = new List<Mannschaft>();
+            mySqlConnectionString = "server=localhost;database=Turnierverwaltung_db;uid=root;password=";
         }
+        
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)
         {
             
