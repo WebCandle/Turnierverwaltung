@@ -19,47 +19,56 @@ namespace Turnierverwaltung
             }
             else
             {
-                if (Page.IsPostBack == false)
+                if(Has_Permission("admin"))
                 {
-                    Sportart.Items.Clear();
-                    Sportart.Items.Add("Fussball");
-                    Sportart.Items.Add("Handball");
-                    Sportart.Items.Add("Tennis");
+                    PnlVerwaltung.Visible = true;
+                    if (Page.IsPostBack == false)
+                    {
+                        Sportart.Items.Clear();
+                        Sportart.Items.Add("Fussball");
+                        Sportart.Items.Add("Handball");
+                        Sportart.Items.Add("Tennis");
 
-                    int k = 0;
-                    LstBxP.Items.Clear();
-                    foreach (var person in Global.Personen)
-                    {
-                        ListItem item = new ListItem(person.Name, k.ToString());
-                        LstBxP.Items.Add(item);
-                        k++;
-                    }
+                        int k = 0;
+                        LstBxP.Items.Clear();
+                        foreach (var person in Global.Personen)
+                        {
+                            ListItem item = new ListItem(person.Name, k.ToString());
+                            LstBxP.Items.Add(item);
+                            k++;
+                        }
 
-                    if (Request.QueryString["do"] == "entfernen")
-                    {
-                        int item = Convert.ToInt32(Request.QueryString["item"]);
-                        Global.Mannschaften.RemoveAt(item);
-                        Response.Redirect("~/Mannschaftsverwaltung.aspx");
-                    }
-                    else if (Request.QueryString["do"] == "bearbeiten")
-                    {
-                        personentbl.Visible = false;
-                        Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
-                        Txt_Name.Text = mannschaft.Name;
-                        Sportart.Text = mannschaft.Sportart;
+                        if (Request.QueryString["do"] == "entfernen")
+                        {
+                            int item = Convert.ToInt32(Request.QueryString["item"]);
+                            Global.Mannschaften.RemoveAt(item);
+                            Response.Redirect("~/Mannschaftsverwaltung.aspx");
+                        }
+                        else if (Request.QueryString["do"] == "bearbeiten")
+                        {
+                            personentbl.Visible = false;
+                            Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
+                            Txt_Name.Text = mannschaft.Name;
+                            Sportart.Text = mannschaft.Sportart;
 
-                        Btn_Add.Visible = false;
-                        Btn_Sichern.Visible = true;
-                        Btn_Abbrechen.Visible = true;
-                    }
-                    else
-                    {
-                        personentbl.Visible = true;
-                        Btn_Add.Visible = true;
-                        Btn_Sichern.Visible = false;
-                        Btn_Abbrechen.Visible = false;
+                            Btn_Add.Visible = false;
+                            Btn_Sichern.Visible = true;
+                            Btn_Abbrechen.Visible = true;
+                        }
+                        else
+                        {
+                            personentbl.Visible = true;
+                            Btn_Add.Visible = true;
+                            Btn_Sichern.Visible = false;
+                            Btn_Abbrechen.Visible = false;
+                        }
                     }
                 }
+                else
+                {
+                    PnlVerwaltung.Visible = false;
+                }
+        
 
                 Render();
             }

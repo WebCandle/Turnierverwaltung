@@ -5,7 +5,4 @@
 <a href="Personenverwaltung.aspx"><h3>Personenverwaltung</h3></a>
 <br />
 <a href="Mannschaftsverwaltung.aspx"><h3>Mannschaftsverwaltung</h3></a>
-<br />
-    <p>Hinweis: die Verbindung in die Datenbank ist noch nicht eingerichtet!</p>
-
 </asp:Content>
