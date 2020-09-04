@@ -15,6 +15,7 @@ namespace Turnierverwaltung
         {
             if (Session["auth"] == null || !(bool)Session["auth"])
             {
+                Session["redirect"] = "~/Personenverwaltung.aspx";
                 Response.Redirect("~/Login.aspx", true);
             }
             else

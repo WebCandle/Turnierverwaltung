@@ -52,11 +52,18 @@ namespace Turnierverwaltung
                                 int active = Convert.ToInt32(reader["active"]);
                                 if (active == 1)
                                 {
-                                    LblMsg.Visible = false;
                                     Session["auth"] = true;
                                     Session["name"] = Convert.ToString(reader["name"]);
                                     Session["rolle"] = Convert.ToString(reader["rolle"]);
-                                    Response.Redirect("~/Default.aspx");
+                                    if(Session["redirect"] != null)
+                                    {
+                                        Response.Redirect((string)Session["redirect"]);
+                                        Session["redirect"] = null;
+                                    }
+                                    else
+                                    {
+                                        Response.Redirect("~/Default.aspx");
+                                    }
                                 }
                                 else
                                 {
@@ -74,14 +81,14 @@ namespace Turnierverwaltung
             }
             catch (Exception ex)
             {
-
+                string script = string.Format("alert('{0}');", ex.Message);
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
             }
         }
         private void Login_Failed()
         {
             //Access denied!
             Session["auth"] = false;
-            LblMsg.Visible = true;
         }
     }
 }

@@ -4,7 +4,7 @@
 
 <html lang="en">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%: Page.Title %></title>
@@ -13,7 +13,7 @@
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -47,15 +47,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/">Turnierverwaltung</a>
+                    <a class="navbar-brand" runat="server" href="~/">Home</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/Personenverwaltung.aspx">Personenverwaltung</a></li>
                         <li><a runat="server" href="~/Mannschaftsverwaltung.aspx">Mannschaftsverwaltung</a></li>
-                        <% if (Session["auth"] != null && !(bool)Session["auth"]) { %>
+                        <% if (Session["auth"] == null || !(bool)Session["auth"])
+                            { %>
                         <li><a runat="server" href="~/Login.aspx">Login</a></li>
-                        <% }; if (Session["auth"] != null && (bool)Session["auth"]) { %>
+                        <% }
+                        else
+                        { %>
                         <li><a runat="server" href="~/Login.aspx?do=logout">Logout</a></li>
                         <% } %>
                     </ul>
@@ -63,11 +66,13 @@
             </div>
         </div>
         <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
+            <div style="min-height: 550px">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Meine ASP.NET-Anwendung by Maher Al Abbasi</p>
+                <p>&copy; <%: DateTime.Now.Year %> - ASP.NET-Anwendung von Maher Al Abbasi</p>
             </footer>
         </div>
 
