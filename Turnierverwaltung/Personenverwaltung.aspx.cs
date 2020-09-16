@@ -242,9 +242,11 @@ namespace Turnierverwaltung
                 if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
                 {
                     FussballSpieler fussballSpieler = new FussballSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Txt3.Text);
+
                     Lbl_Msg.Visible = true;
                     Lbl_Msg.Text = "FussballSpieler wurde erfolgreich hinzugefügt!";
                     Global.Personen.Add(fussballSpieler);
+                    fussballSpieler.Sage();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Handballspieler")
                 {

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using MySql.Data.MySqlClient;
 
 namespace Turnierverwaltung
 {
@@ -61,7 +62,40 @@ namespace Turnierverwaltung
         #endregion
 
         #region Worker
-        
+        public void Sage()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        string qry = string.Format("INSERT INTO `person`(`Vorname`, `Nachname`, `Geburtsdatum`) VALUES (\"{0}\",\"{1}\",\"{2}\")", MySqlHelper.EscapeString(this.Vorname), MySqlHelper.EscapeString(this.Name), MySqlHelper.EscapeString(this._Geburtsdatum.ToShortDateString()));
+                        cmd.CommandText = qry;
+                        cmd.ExecuteNonQuery();
+                        long person_id = cmd.LastInsertedId;
+                        switch(this.GetType().ToString())
+                        {
+                            case "Turnierverwaltung.FussballSpieler":
+                                FussballSpieler fussballSpieler = this as FussballSpieler;
+                                qry = string.Format("INSERT INTO `fussballspieler`( `Person_ID`, `Spiele`, `Tore`, `Position`) VALUES ({0},{1},{2},\"{3}\")",person_id,fussballSpieler.Spiele,fussballSpieler.Tore,fussballSpieler.Position);
+                                using (MySqlCommand cmd2 = conn.CreateCommand())
+                                {
+                                    cmd2.CommandText = qry;
+                                    cmd2.ExecuteNonQuery();
+                                    long fussballSpieler_id = cmd2.LastInsertedId;
+                                }
+                                    break;
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
         #endregion
     }
 }
