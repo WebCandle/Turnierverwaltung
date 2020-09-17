@@ -17,6 +17,7 @@ namespace Turnierverwaltung
     public class TennisSpieler : Person
     {
         #region Eigenschaften
+        private long _TennisSpieler_ID;
         private int _Spiele;
         private int _Tore;
         #endregion
@@ -24,6 +25,7 @@ namespace Turnierverwaltung
         #region Accessoren/Modifiers
         public int Spiele { get => _Spiele; set => _Spiele = value; }
         public int Tore { get => _Tore; set => _Tore = value; }
+        public long TennisSpieler_ID { get => _TennisSpieler_ID; set => _TennisSpieler_ID = value; }
         #endregion
 
         #region Konstruktorn

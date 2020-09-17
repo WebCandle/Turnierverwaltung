@@ -246,38 +246,44 @@ namespace Turnierverwaltung
                     Lbl_Msg.Visible = true;
                     Lbl_Msg.Text = "FussballSpieler wurde erfolgreich hinzugefügt!";
                     Global.Personen.Add(fussballSpieler);
-                    fussballSpieler.Sage();
+                    fussballSpieler.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Handballspieler")
                 {
                     HandballSpieler handballSpieler = new HandballSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Txt3.Text);
                     Global.Personen.Add(handballSpieler);
+                    handballSpieler.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
                 {
                     TennisSpieler tennisSpieler = new TennisSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text));
                     Global.Personen.Add(tennisSpieler);
+                    tennisSpieler.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "anderer Spielertyp")
                 {
                     Spieler spieler = new Spieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Sportart.Text);
                     Global.Personen.Add(spieler);
+                    spieler.Save();
 
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
                 {
                     Physiotherapeut physiotherapeut = new Physiotherapeut(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Sportart.Text);
                     Global.Personen.Add(physiotherapeut);
+                    physiotherapeut.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
                 {
                     Trainer trainer = new Trainer(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Sportart.Text);
                     Global.Personen.Add(trainer);
+                    trainer.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Person mit anderen Aufgaben")
                 {
                     Mitarbeiter mitarbeiter = new Mitarbeiter(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Txt1.Text, Sportart.Text);
                     Global.Personen.Add(mitarbeiter);
+                    mitarbeiter.Save();
                 }
                 Response.Redirect("~/Personenverwaltung.aspx");
             }

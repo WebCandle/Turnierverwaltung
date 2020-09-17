@@ -17,6 +17,7 @@ namespace Turnierverwaltung
     public class Mitarbeiter : Person
     {
         #region Eigenschaften
+        private long _Mitarbeiter_ID;
         private string _Aufgabe;
         private string _Sportart;
         #endregion
@@ -24,6 +25,7 @@ namespace Turnierverwaltung
         #region Accessoren/Modifiers
         public string Sportart { get => _Sportart; set => _Sportart = value; }
         public string Aufgabe { get => _Aufgabe; set => _Aufgabe = value; }
+        public long Mitarbeiter_ID { get => _Mitarbeiter_ID; set => _Mitarbeiter_ID = value; }
         #endregion
 
         #region Konstruktorn

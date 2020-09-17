@@ -17,6 +17,7 @@ namespace Turnierverwaltung
     public class Trainer : Person
     {
         #region Eigenschaften
+        private long _Trainer_ID;
         private int _Vereine;
         private string _Sportart;
         #endregion
@@ -24,6 +25,7 @@ namespace Turnierverwaltung
         #region Accessoren/Modifiers
         public int Vereine { get => _Vereine; set => _Vereine = value; }
         public string Sportart { get => _Sportart; set => _Sportart = value; }
+        public long Trainer_ID { get => _Trainer_ID; set => _Trainer_ID = value; }
         #endregion
 
         #region Konstruktoren

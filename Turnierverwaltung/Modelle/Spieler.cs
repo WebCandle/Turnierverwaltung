@@ -17,6 +17,7 @@ namespace Turnierverwaltung
     public class Spieler: Person
     {
         #region Eigenschaften
+        private long _Spieler_ID;
         private int _Spiele;
         private int _Tore;
         private string _Sportart;
@@ -26,6 +27,7 @@ namespace Turnierverwaltung
         public int Spiele { get => _Spiele; set => _Spiele = value; }
         public int Tore { get => _Tore; set => _Tore = value; }
         public string Sportart { get => _Sportart; set => _Sportart = value; }
+        public long Spieler_ID { get => _Spieler_ID; set => _Spieler_ID = value; }
         #endregion
 
         #region Konstruktorn

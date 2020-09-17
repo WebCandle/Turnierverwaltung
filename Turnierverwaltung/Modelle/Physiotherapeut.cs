@@ -17,6 +17,7 @@ namespace Turnierverwaltung
     public class Physiotherapeut : Person
     {
         #region Eigenschaften
+        private long _Physiotherapeut_ID;
         private int _Jahre;
         private string _Sportart;
         #endregion
@@ -24,6 +25,7 @@ namespace Turnierverwaltung
         #region Accessoren/Modifiers
         public int Jahre { get => _Jahre; set => _Jahre = value; }
         public string Sportart { get => _Sportart; set => _Sportart = value; }
+        public long Physiotherapeut_ID { get => _Physiotherapeut_ID; set => _Physiotherapeut_ID = value; }
         #endregion
 
         #region Konstuktoren
