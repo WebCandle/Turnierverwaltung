@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using MySql.Data.MySqlClient;
 
 namespace Turnierverwaltung
 {
@@ -47,6 +48,37 @@ namespace Turnierverwaltung
         public void PositionAendern(string position)
         {
             Position = position;
+        }
+        public static FussballSpieler FetchByID(long id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT * FROM `fussballspieler` INNER JOIN `person` On `person`.`Art_ID` = `fussballspieler`.`Fussballspieler_ID` AND `person`.`Art` = \"FussballSpieler\" WHERE `fussballspieler`.`Fussballspieler_ID` = {0} ",id.ToString());
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                long person_id = long.Parse(reader["Person_ID"].ToString());
+                                int spiele = Convert.ToInt32(reader["Spiele"]);
+                                int tore = Convert.ToInt32(reader["Tore"]);
+                                string position = reader["Position"].ToString();
+                                FussballSpieler fussballSpieler = new FussballSpieler();
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         #endregion
     }
