@@ -602,12 +602,12 @@ namespace Turnierverwaltung
 
         protected void Btn_XMLDownload_Click(object sender, EventArgs e)
         {
-            Turnier turnier = new Turnier(Global.Personen);
-            XmlSerializer SR = new XmlSerializer(typeof(Turnier));
-            FileStream FS = new FileStream(Server.MapPath("~/Files")+"/Personen.xml", FileMode.Create);
-            SR.Serialize(FS, turnier);
-            FS.Close();
-            Response.Redirect("~/Files/Personen.xml");
+            //Turnier turnier = new Turnier(Global.Personen);
+            //XmlSerializer SR = new XmlSerializer(typeof(Turnier));
+            //FileStream FS = new FileStream(Server.MapPath("~/Files")+"/Personen.xml", FileMode.Create);
+            //SR.Serialize(FS, turnier);
+            //FS.Close();
+            //Response.Redirect("~/Files/Personen.xml");
         }
     }
 }

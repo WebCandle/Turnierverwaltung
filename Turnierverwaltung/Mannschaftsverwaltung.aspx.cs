@@ -208,13 +208,13 @@ namespace Turnierverwaltung
         }
         protected void Btn_XMLDownload_Click(object sender, EventArgs e)
         {
-            Turnier turnier = new Turnier(Global.Mannschaften);
-            XmlSerializer SR = new XmlSerializer(typeof(Turnier));
-            string name = Server.MapPath("~/Files") + "/Personen.xml";
-            FileStream FS = new FileStream(name, FileMode.Create);
-            SR.Serialize(FS, turnier);
-            FS.Close();
-            Response.Redirect("~/Files/Personen.xml");
+            //Turnier turnier = new Turnier(Global.Mannschaften);
+            //XmlSerializer SR = new XmlSerializer(typeof(Turnier));
+            //string name = Server.MapPath("~/Files") + "/Personen.xml";
+            //FileStream FS = new FileStream(name, FileMode.Create);
+            //SR.Serialize(FS, turnier);
+            //FS.Close();
+            //Response.Redirect("~/Files/Personen.xml");
             //Response.AddHeader("Content-Disposition", "attachment; filename="+name);
         }
     }

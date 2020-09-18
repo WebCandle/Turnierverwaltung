@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace Turnierverwaltung
 {
@@ -16,6 +17,7 @@ namespace Turnierverwaltung
     public class Mannschaft
     {
         #region Eigenschaften
+        private long _Mannschaft_ID;
         private string _Name;
         private List<Person> _Mitglieder;
         private string _Sportart;
@@ -25,6 +27,7 @@ namespace Turnierverwaltung
         public string Name { get => _Name; set => _Name = value; }
         public List<Person> Mitglieder { get => _Mitglieder; set => _Mitglieder = value; }
         public string Sportart { get => _Sportart; set => _Sportart = value; }
+        public long Mannschaft_ID { get => _Mannschaft_ID; set => _Mannschaft_ID = value; }
         #endregion
 
         #region Konstruktoren
@@ -36,7 +39,14 @@ namespace Turnierverwaltung
         public Mannschaft(string name, List<Person> personen)
         {
             Name = name;
+
             Mitglieder = personen;
+        }
+        public Mannschaft(long id, string name, string sportart)
+        {
+            Mannschaft_ID = id;
+            Name = name;
+            Sportart = sportart;
         }
         #endregion
 
@@ -67,6 +77,41 @@ namespace Turnierverwaltung
             //        }
             //    }
             //} while (!PaarSortiert);
+        }
+        public static List<Mannschaft> GetAll()
+        {
+            List<Mannschaft> mannschaften = new List<Mannschaft>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * FROM `mannschaft`";
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    long id = long.Parse(reader["Mannschaft_ID"].ToString());
+                                    string name = reader["Name"].ToString();
+                                    string sportart = reader["Sport_Art"].ToString();
+                                    Mannschaft mannschaft = new Mannschaft(id, name, sportart);
+                                    mannschaften.Add(mannschaft);
+                                }
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return mannschaften;
         }
         #endregion
     }

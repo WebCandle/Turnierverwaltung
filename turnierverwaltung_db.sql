@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 18. Sep 2020 um 08:59
+-- Erstellungszeit: 18. Sep 2020 um 12:30
 -- Server-Version: 10.1.37-MariaDB
 -- PHP-Version: 7.2.12
 
@@ -68,6 +68,16 @@ CREATE TABLE `mannschaft` (
   `Name` varchar(50) COLLATE latin1_german2_ci NOT NULL,
   `Sport_Art` varchar(50) COLLATE latin1_german2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci;
+
+--
+-- Daten für Tabelle `mannschaft`
+--
+
+INSERT INTO `mannschaft` (`Mannschaft_ID`, `Name`, `Sport_Art`) VALUES
+(1, 'Rial Madried', 'Fussball'),
+(2, 'Parcilona', 'Fussball'),
+(3, 'Beiern', 'Fussball'),
+(4, 'Kölner Mannschaft', 'Fussball');
 
 -- --------------------------------------------------------
 
@@ -193,6 +203,39 @@ CREATE TABLE `trainer` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `turnier`
+--
+
+CREATE TABLE `turnier` (
+  `Turnier_ID` int(5) NOT NULL,
+  `Verein_Name` varchar(250) COLLATE latin1_german2_ci NOT NULL,
+  `Adresse` varchar(250) COLLATE latin1_german2_ci DEFAULT NULL,
+  `Datum_von` date DEFAULT NULL,
+  `Datum_bis` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci;
+
+--
+-- Daten für Tabelle `turnier`
+--
+
+INSERT INTO `turnier` (`Turnier_ID`, `Verein_Name`, `Adresse`, `Datum_von`, `Datum_bis`) VALUES
+(1, 'verein1', 'bonn, Auerberg 119', '2020-10-21', '2000-01-01');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `turnier_mannschaft`
+--
+
+CREATE TABLE `turnier_mannschaft` (
+  `Turnier_Mannschaft_ID` int(5) NOT NULL,
+  `Turnier_ID` int(5) NOT NULL,
+  `Mannschaft_ID` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `users`
 --
 
@@ -278,6 +321,18 @@ ALTER TABLE `trainer`
   ADD PRIMARY KEY (`Trainer_ID`);
 
 --
+-- Indizes für die Tabelle `turnier`
+--
+ALTER TABLE `turnier`
+  ADD PRIMARY KEY (`Turnier_ID`);
+
+--
+-- Indizes für die Tabelle `turnier_mannschaft`
+--
+ALTER TABLE `turnier_mannschaft`
+  ADD PRIMARY KEY (`Turnier_Mannschaft_ID`);
+
+--
 -- Indizes für die Tabelle `users`
 --
 ALTER TABLE `users`
@@ -303,7 +358,7 @@ ALTER TABLE `handballspieler`
 -- AUTO_INCREMENT für Tabelle `mannschaft`
 --
 ALTER TABLE `mannschaft`
-  MODIFY `Mannschaft_ID` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mannschaft_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT für Tabelle `mannschaft_mitglieder`
@@ -346,6 +401,18 @@ ALTER TABLE `tennisspieler`
 --
 ALTER TABLE `trainer`
   MODIFY `Trainer_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `turnier`
+--
+ALTER TABLE `turnier`
+  MODIFY `Turnier_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT für Tabelle `turnier_mannschaft`
+--
+ALTER TABLE `turnier_mannschaft`
+  MODIFY `Turnier_Mannschaft_ID` int(5) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
