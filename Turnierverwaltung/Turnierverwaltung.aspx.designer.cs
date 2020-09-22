@@ -13,6 +13,15 @@ namespace Turnierverwaltung {
     public partial class Turnierverwaltung {
         
         /// <summary>
+        /// PnlVerwaltung-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PnlVerwaltung;
+        
+        /// <summary>
         /// Label1-Steuerelement
         /// </summary>
         /// <remarks>
@@ -119,5 +128,23 @@ namespace Turnierverwaltung {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnAdd;
+        
+        /// <summary>
+        /// Tbl-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table Tbl;
+        
+        /// <summary>
+        /// Btn_XMLDownload-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_XMLDownload;
     }
 }

@@ -36,6 +36,10 @@ namespace Turnierverwaltung
             Name = "<Neue Mannschaft>";
             Mitglieder = new List<Person>();
         }
+        public Mannschaft(long id)
+        {
+            _Mannschaft_ID = id;
+        }
         public Mannschaft(string name, List<Person> personen)
         {
             Name = name;

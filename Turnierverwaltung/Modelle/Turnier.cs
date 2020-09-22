@@ -35,12 +35,13 @@ namespace Turnierverwaltung
         #endregion
 
         #region Konstruktoren
-        public Turnier(string name, DateTime von, DateTime bis, string adresse)
+        public Turnier(string vereinName, DateTime von, DateTime bis, string adresse, List<Mannschaft> mannschaften)
         {
-            VereinName = name;
+            VereinName = vereinName;
             Datum_Von = von;
-            Datum_Von = bis;
+            Datum_Bis = bis;
             Adresse = adresse;
+            _Mannschaften = mannschaften;
         }
         #endregion
 
@@ -58,6 +59,16 @@ namespace Turnierverwaltung
                         cmd.CommandText = qry;
                         cmd.ExecuteNonQuery();
                         Turnier_ID = cmd.LastInsertedId;
+                        foreach (Mannschaft mannschaft in Mannschaften)
+                        {
+                            using (MySqlCommand cmd1 = conn.CreateCommand())
+                            {
+                                string qry1 = string.Format("INSERT INTO `turnier_mannschaft`(`Turnier_ID`, `Mannschaft_ID`) VALUES ({0},{1})", Turnier_ID, mannschaft.Mannschaft_ID);
+                                cmd1.CommandText = qry1;
+                                cmd1.ExecuteNonQuery();
+                            }
+                        }
+
                     }
                     conn.Close();
                 }
@@ -66,6 +77,60 @@ namespace Turnierverwaltung
             {
 
             }
+        }
+        public static List<Turnier> GetAll()
+        {
+            //hat hier nicht akzeptiert !!
+            List<Turnier> turniere = new List<Turnier>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * FROM `turnier`";
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    long id = long.Parse(reader["Turnier_ID"].ToString());
+                                    string name = reader["Verein_Name"].ToString();
+                                    string adresse = reader["Adresse"].ToString();
+                                    DateTime von = Convert.ToDateTime(reader["Datum_von"].ToString());
+                                    DateTime bis = Convert.ToDateTime(reader["Datum_bis"].ToString());
+                                    List<Mannschaft> mannschaften = new List<Mannschaft>();
+                                    using (MySqlCommand cmd1 = conn.CreateCommand())
+                                    {
+                                        cmd1.CommandText = "SELECT `Turnier_Mannschaft_ID`, `Turnier_ID`, `Mannschaft_ID` FROM `turnier_mannschaft` WHERE `Turnier_ID` = " + id.ToString();
+                                        using(MySqlDataReader reader1 = cmd1.ExecuteReader())
+                                        {
+                                            if (reader1.HasRows)
+                                            {
+                                                while (reader1.Read())
+                                                {
+                                                    long mannschaft_id = long.Parse(reader1["Mannschaft_ID"].ToString());
+                                                    mannschaften.Add(new Mannschaft(mannschaft_id));
+                                                }
+                                            }
+                                        }
+                                    }
+                                    Turnier turnier = new Turnier(name, von, bis, adresse,mannschaften);
+                                    turniere.Add(turnier);
+                                }
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return turniere;
         }
         #endregion
     }
