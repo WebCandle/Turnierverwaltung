@@ -35,17 +35,82 @@ namespace Turnierverwaltung
         #endregion
 
         #region Konstruktoren
+        public Turnier(long turnier_id)
+        {
+            Turnier_ID = turnier_id;
+            Mannschaften = FetchMannschaften(turnier_id);
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT `Turnier_ID`, `Verein_Name`, `Adresse`, `Datum_von`, `Datum_bis` FROM `turnier` WHERE `Turnier_ID` = {0} LIMIT 1", _Turnier_ID);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    VereinName = reader["Verein_Name"].ToString();
+                                    Adresse = reader["Adresse"].ToString();
+                                    Datum_Von = Convert.ToDateTime(reader["Datum_von"].ToString());
+                                    Datum_Bis = Convert.ToDateTime(reader["Datum_bis"].ToString());
+
+                                }
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            } catch(Exception ex)
+            {
+                VereinName = "<Konnte nicht ermitteln!>";
+                Adresse = "<Konnte nicht ermitteln!>";
+                Datum_Von = DateTime.Now;
+                Datum_Bis = DateTime.Now;
+            }
+            }
         public Turnier(string vereinName, DateTime von, DateTime bis, string adresse, List<Mannschaft> mannschaften)
         {
             VereinName = vereinName;
             Datum_Von = von;
             Datum_Bis = bis;
             Adresse = adresse;
-            _Mannschaften = mannschaften;
+            Mannschaften = mannschaften;
         }
         #endregion
 
         #region Worker
+        public void Delete()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        string qry = string.Format("DELETE FROM `turnier` WHERE `Turnier_ID` = {0}", Turnier_ID);
+                        cmd.CommandText = qry;
+                        cmd.ExecuteNonQuery();
+                        using (MySqlCommand cmd1 = conn.CreateCommand())
+                        {
+                            string qry1 = string.Format("DELETE FROM `turnier_mannschaft` WHERE `Turnier_ID` = {0}", Turnier_ID);
+                            cmd1.CommandText = qry1;
+                            cmd1.ExecuteNonQuery();
+                        }
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         public void Save()
         {
             try
@@ -96,28 +161,13 @@ namespace Turnierverwaltung
                             {
                                 while (reader.Read())
                                 {
-                                    long id = long.Parse(reader["Turnier_ID"].ToString());
-                                    string name = reader["Verein_Name"].ToString();
-                                    string adresse = reader["Adresse"].ToString();
-                                    DateTime von = Convert.ToDateTime(reader["Datum_von"].ToString());
-                                    DateTime bis = Convert.ToDateTime(reader["Datum_bis"].ToString());
-                                    List<Mannschaft> mannschaften = new List<Mannschaft>();
-                                    using (MySqlCommand cmd1 = conn.CreateCommand())
-                                    {
-                                        cmd1.CommandText = "SELECT `Turnier_Mannschaft_ID`, `Turnier_ID`, `Mannschaft_ID` FROM `turnier_mannschaft` WHERE `Turnier_ID` = " + id.ToString();
-                                        using(MySqlDataReader reader1 = cmd1.ExecuteReader())
-                                        {
-                                            if (reader1.HasRows)
-                                            {
-                                                while (reader1.Read())
-                                                {
-                                                    long mannschaft_id = long.Parse(reader1["Mannschaft_ID"].ToString());
-                                                    mannschaften.Add(new Mannschaft(mannschaft_id));
-                                                }
-                                            }
-                                        }
-                                    }
-                                    Turnier turnier = new Turnier(name, von, bis, adresse,mannschaften);
+                                    long turnier_id = long.Parse(reader["Turnier_ID"].ToString());
+                                    //string name = reader["Verein_Name"].ToString();
+                                    //string adresse = reader["Adresse"].ToString();
+                                    //DateTime von = Convert.ToDateTime(reader["Datum_von"].ToString());
+                                    //DateTime bis = Convert.ToDateTime(reader["Datum_bis"].ToString());
+                                    //List<Mannschaft> mannschaften = Turnier.FetchMannschaften(id);
+                                    Turnier turnier = new Turnier(turnier_id);
                                     turniere.Add(turnier);
                                 }
                             }
@@ -131,6 +181,31 @@ namespace Turnierverwaltung
 
             }
             return turniere;
+        }
+        public static List<Mannschaft> FetchMannschaften(long trunier_id)
+        {
+            List<Mannschaft> mannschaften = new List<Mannschaft>();
+            using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+            {
+                conn.Open();
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                        cmd.CommandText = "SELECT `Turnier_Mannschaft_ID`, `Turnier_ID`, `Mannschaft_ID` FROM `turnier_mannschaft` WHERE `Turnier_ID` = " + trunier_id.ToString();
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    long mannschaft_id = long.Parse(reader["Mannschaft_ID"].ToString());
+                                    mannschaften.Add(new Mannschaft(mannschaft_id));
+                                }
+                            }
+                        }
+                }
+                conn.Close();
+            }
+            return mannschaften;
         }
         #endregion
     }

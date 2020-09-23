@@ -11,11 +11,41 @@ namespace Turnierverwaltung
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckBxLstMannschaften.Items.Clear();
-            List<Mannschaft> mannschaften = Mannschaft.GetAll();
-            foreach (Mannschaft mannschaft in mannschaften)
+            if(!Page.IsPostBack)
             {
-                CheckBxLstMannschaften.Items.Add(new ListItem(mannschaft.Name, mannschaft.Mannschaft_ID.ToString()));
+                txtDatumVon.Text = DateTime.Now.ToShortDateString();
+                txtDatumBis.Text = DateTime.Now.ToShortDateString();
+                CheckBxLstMannschaften.Items.Clear();
+                List<Mannschaft> mannschaften = Mannschaft.GetAll();
+                foreach (Mannschaft mannschaft in mannschaften)
+                {
+                    CheckBxLstMannschaften.Items.Add(new ListItem(mannschaft.Name, mannschaft.Mannschaft_ID.ToString()));
+                }
+                if (Request.QueryString["do"] == "entfernen")
+                {
+                    long turnier_id = long.Parse(Request.QueryString["item"]);
+                    Turnier turnier = new Turnier(turnier_id);
+                    turnier.Delete();
+                    Response.Redirect("~/Turnierverwaltung.aspx", true);
+                }
+                else if (Request.QueryString["do"] == "bearbeiten")
+                {
+                    //personentbl.Visible = false;
+                    //Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
+                    //Txt_Name.Text = mannschaft.Name;
+                    //Sportart.Text = mannschaft.Sportart;
+
+                    //Btn_Add.Visible = false;
+                    //Btn_Sichern.Visible = true;
+                    //Btn_Abbrechen.Visible = true;
+                }
+                else
+                {
+                    //personentbl.Visible = true;
+                    //Btn_Add.Visible = true;
+                    //Btn_Sichern.Visible = false;
+                    //Btn_Abbrechen.Visible = false;
+                }
             }
             Render();
         }
@@ -32,6 +62,7 @@ namespace Turnierverwaltung
             }
             Turnier turnier = new Turnier(txtVereinName.Text, Convert.ToDateTime(txtDatumVon.Text), Convert.ToDateTime(txtDatumBis.Text), txtAdresse.Text,mannschaften);
             turnier.Save();
+            Response.Redirect("~/Turnierverwaltung.aspx",true);
         }
         private void Render()
         {
@@ -76,7 +107,7 @@ namespace Turnierverwaltung
                 cell3.Text = "";
                 foreach (Mannschaft mannschaft in turnier.Mannschaften)
                 {
-                    cell3.Text += mannschaft.Mannschaft_ID+ "<br />";
+                    cell3.Text += mannschaft.Name+ "<br />";
                 }
                 row.Cells.Add(cell3);
 

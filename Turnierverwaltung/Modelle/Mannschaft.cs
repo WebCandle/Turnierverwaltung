@@ -39,6 +39,35 @@ namespace Turnierverwaltung
         public Mannschaft(long id)
         {
             _Mannschaft_ID = id;
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT `Mannschaft_ID`, `Name`, `Sport_Art` FROM `mannschaft` WHERE `Mannschaft_ID` = {0} LIMIT 1",_Mannschaft_ID);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Name = reader["Name"].ToString();
+                                    Sportart = reader["Sport_Art"].ToString();
+                                    
+                                }
+                            }
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Name = "<Konnte nicht ermitteln!>";
+                Sportart = "<Konnte nicht ermitteln!>";
+            }
         }
         public Mannschaft(string name, List<Person> personen)
         {
