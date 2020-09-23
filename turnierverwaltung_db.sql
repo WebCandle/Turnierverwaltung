@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Erstellungszeit: 18. Sep 2020 um 12:30
--- Server-Version: 10.1.37-MariaDB
--- PHP-Version: 7.2.12
+-- Host: 127.0.0.1
+-- Erstellungszeit: 23. Sep 2020 um 13:45
+-- Server-Version: 10.4.11-MariaDB
+-- PHP-Version: 7.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,8 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `fussballspieler` (
   `Fussballspieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Tore` int(5) NOT NULL DEFAULT '0',
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Tore` int(5) NOT NULL DEFAULT 0,
   `Position` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -52,8 +52,8 @@ INSERT INTO `fussballspieler` (`Fussballspieler_ID`, `Person_ID`, `Spiele`, `Tor
 CREATE TABLE `handballspieler` (
   `Handballspieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Tore` int(5) DEFAULT '0',
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Tore` int(5) DEFAULT 0,
   `Position` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -136,7 +136,7 @@ INSERT INTO `person` (`Person_ID`, `Art`, `Art_ID`, `Vorname`, `Nachname`, `Gebu
 CREATE TABLE `physiotherapeut` (
   `Physiotherapeut_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Jahre` int(5) NOT NULL DEFAULT '0',
+  `Jahre` int(5) NOT NULL DEFAULT 0,
   `Sport_Art` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -149,8 +149,8 @@ CREATE TABLE `physiotherapeut` (
 CREATE TABLE `spieler` (
   `Spieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Gewonnene_Spiele` int(5) NOT NULL DEFAULT '0',
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Gewonnene_Spiele` int(5) NOT NULL DEFAULT 0,
   `Sport_Art` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -183,8 +183,8 @@ INSERT INTO `sportart` (`Sport_Art_ID`, `name`) VALUES
 CREATE TABLE `tennisspieler` (
   `Tennisspieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Gewonnene_Spiele` int(5) NOT NULL DEFAULT '0'
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Gewonnene_Spiele` int(5) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
 -- --------------------------------------------------------
@@ -195,8 +195,8 @@ CREATE TABLE `tennisspieler` (
 
 CREATE TABLE `trainer` (
   `Trainer_ID` int(11) NOT NULL,
-  `Person_ID` int(5) NOT NULL DEFAULT '0',
-  `Vereine` int(5) NOT NULL DEFAULT '0',
+  `Person_ID` int(5) NOT NULL DEFAULT 0,
+  `Vereine` int(5) NOT NULL DEFAULT 0,
   `Sport_Art` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -219,7 +219,14 @@ CREATE TABLE `turnier` (
 --
 
 INSERT INTO `turnier` (`Turnier_ID`, `Verein_Name`, `Adresse`, `Datum_von`, `Datum_bis`) VALUES
-(1, 'verein1', 'bonn, Auerberg 119', '2020-10-21', '2000-01-01');
+(3, 'test', 'test', '2020-09-01', '2020-09-22'),
+(4, 'test', 'test', '2020-09-16', '2020-09-09'),
+(5, 'Kölner Verein', 'Villemombler 29, 53123 Bonn', '2020-10-01', '2020-10-16'),
+(6, 'aera', 'asdf', '2020-09-15', '2020-10-08'),
+(7, 'qwer', 'qwer', '2020-09-04', '2020-09-18'),
+(8, 'Kölner Verein', 'test', '2020-09-03', '2020-09-22'),
+(10, 'Kölner Verein', 'Villemombler 29, 53123 Bonn', '2020-09-11', '2020-10-09'),
+(11, 'Kölner Verein', 'Villemombler 29, 53123 Bonn', '2020-09-03', '2020-10-08');
 
 -- --------------------------------------------------------
 
@@ -232,6 +239,19 @@ CREATE TABLE `turnier_mannschaft` (
   `Turnier_ID` int(5) NOT NULL,
   `Mannschaft_ID` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german2_ci;
+
+--
+-- Daten für Tabelle `turnier_mannschaft`
+--
+
+INSERT INTO `turnier_mannschaft` (`Turnier_Mannschaft_ID`, `Turnier_ID`, `Mannschaft_ID`) VALUES
+(1, 3, 3),
+(2, 3, 4),
+(5, 10, 1),
+(6, 10, 2),
+(7, 10, 3),
+(8, 10, 4),
+(9, 11, 1);
 
 -- --------------------------------------------------------
 
@@ -406,13 +426,13 @@ ALTER TABLE `trainer`
 -- AUTO_INCREMENT für Tabelle `turnier`
 --
 ALTER TABLE `turnier`
-  MODIFY `Turnier_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Turnier_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT für Tabelle `turnier_mannschaft`
 --
 ALTER TABLE `turnier_mannschaft`
-  MODIFY `Turnier_Mannschaft_ID` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `Turnier_Mannschaft_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT für Tabelle `users`
