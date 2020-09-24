@@ -36,6 +36,42 @@ namespace Turnierverwaltung
         {
             Name = "<Neuer FussballSpieler>";
         }
+        public FussballSpieler(long fussballspieler_id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT * FROM `fussballspieler` AS F INNER JOIN `person` AS P ON Fussballspieler_ID = Art_ID AND Art = \"FussballSpieler\" WHERE Fussballspieler_ID = {0}",fussballspieler_id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Person_ID = long.Parse(reader["Person_ID"].ToString());
+                                    FussballSpieler_ID = fussballspieler_id;
+                                    Name = reader["Nachname"].ToString();
+                                    Vorname = reader["Vorname"].ToString();
+                                    Spiele = Convert.ToInt32(reader["Spiele"].ToString());
+                                    Tore = Convert.ToInt32(reader["Tore"].ToString());
+                                    Position = reader["Position"].ToString();
+                                    Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         public FussballSpieler(string name, string vorname, DateTime geburtsdatum, Geschlecht geschlecht, int spiele, int tore, string position) : base(name, vorname, geburtsdatum, geschlecht)
         {
             Spiele = spiele;

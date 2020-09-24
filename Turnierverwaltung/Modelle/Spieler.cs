@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using MySql.Data.MySqlClient;
 
 namespace Turnierverwaltung
 {
@@ -34,6 +35,42 @@ namespace Turnierverwaltung
         public Spieler() : base()
         {
             Name = "<Neuer Spieler>";
+        }
+        public Spieler(long spieler_id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT * FROM `spieler` AS F INNER JOIN `person` AS P ON Spieler_ID = Art_ID AND Art = \"Spieler\" WHERE Spieler_ID = {0}", spieler_id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Person_ID = long.Parse(reader["Person_ID"].ToString());
+                                    Spieler_ID = spieler_id;
+                                    Name = reader["Nachname"].ToString();
+                                    Vorname = reader["Vorname"].ToString();
+                                    Spiele = Convert.ToInt32(reader["Spiele"].ToString());
+                                    Tore = Convert.ToInt32(reader["Tore"].ToString());
+                                    Sportart = reader["Sport_Art"].ToString();
+                                    Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public Spieler(string name, string vorname, DateTime geburtsdatum, Geschlecht geschlecht, int spiele, int tore, string sportart) : base(name, vorname, geburtsdatum, geschlecht)
         {

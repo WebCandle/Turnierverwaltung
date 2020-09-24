@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using MySql.Data.MySqlClient;
 
 namespace Turnierverwaltung
 {
@@ -35,6 +36,42 @@ namespace Turnierverwaltung
         public HandballSpieler() : base()
         {
             Name = "<Neuer HandballSpieler>";
+        }
+        public HandballSpieler(long handballspieler_id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT * FROM `HandballSpieler` AS F INNER JOIN `person` AS P ON HandballSpieler_ID = Art_ID AND Art = \"HandballSpieler\" WHERE HandballSpieler_ID = {0}", handballspieler_id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Person_ID = long.Parse(reader["Person_ID"].ToString());
+                                    HandballSpieler_ID = handballspieler_id;
+                                    Name = reader["Nachname"].ToString();
+                                    Vorname = reader["Vorname"].ToString();
+                                    Spiele = Convert.ToInt32(reader["Spiele"].ToString());
+                                    Tore = Convert.ToInt32(reader["Tore"].ToString());
+                                    Position = reader["Position"].ToString();
+                                    Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public HandballSpieler(string name, string vorname, DateTime geburtsdatum, Geschlecht geschlecht, int spiele, int tore, string position) : base(name, vorname, geburtsdatum, geschlecht)
         {

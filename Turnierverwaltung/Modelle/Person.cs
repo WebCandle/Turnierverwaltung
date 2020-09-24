@@ -61,6 +61,37 @@ namespace Turnierverwaltung
             Geburtsdatum = geburtsdatum;
             Geschlecht = geschlecht;
         }
+        public Person(long person_id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT `Person_ID`, `Art`, `Art_ID`, `Vorname`, `Nachname`, `Geburtsdatum` FROM `person` WHERE `Person_ID` = {0} LIMIT 1", person_id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Person_ID = long.Parse(reader["Person_ID"].ToString());
+                                    Vorname = reader["Vorname"].ToString();
+                                    Name = reader["Nachname"].ToString();
+                                    Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         #endregion
 
         #region Worker
@@ -179,35 +210,45 @@ namespace Turnierverwaltung
             {
             }
         }
-        //public static List<Person> FetchAllPersonen(long mannschaft_id = -1)
-        //{
-        //    try
-        //    {
-        //        using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
-        //        {
-        //            conn.Open();
-        //            using (MySqlCommand cmd = conn.CreateCommand())
-        //            {
-        //                cmd.CommandText = "SELECT * FROM `person`";
-        //                using (MySqlDataReader reader = cmd.ExecuteReader())
-        //                {
-        //                    if (reader.HasRows)
-        //                    {
-        //                        while(reader.Read())
-        //                        {
-        //                            long person_id = long.Parse(reader["Person_ID"].ToString());
-        //                            string art = reader["Art"].ToString();
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
+        public static List<Person> GetAll()
+        {
+            List<Person> personen = new List<Person>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT * FROM `person`";
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    long person_id = long.Parse(reader["Person_ID"].ToString());
+                                    string art = reader["Art"].ToString();
+                                    long art_id = long.Parse(reader["Art_ID"].ToString());
+                                    switch (art)
+                                    {
+                                        case "FussballSpieler":
+                                            Person person = new FussballSpieler(art_id);
+                                            personen.Add(person);
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
 
-        //    }
-        //}
+            }
+            return personen;
+        }
         //public static Person FetchPersonByArt(string art, long art_id)
         //{
         //    switch(art)

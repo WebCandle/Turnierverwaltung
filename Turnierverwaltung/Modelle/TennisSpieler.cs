@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using MySql.Data.MySqlClient;
 
 namespace Turnierverwaltung
 {
@@ -32,6 +33,41 @@ namespace Turnierverwaltung
         public TennisSpieler() : base()
         {
             Name = "<Neuer TennisSpieler>";
+        }
+        public TennisSpieler(long tennisspieler_id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT * FROM `tennisspieler` AS F INNER JOIN `person` AS P ON Tennisspieler_ID = Art_ID AND Art = \"TennisSpieler\" WHERE Tennisspieler_ID = {0}", tennisspieler_id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Person_ID = long.Parse(reader["Person_ID"].ToString());
+                                    TennisSpieler_ID = long.Parse(reader["Tennisspieler_ID"].ToString());
+                                    Name = reader["Nachname"].ToString();
+                                    Vorname = reader["Vorname"].ToString();
+                                    Spiele = Convert.ToInt32(reader["Spiele"].ToString());
+                                    Tore = Convert.ToInt32(reader["Tore"].ToString());
+                                    Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public TennisSpieler(string name, string vorname, DateTime geburtsdatum, Geschlecht geschlecht, int spiele, int tore) : base(name, vorname, geburtsdatum, geschlecht)
         {
