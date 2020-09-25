@@ -28,24 +28,6 @@ namespace Turnierverwaltung
                     turnier.Delete();
                     Response.Redirect("~/Turnierverwaltung.aspx", true);
                 }
-                else if (Request.QueryString["do"] == "bearbeiten")
-                {
-                    //personentbl.Visible = false;
-                    //Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
-                    //Txt_Name.Text = mannschaft.Name;
-                    //Sportart.Text = mannschaft.Sportart;
-
-                    //Btn_Add.Visible = false;
-                    //Btn_Sichern.Visible = true;
-                    //Btn_Abbrechen.Visible = true;
-                }
-                else
-                {
-                    //personentbl.Visible = true;
-                    //Btn_Add.Visible = true;
-                    //Btn_Sichern.Visible = false;
-                    //Btn_Abbrechen.Visible = false;
-                }
             }
             Render();
         }
@@ -85,7 +67,7 @@ namespace Turnierverwaltung
             h3.Text = "Von/Bis";
             header.Cells.Add(h3);
             TableHeaderCell h4 = new TableHeaderCell();
-            h4.Text = "Bearbeiten";
+            h4.Text = "Spiele";
             header.Cells.Add(h4);
             TableHeaderCell h5 = new TableHeaderCell();
             h5.Text = "Entfernen";
@@ -116,15 +98,15 @@ namespace Turnierverwaltung
                 row.Cells.Add(cell222);
 
                 HyperLink link1 = new HyperLink();
-                link1.NavigateUrl = "~/Turnierverwaltung.aspx?do=bearbeiten&item=" + turnier.Turnier_ID.ToString();
-                link1.Text = "Berabeiten";
+                link1.NavigateUrl = "~/Spiele.aspx?item=" + turnier.Turnier_ID.ToString();
+                link1.Text = "Spiele";
                 TableCell cell12 = new TableCell();
                 cell12.Controls.Add(link1);
                 row.Cells.Add(cell12);
 
                 HyperLink link2 = new HyperLink();
                 link2.NavigateUrl = "~/Turnierverwaltung.aspx?do=entfernen&item=" + turnier.Turnier_ID.ToString();
-                link2.Text = "Entfernen";
+                link2.Text = "X";
 
                 TableCell cell13 = new TableCell();
                 cell13.Controls.Add(link2);

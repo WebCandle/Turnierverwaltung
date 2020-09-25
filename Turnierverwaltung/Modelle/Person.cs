@@ -110,30 +110,31 @@ namespace Turnierverwaltung
                     conn.Open();
                     using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        if(Person_ID != 0)
+                        string qry;
+                        if (Person_ID != 0)
                         {
                             //update
-                            string qry = string.Format("UPDATE `person` SET `Vorname`=[value-4],`Nachname`=[value-5],`Geburtsdatum`=[value-6] WHERE 1", MySqlHelper.EscapeString(this.Vorname), MySqlHelper.EscapeString(this.Name), MySqlHelper.EscapeString(Geburtsdatum.ToShortDateString()));
+                            qry = string.Format("UPDATE `person` SET `Vorname`=[value-4],`Nachname`=[value-5],`Geburtsdatum`=[value-6] WHERE 1", MySqlHelper.EscapeString(this.Vorname), MySqlHelper.EscapeString(this.Name), MySqlHelper.EscapeString(Geburtsdatum.ToShortDateString()));
                             cmd.CommandText = qry;
                             cmd.ExecuteNonQuery();
                         }
                         else
                         {
                             //Insert
-                            string qry = string.Format("INSERT INTO `person`(`Vorname`, `Nachname`, `Geburtsdatum`) VALUES (\"{0}\",\"{1}\",STR_TO_DATE(\"{2}\", '%d.%m.%y'))", MySqlHelper.EscapeString(this.Vorname), MySqlHelper.EscapeString(this.Name), MySqlHelper.EscapeString(Geburtsdatum.ToShortDateString()));
+                            qry = string.Format("INSERT INTO `person`(`Vorname`, `Nachname`, `Geburtsdatum`) VALUES (\"{0}\",\"{1}\",STR_TO_DATE(\"{2}\", '%d.%m.%y'))", MySqlHelper.EscapeString(this.Vorname), MySqlHelper.EscapeString(this.Name), MySqlHelper.EscapeString(Geburtsdatum.ToShortDateString()));
                             cmd.CommandText = qry;
                             cmd.ExecuteNonQuery();
                             Person_ID = cmd.LastInsertedId;
                         }
-                        
+
 
                         string art = "Person";
                         long art_id = Person_ID;
-                        switch(this.GetType().ToString())
+                        switch (this.GetType().ToString())
                         {
-                            case "Turnierverwaltung.FussballSpieler" :
+                            case "Turnierverwaltung.FussballSpieler":
                                 FussballSpieler fussballSpieler = this as FussballSpieler;
-                                qry = string.Format("INSERT INTO `fussballspieler`( `Person_ID`, `Spiele`, `Tore`, `Position`) VALUES ({0},{1},{2},\"{3}\")",Person_ID,fussballSpieler.Spiele,fussballSpieler.Tore,fussballSpieler.Position);
+                                qry = string.Format("INSERT INTO `fussballspieler`( `Person_ID`, `Spiele`, `Tore`, `Position`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, fussballSpieler.Spiele, fussballSpieler.Tore, fussballSpieler.Position);
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
@@ -157,7 +158,7 @@ namespace Turnierverwaltung
                                 break;
                             case "Turnierverwaltung.TennisSpieler":
                                 TennisSpieler tennisSpieler = this as TennisSpieler;
-                                qry = string.Format("INSERT INTO `tennisspieler`(`Person_ID`, `Spiele`, `Gewonnene_Spiele`) VALUES ({0},{1},{2})", Person_ID, tennisSpieler.Spiele,tennisSpieler.Tore);
+                                qry = string.Format("INSERT INTO `tennisspieler`(`Person_ID`, `Spiele`, `Gewonnene_Spiele`) VALUES ({0},{1},{2})", Person_ID, tennisSpieler.Spiele, tennisSpieler.Tore);
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
@@ -169,7 +170,7 @@ namespace Turnierverwaltung
                                 break;
                             case "Turnierverwaltung.Spieler":
                                 Spieler spieler = this as Spieler;
-                                qry = string.Format("INSERT INTO `spieler`(`Person_ID`, `Spiele`, `Gewonnene_Spiele`, `Sport_Art`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, spieler.Spiele, spieler.Tore,spieler.Sportart);
+                                qry = string.Format("INSERT INTO `spieler`(`Person_ID`, `Spiele`, `Gewonnene_Spiele`, `Sport_Art`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, spieler.Spiele, spieler.Tore, spieler.Sportart);
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
@@ -218,7 +219,7 @@ namespace Turnierverwaltung
                         }
                         using (MySqlCommand cmd3 = conn.CreateCommand())
                         {
-                            cmd3.CommandText = string.Format("UPDATE `person` SET `Art`=\"{0}\",`Art_ID`={1} WHERE `Person_ID`={2}",art,art_id,Person_ID);
+                            cmd3.CommandText = string.Format("UPDATE `person` SET `Art`=\"{0}\",`Art_ID`={1} WHERE `Person_ID`={2}", art, art_id, Person_ID);
                             cmd3.ExecuteNonQuery();
                         }
                     }
