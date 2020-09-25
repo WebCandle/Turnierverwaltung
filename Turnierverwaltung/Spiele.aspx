@@ -25,7 +25,7 @@
         </table>
         <asp:Button ID="btnSichern" runat="server" Text="Sichern" OnClick="btnSichern_Click" />
     </asp:Panel>
-    <br />
+    <br /><br />
         <asp:Table ID="Tbl" runat="server" Width="100%" GridLines="Both">
         <asp:TableHeaderRow>
             <asp:TableHeaderCell>Mannschaft</asp:TableHeaderCell>

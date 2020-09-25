@@ -43,9 +43,50 @@ namespace Turnierverwaltung
             Gegen_Mannschaft_ID = gegen_mannschaft_id;
             Gegen_Punkte = gegen_punkte;
         }
-        #endregion
+        public Spiel(long spiel_id, long turnier_id, long mannschaft_id, int punkte, long gegen_mannschaft_id, int gegen_punkte)
+        {
+            Spiel_ID = spiel_id;
+            Turnier_ID = turnier_id;
+            Mannschaft_ID = mannschaft_id;
+            Punkte = punkte;
+            Gegen_Mannschaft_ID = gegen_mannschaft_id;
+            Gegen_Punkte = gegen_punkte;
+        }
+        public Spiel(long spiel_id)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT `Spiel_ID`, `Turnier_ID`, `Mannschaft_ID`, `Punkte`, `Gegen_Mannschaft_ID`, `Gegen_Punkte` FROM `spiel` WHERE `Spiel_ID` =  {0} LIMIT 1", spiel_id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    Spiel_ID = long.Parse(reader["Spiel_ID"].ToString());
+                                    Turnier_ID = long.Parse(reader["Turnier_ID"].ToString());
+                                    Mannschaft_ID = long.Parse(reader["Mannschaft_ID"].ToString());
+                                    Punkte = Convert.ToInt32(reader["Punkte"].ToString());
+                                    Gegen_Mannschaft_ID = long.Parse(reader["Gegen_Mannschaft_ID"].ToString());
+                                    Gegen_Punkte = Convert.ToInt32(reader["Gegen_Punkte"].ToString());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
 
-        #region Worker
+            }
+            #endregion
+        }
+            #region Worker
         public void Save()
         {
             try
@@ -67,6 +108,32 @@ namespace Turnierverwaltung
             {
 
             }
+        }
+        public void Delete()
+        {
+            if (Spiel_ID != 0)
+            {
+                try
+                {
+
+                    using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                    {
+                        conn.Open();
+                        using (MySqlCommand cmd = conn.CreateCommand())
+                        {
+                            string qry = string.Format("DELETE FROM `spiel` WHERE `Spiel_ID` = {0} LIMIT 1",Spiel_ID);
+                            cmd.CommandText = qry;
+                            cmd.ExecuteNonQuery();
+                        }
+                        conn.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
         }
         #endregion
 

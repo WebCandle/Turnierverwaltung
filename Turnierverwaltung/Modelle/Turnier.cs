@@ -23,6 +23,7 @@ namespace Turnierverwaltung
         private DateTime _Datum_Bis;
         private string _Adresse;
         private List<Mannschaft> _Mannschaften;
+        private List<Spiel> _Spiele;
         #endregion
 
         #region Accessoren/Modifiers
@@ -32,6 +33,7 @@ namespace Turnierverwaltung
         public DateTime Datum_Bis { get => _Datum_Bis; set => _Datum_Bis = value; }
         public string Adresse { get => _Adresse; set => _Adresse = value; }
         public long Turnier_ID { get => _Turnier_ID; set => _Turnier_ID = value; }
+        public List<Spiel> Spiele { get => _Spiele; set => _Spiele = value; }
         #endregion
 
         #region Konstruktoren
@@ -58,7 +60,7 @@ namespace Turnierverwaltung
                                     Adresse = reader["Adresse"].ToString();
                                     Datum_Von = Convert.ToDateTime(reader["Datum_von"].ToString());
                                     Datum_Bis = Convert.ToDateTime(reader["Datum_bis"].ToString());
-
+                                    GetSpiele();
                                 }
                             }
                         }
@@ -207,6 +209,42 @@ namespace Turnierverwaltung
                 conn.Close();
             }
             return mannschaften;
+        }
+        public List<Spiel> GetSpiele()
+        {
+            Spiele = new List<Spiel>();
+            using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+            {
+                conn.Open();
+                using (MySqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT `Spiel_ID`, `Turnier_ID`, `Mannschaft_ID`, `Punkte`, `Gegen_Mannschaft_ID`, `Gegen_Punkte` FROM `spiel` WHERE `Turnier_ID` = " + Turnier_ID.ToString();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                long spiel_id = long.Parse(reader["Spiel_ID"].ToString());
+                                long mannschaft_id = long.Parse(reader["Mannschaft_ID"].ToString());
+                                int punkte = Convert.ToInt32(reader["Punkte"].ToString());
+                                long gegen_mannschaft_id = long.Parse(reader["Gegen_Mannschaft_ID"].ToString());
+                                int gegen_punkte = Convert.ToInt32(reader["Gegen_Punkte"].ToString());
+                                Spiel spiel = new Spiel(spiel_id, Turnier_ID, mannschaft_id, punkte, gegen_mannschaft_id, gegen_punkte);
+                                Spiele.Add(spiel);
+                            }
+                        }
+                    }
+                }
+                conn.Close();
+            }
+            return Spiele;
+        }
+        public void DeleteSpiel(long spiel_id)
+        {
+            Spiel spiel = Spiele.Where(x => x.Spiel_ID == spiel_id).First();
+            spiel.Delete();
+            Spiele.Remove(spiel);
         }
         #endregion
     }
