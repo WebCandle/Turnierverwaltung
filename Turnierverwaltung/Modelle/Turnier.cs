@@ -53,6 +53,7 @@ namespace Turnierverwaltung
                             {
                                 while (reader.Read())
                                 {
+                                    Turnier_ID = long.Parse(reader["Turnier_ID"].ToString());
                                     VereinName = reader["Verein_Name"].ToString();
                                     Adresse = reader["Adresse"].ToString();
                                     Datum_Von = Convert.ToDateTime(reader["Datum_von"].ToString());

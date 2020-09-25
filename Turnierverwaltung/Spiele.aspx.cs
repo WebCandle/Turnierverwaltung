@@ -28,7 +28,14 @@ namespace Turnierverwaltung
 
         protected void btnSichern_Click(object sender, EventArgs e)
         {
-
+            long turnier_id = Convert.ToInt32(Request.QueryString["item"]);
+            Turnier turnier = new Turnier(turnier_id);
+            if(turnier.Turnier_ID != 0)
+            {
+                Spiel spiel = new Spiel(turnier_id, Convert.ToInt32(ddLstMannschaft1.SelectedItem.Value), Convert.ToInt32(txtPunkte1.Text), Convert.ToInt32(ddLstMannschaft2.SelectedItem.Value), Convert.ToInt32(txtPunkte2.Text));
+                spiel.Save();
+            }
+            
         }
     }
 }
