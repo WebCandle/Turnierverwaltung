@@ -100,16 +100,18 @@ namespace Turnierverwaltung
                         if ( Spiel_ID > 0)
                         {
                             //Update
+                            qry = string.Format("UPDATE `spiel` SET `Mannschaft_ID`={0},`Punkte`={1},`Gegen_Mannschaft_ID`={2},`Gegen_Punkte`={3} WHERE `Spiel_ID`={4}",Mannschaft_ID,Punkte,Gegen_Mannschaft_ID,Gegen_Punkte,Spiel_ID);
+                            cmd.CommandText = qry;
+                            cmd.ExecuteNonQuery();
                         }
                         else
                         {
                             //Insert
                             qry = string.Format("INSERT INTO `spiel`(`Turnier_ID`, `Mannschaft_ID`, `Punkte`, `Gegen_Mannschaft_ID`, `Gegen_Punkte`) VALUES ({0},{1},{2},{3},{4})", Turnier_ID, Mannschaft_ID, Punkte, Gegen_Mannschaft_ID, Gegen_Punkte);
+                            cmd.CommandText = qry;
+                            cmd.ExecuteNonQuery();
+                            Spiel_ID = cmd.LastInsertedId;
                         }
-                        
-                        cmd.CommandText = qry;
-                        cmd.ExecuteNonQuery();
-                        Spiel_ID = cmd.LastInsertedId;
                     }
                     conn.Close();
                 }

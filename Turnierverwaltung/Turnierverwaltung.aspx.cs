@@ -67,7 +67,7 @@ namespace Turnierverwaltung
             h3.Text = "Von/Bis";
             header.Cells.Add(h3);
             TableHeaderCell h4 = new TableHeaderCell();
-            h4.Text = "Spiele";
+            h4.Text = "Spiele/Tabelle";
             header.Cells.Add(h4);
             TableHeaderCell h5 = new TableHeaderCell();
             h5.Text = "Entfernen";
@@ -100,8 +100,15 @@ namespace Turnierverwaltung
                 HyperLink link1 = new HyperLink();
                 link1.NavigateUrl = "~/Spiele.aspx?item=" + turnier.Turnier_ID.ToString();
                 link1.Text = "Spiele";
+                HyperLink link12 = new HyperLink();
+                link12.NavigateUrl = "~/TurnierTabelle.aspx?item=" + turnier.Turnier_ID.ToString();
+                link12.Text = "Tabelle";
+                Label l = new Label();
+                l.Text = " / ";
                 TableCell cell12 = new TableCell();
                 cell12.Controls.Add(link1);
+                cell12.Controls.Add(l);
+                cell12.Controls.Add(link12);
                 row.Cells.Add(cell12);
 
                 HyperLink link2 = new HyperLink();

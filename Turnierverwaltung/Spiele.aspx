@@ -13,12 +13,12 @@
                 <td>
                     <asp:DropDownList ID="lstmannschaft" runat="server" Font-Bold="True" EnableViewState="False"></asp:DropDownList></td>
                 <td>
-                    <asp:TextBox ID="txtPunkte1" TextMode="Number" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtPunkte1" Text="0" TextMode="Number" runat="server"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="lstgegenmannschaft" runat="server" EnableViewState="False"></asp:DropDownList></td>
                 <td>
-                    <asp:TextBox ID="txtPunkte2" TextMode="Number" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtPunkte2" Text="0" TextMode="Number" runat="server"></asp:TextBox>
 
                 </td>
             </tr>

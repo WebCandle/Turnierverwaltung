@@ -25,7 +25,7 @@
             <asp:TableHeaderCell>Adresse</asp:TableHeaderCell>
             <asp:TableHeaderCell>Mannschaften</asp:TableHeaderCell>
             <asp:TableHeaderCell>Von/Bis</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Spiele</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Spiele/Tabelle</asp:TableHeaderCell>
             <asp:TableHeaderCell>Entfernen</asp:TableHeaderCell>
         </asp:TableHeaderRow>
     </asp:Table>

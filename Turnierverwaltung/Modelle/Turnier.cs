@@ -165,11 +165,6 @@ namespace Turnierverwaltung
                                 while (reader.Read())
                                 {
                                     long turnier_id = long.Parse(reader["Turnier_ID"].ToString());
-                                    //string name = reader["Verein_Name"].ToString();
-                                    //string adresse = reader["Adresse"].ToString();
-                                    //DateTime von = Convert.ToDateTime(reader["Datum_von"].ToString());
-                                    //DateTime bis = Convert.ToDateTime(reader["Datum_bis"].ToString());
-                                    //List<Mannschaft> mannschaften = Turnier.FetchMannschaften(id);
                                     Turnier turnier = new Turnier(turnier_id);
                                     turniere.Add(turnier);
                                 }

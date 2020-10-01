@@ -34,9 +34,6 @@ namespace Turnierverwaltung
                     Spiel spiel = new Spiel(spiel_id);
                     txtPunkte1.Text = spiel.Punkte.ToString();
                     txtPunkte2.Text = spiel.Gegen_Punkte.ToString();
-                    //ddLstMannschaft2.SelectedIndex = ddLstMannschaft2.Items.IndexOf(ddLstMannschaft2.Items.FindByValue(spiel.Gegen_Mannschaft_ID.ToString()));
-                    //ddLstMannschaft1.SelectedIndex = ddLstMannschaft1.Items.IndexOf(ddLstMannschaft1.Items.FindByValue(spiel.Mannschaft_ID.ToString()));
-
                     lstmannschaft.Items.FindByValue(spiel.Mannschaft_ID.ToString()).Selected = true;
                     lstgegenmannschaft.Items.FindByValue(spiel.Gegen_Mannschaft_ID.ToString()).Selected = true;
                 }
@@ -67,18 +64,21 @@ namespace Turnierverwaltung
                     if( spiel_id > 0)
                     {
                         Spiel spiel = new Spiel(spiel_id);
-                        spiel.Punkte = Convert.ToInt32(txtPunkte1.Text);
-                        spiel.Gegen_Punkte = Convert.ToInt32(txtPunkte2.Text);
+                        spiel.Punkte = Convert.ToInt32(Request.Form["ctl00$MainContent$txtPunkte1"]);
+                        spiel.Gegen_Punkte = Convert.ToInt32(Request.Form["ctl00$MainContent$txtPunkte2"]);
+                        spiel.Mannschaft_ID = long.Parse(Request.Form["ctl00$MainContent$lstmannschaft"]);
+                        spiel.Gegen_Mannschaft_ID = long.Parse(Request.Form["ctl00$MainContent$lstgegenmannschaft"]);
                         spiel.Save();
                     }
                 }
                 else
                 {
-                    Spiel spiel = new Spiel(turnier_id, Convert.ToInt32(lstmannschaft.SelectedItem.Value), Convert.ToInt32(txtPunkte1.Text), Convert.ToInt32(lstgegenmannschaft.SelectedItem.Value), Convert.ToInt32(txtPunkte2.Text));
+                    //Hinzufügen
+                    Spiel spiel = new Spiel(turnier_id, Convert.ToInt32(Request.Form["ctl00$MainContent$lstmannschaft"]), Convert.ToInt32(Request.Form["ctl00$MainContent$txtPunkte1"]), Convert.ToInt32(Request.Form["ctl00$MainContent$lstgegenmannschaft"]), Convert.ToInt32(Request.Form["ctl00$MainContent$txtPunkte2"]));
                     spiel.Save();
                 }
-                Render();
             }
+            Response.Redirect("~/Spiele.aspx?item=" + Request.QueryString["item"], true);
         }
         private void Render()
         {

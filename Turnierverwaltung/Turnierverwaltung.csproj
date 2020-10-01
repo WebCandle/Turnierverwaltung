@@ -197,6 +197,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="Spiele.aspx" />
+    <Content Include="TurnierTabelle.aspx" />
     <Content Include="Turnierverwaltung.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -270,6 +271,13 @@
     </Compile>
     <Compile Include="Spiele.aspx.designer.cs">
       <DependentUpon>Spiele.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TurnierTabelle.aspx.cs">
+      <DependentUpon>TurnierTabelle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TurnierTabelle.aspx.designer.cs">
+      <DependentUpon>TurnierTabelle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Turnierverwaltung.aspx.cs">
       <DependentUpon>Turnierverwaltung.aspx</DependentUpon>
