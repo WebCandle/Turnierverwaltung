@@ -15,27 +15,18 @@ namespace Turnierverwaltung
             {
                 Response.Redirect("~/Turnierverwaltung.aspx", true);
             }
-            if (Request.QueryString["do"] == "entfernen")
-            {
-                long turnier_id = long.Parse(Request.QueryString["item"]);
-                long spiel_id = long.Parse(Request.QueryString["spiel"]);
-                Turnier turnier = new Turnier(turnier_id);
-                if(turnier.Turnier_ID != 0 && spiel_id != 0)
-                {
-                    turnier.DeleteSpiel(spiel_id);
-                }
-                Response.Redirect("~/Spiele.aspx?item="+ Request.QueryString["item"]);
-            }
+
             if (!Page.IsPostBack)
             {
-                ddLstMannschaft1.Items.Clear();
-                ddLstMannschaft2.Items.Clear();
+                lstmannschaft.Items.Clear();
+                lstgegenmannschaft.Items.Clear();
                 List<Mannschaft> mannschaften = Mannschaft.GetAll();
                 foreach (Mannschaft mannschaft in mannschaften)
                 {
-                    ListItem listItem = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
-                    ddLstMannschaft1.Items.Add(listItem);
-                    ddLstMannschaft2.Items.Add(listItem);
+                    ListItem listItem1 = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
+                    lstmannschaft.Items.Add(listItem1);
+                    ListItem listItem2 = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
+                    lstgegenmannschaft.Items.Add(listItem2);
                 }
                 if (Request.QueryString["do"] == "bearbeiten")
                 {
@@ -43,7 +34,22 @@ namespace Turnierverwaltung
                     Spiel spiel = new Spiel(spiel_id);
                     txtPunkte1.Text = spiel.Punkte.ToString();
                     txtPunkte2.Text = spiel.Gegen_Punkte.ToString();
-                    ddLstMannschaft1.SelectedIndex = ddLstMannschaft1.Items.IndexOf(ddLstMannschaft1.Items.FindByValue(spiel.Mannschaft_ID.ToString()));
+                    //ddLstMannschaft2.SelectedIndex = ddLstMannschaft2.Items.IndexOf(ddLstMannschaft2.Items.FindByValue(spiel.Gegen_Mannschaft_ID.ToString()));
+                    //ddLstMannschaft1.SelectedIndex = ddLstMannschaft1.Items.IndexOf(ddLstMannschaft1.Items.FindByValue(spiel.Mannschaft_ID.ToString()));
+
+                    lstmannschaft.Items.FindByValue(spiel.Mannschaft_ID.ToString()).Selected = true;
+                    lstgegenmannschaft.Items.FindByValue(spiel.Gegen_Mannschaft_ID.ToString()).Selected = true;
+                }
+                else if(Request.QueryString["do"] == "entfernen")
+                {
+                    long turnier_id = long.Parse(Request.QueryString["item"]);
+                    long spiel_id = long.Parse(Request.QueryString["spiel"]);
+                    Turnier turnier = new Turnier(turnier_id);
+                    if (turnier.Turnier_ID != 0 && spiel_id != 0)
+                    {
+                        turnier.DeleteSpiel(spiel_id);
+                    }
+                    Response.Redirect("~/Spiele.aspx?item=" + Request.QueryString["item"]);
                 }
             }
             Render();
@@ -55,8 +61,22 @@ namespace Turnierverwaltung
             Turnier turnier = new Turnier(turnier_id);
             if(turnier.Turnier_ID != 0)
             {
-                Spiel spiel = new Spiel(turnier_id, Convert.ToInt32(ddLstMannschaft1.SelectedItem.Value), Convert.ToInt32(txtPunkte1.Text), Convert.ToInt32(ddLstMannschaft2.SelectedItem.Value), Convert.ToInt32(txtPunkte2.Text));
-                spiel.Save();
+                if (Request.QueryString["do"] == "bearbeiten")
+                {
+                    long spiel_id = long.Parse(Request.QueryString["spiel"]);
+                    if( spiel_id > 0)
+                    {
+                        Spiel spiel = new Spiel(spiel_id);
+                        spiel.Punkte = Convert.ToInt32(txtPunkte1.Text);
+                        spiel.Gegen_Punkte = Convert.ToInt32(txtPunkte2.Text);
+                        spiel.Save();
+                    }
+                }
+                else
+                {
+                    Spiel spiel = new Spiel(turnier_id, Convert.ToInt32(lstmannschaft.SelectedItem.Value), Convert.ToInt32(txtPunkte1.Text), Convert.ToInt32(lstgegenmannschaft.SelectedItem.Value), Convert.ToInt32(txtPunkte2.Text));
+                    spiel.Save();
+                }
                 Render();
             }
         }

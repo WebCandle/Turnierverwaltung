@@ -96,7 +96,17 @@ namespace Turnierverwaltung
                     conn.Open();
                     using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        string qry = string.Format("INSERT INTO `spiel`(`Turnier_ID`, `Mannschaft_ID`, `Punkte`, `Gegen_Mannschaft_ID`, `Gegen_Punkte`) VALUES ({0},{1},{2},{3},{4})", Turnier_ID,Mannschaft_ID,Punkte,Gegen_Mannschaft_ID,Gegen_Punkte);
+                        string qry;
+                        if ( Spiel_ID > 0)
+                        {
+                            //Update
+                        }
+                        else
+                        {
+                            //Insert
+                            qry = string.Format("INSERT INTO `spiel`(`Turnier_ID`, `Mannschaft_ID`, `Punkte`, `Gegen_Mannschaft_ID`, `Gegen_Punkte`) VALUES ({0},{1},{2},{3},{4})", Turnier_ID, Mannschaft_ID, Punkte, Gegen_Mannschaft_ID, Gegen_Punkte);
+                        }
+                        
                         cmd.CommandText = qry;
                         cmd.ExecuteNonQuery();
                         Spiel_ID = cmd.LastInsertedId;

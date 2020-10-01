@@ -22,13 +22,13 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Panel Panel1;
         
         /// <summary>
-        /// ddLstMannschaft1-Steuerelement
+        /// lstmannschaft-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddLstMannschaft1;
+        protected global::System.Web.UI.WebControls.DropDownList lstmannschaft;
         
         /// <summary>
         /// txtPunkte1-Steuerelement
@@ -40,13 +40,13 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.TextBox txtPunkte1;
         
         /// <summary>
-        /// ddLstMannschaft2-Steuerelement
+        /// lstgegenmannschaft-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddLstMannschaft2;
+        protected global::System.Web.UI.WebControls.DropDownList lstgegenmannschaft;
         
         /// <summary>
         /// txtPunkte2-Steuerelement
