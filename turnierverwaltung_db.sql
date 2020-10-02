@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Erstellungszeit: 25. Sep 2020 um 12:32
+-- Erstellungszeit: 02. Okt 2020 um 12:29
 -- Server-Version: 10.1.37-MariaDB
 -- PHP-Version: 7.2.12
 
@@ -162,8 +162,13 @@ CREATE TABLE `spiel` (
 --
 
 INSERT INTO `spiel` (`Spiel_ID`, `Turnier_ID`, `Mannschaft_ID`, `Punkte`, `Gegen_Mannschaft_ID`, `Gegen_Punkte`) VALUES
-(1, 2, 2, 12, 1, 10),
-(2, 2, 1, 3, 2, 5);
+(2, 2, 1, 3, 2, 5),
+(3, 2, 2, 6, 3, 2),
+(4, 2, 3, 3, 1, 1),
+(5, 2, 4, 0, 1, 1),
+(6, 2, 4, 1, 3, 2),
+(7, 2, 2, 3, 4, 3),
+(9, 2, 2, 1, 3, 10);
 
 -- --------------------------------------------------------
 
@@ -431,7 +436,7 @@ ALTER TABLE `physiotherapeut`
 -- AUTO_INCREMENT für Tabelle `spiel`
 --
 ALTER TABLE `spiel`
-  MODIFY `Spiel_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Spiel_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT für Tabelle `spieler`

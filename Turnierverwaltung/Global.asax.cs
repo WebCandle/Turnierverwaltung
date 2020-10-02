@@ -25,6 +25,7 @@ namespace Turnierverwaltung
             Personen = new List<Person>();
             Mannschaften = new List<Mannschaft>();
             mySqlConnectionString = "server=localhost;database=Turnierverwaltung_db;uid=root;password=";
+
         }
         
         protected void Application_AuthenticateRequest(Object sender, EventArgs e)

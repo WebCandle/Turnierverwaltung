@@ -58,15 +58,6 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.TextBox txtAdresse;
         
         /// <summary>
-        /// Label2-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-        
-        /// <summary>
         /// Label3-Steuerelement
         /// </summary>
         /// <remarks>

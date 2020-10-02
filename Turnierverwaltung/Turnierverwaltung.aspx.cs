@@ -11,25 +11,38 @@ namespace Turnierverwaltung
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!Page.IsPostBack)
+            User user = new User(Session);
+            if (!user.Auth)
             {
-                txtDatumVon.Text = DateTime.Now.ToShortDateString();
-                txtDatumBis.Text = DateTime.Now.ToShortDateString();
-                CheckBxLstMannschaften.Items.Clear();
-                List<Mannschaft> mannschaften = Mannschaft.GetAll();
-                foreach (Mannschaft mannschaft in mannschaften)
+                Session["redirect"] = "~/Personenverwaltung.aspx";
+                Response.Redirect("~/Login.aspx", true);
+            }
+            else
+            {
+                if (user.Has_Permission("admin"))
                 {
-                    CheckBxLstMannschaften.Items.Add(new ListItem(mannschaft.Name, mannschaft.Mannschaft_ID.ToString()));
-                }
-                if (Request.QueryString["do"] == "entfernen")
-                {
-                    long turnier_id = long.Parse(Request.QueryString["item"]);
-                    Turnier turnier = new Turnier(turnier_id);
-                    turnier.Delete();
-                    Response.Redirect("~/Turnierverwaltung.aspx", true);
+                    if (!Page.IsPostBack)
+                    {
+                        txtDatumVon.Text = DateTime.Now.ToShortDateString();
+                        txtDatumBis.Text = DateTime.Now.ToShortDateString();
+                        CheckBxLstMannschaften.Items.Clear();
+                        List<Mannschaft> mannschaften = Mannschaft.GetAll();
+                        foreach (Mannschaft mannschaft in mannschaften)
+                        {
+                            CheckBxLstMannschaften.Items.Add(new ListItem(mannschaft.Name, mannschaft.Mannschaft_ID.ToString()));
+                        }
+                        if (Request.QueryString["do"] == "entfernen")
+                        {
+                            long turnier_id = long.Parse(Request.QueryString["item"]);
+                            Turnier turnier = new Turnier(turnier_id);
+                            turnier.Delete();
+                            Response.Redirect("~/Turnierverwaltung.aspx", true);
+                        }
+                    }
+                    Render();
                 }
             }
-            Render();
+                   
         }
 
         protected void btnAdd_Click(object sender, EventArgs e)

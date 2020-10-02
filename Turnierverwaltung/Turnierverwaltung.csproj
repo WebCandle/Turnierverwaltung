@@ -244,6 +244,7 @@
     <Compile Include="Modelle\Trainer.cs" />
     <Compile Include="Modelle\TTabelle.cs" />
     <Compile Include="Modelle\Turnier.cs" />
+    <Compile Include="Modelle\User.cs" />
     <Compile Include="Personenverwaltung.aspx.cs">
       <DependentUpon>Personenverwaltung.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
