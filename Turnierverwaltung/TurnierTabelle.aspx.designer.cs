@@ -7,13 +7,20 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace Turnierverwaltung
-{
-
-
-    public partial class TurnierTabelle
-    {
-
+namespace Turnierverwaltung {
+    
+    
+    public partial class TurnierTabelle {
+        
+        /// <summary>
+        /// lblTurnierName-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTurnierName;
+        
         /// <summary>
         /// Tbl-Steuerelement
         /// </summary>
@@ -22,5 +29,14 @@ namespace Turnierverwaltung
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Table Tbl;
+        
+        /// <summary>
+        /// lnkBack-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink lnkBack;
     }
 }

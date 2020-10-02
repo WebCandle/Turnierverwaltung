@@ -35,4 +35,6 @@
             <asp:TableHeaderCell>Entfernen</asp:TableHeaderCell>
         </asp:TableHeaderRow>
     </asp:Table>
+    <br />
+    <asp:HyperLink ID="lnkBack" runat="server" NavigateUrl="~/Turnierverwaltung.aspx">zurück</asp:HyperLink>
 </asp:Content>

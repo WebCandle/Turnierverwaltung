@@ -258,7 +258,8 @@ namespace Turnierverwaltung
                 tabelle.Rows.Add(row);
                 
             }
-            tabelle.Rows.OrderBy(row => row.Tore).ThenBy(row => row.gegenTore).ThenBy(row => row.Siege);
+            var rows = tabelle.Rows.OrderByDescending(x => x.Siege).ThenByDescending(x=>x.Tordifferenz).ToList() ;
+            tabelle.Rows = rows;
             return tabelle;
         }
 
