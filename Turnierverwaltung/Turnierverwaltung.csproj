@@ -242,6 +242,7 @@
     <Compile Include="Modelle\Spieler.cs" />
     <Compile Include="Modelle\TennisSpieler.cs" />
     <Compile Include="Modelle\Trainer.cs" />
+    <Compile Include="Modelle\TTabelle.cs" />
     <Compile Include="Modelle\Turnier.cs" />
     <Compile Include="Personenverwaltung.aspx.cs">
       <DependentUpon>Personenverwaltung.aspx</DependentUpon>

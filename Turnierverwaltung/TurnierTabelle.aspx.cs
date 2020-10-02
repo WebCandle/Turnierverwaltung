@@ -15,66 +15,53 @@ namespace Turnierverwaltung
             if( turnier_id > 0)
             {
                 Turnier turnier = new Turnier(turnier_id);
-                foreach (Mannschaft mannschaft in turnier.Mannschaften)
+                TTabelle tabelle = turnier.getTabelle();
+                int platz = 1;
+                foreach (TRow trow in tabelle.Rows)
                 {
                     TableRow row = new TableRow();
-
-                    TableCell c1 = new TableCell();
-                    c1.Text = mannschaft.Name;
-                    row.Cells.Add(c1);
-                    Tbl.Rows.Add(row);
                     //
+                    TableCell c1 = new TableCell();
+                    c1.Text = platz.ToString();
+                    row.Cells.Add(c1);
+                    //
+                    TableCell c2 = new TableCell();
+                    c2.Text = trow.Mannschaft.Name;
+                    row.Cells.Add(c2);
+                    //
+                    TableCell c3 = new TableCell();
+                    c3.Text = trow.Spiele.ToString();
+                    row.Cells.Add(c3);
+                    //
+                    TableCell c4 = new TableCell();
+                    c4.Text = trow.Siege.ToString();
+                    row.Cells.Add(c4);
+                    //
+                    TableCell c5 = new TableCell();
+                    c5.Text = trow.Unentschieden.ToString();
+                    row.Cells.Add(c5);
+                    //
+                    TableCell c6 = new TableCell();
+                    c6.Text = trow.Niederlagen.ToString();
+                    row.Cells.Add(c6);
+                    //
+                    TableCell c7 = new TableCell();
+                    c7.Text = trow.Tore.ToString();
+                    row.Cells.Add(c7);
+                    //
+                    TableCell c8 = new TableCell();
+                    c8.Text = trow.gegenTore.ToString();
+                    row.Cells.Add(c8);
+                    //
+                    TableCell c9 = new TableCell();
+                    c9.Text = trow.Tordifferenz.ToString();
+                    row.Cells.Add(c9);
+                    //
+                    Tbl.Rows.Add(row);
+                    platz++;
                 }
             }
             
-        }
-        private void Render()
-        {
-            foreach (Turnier turnier in Turnier.GetAll())
-            {
-                TableRow row = new TableRow();
-                TableCell cell1 = new TableCell();
-                cell1.Text = turnier.VereinName;
-                row.Cells.Add(cell1);
-                TableCell cell2 = new TableCell();
-                cell2.Text = turnier.Adresse;
-                row.Cells.Add(cell2);
-                TableCell cell3 = new TableCell();
-                cell3.Text = "";
-                foreach (Mannschaft mannschaft in turnier.Mannschaften)
-                {
-                    cell3.Text += mannschaft.Name + "<br />";
-                }
-                row.Cells.Add(cell3);
-
-                TableCell cell222 = new TableCell();
-                cell222.Text = turnier.Datum_Von.ToShortDateString() + "/" + turnier.Datum_Bis.ToShortDateString();
-                row.Cells.Add(cell222);
-
-                HyperLink link1 = new HyperLink();
-                link1.NavigateUrl = "~/Spiele.aspx?item=" + turnier.Turnier_ID.ToString();
-                link1.Text = "Spiele";
-                HyperLink link12 = new HyperLink();
-                link12.NavigateUrl = "~/TurnierTabelle.aspx?item=" + turnier.Turnier_ID.ToString();
-                link12.Text = "Tabelle";
-                Label l = new Label();
-                l.Text = " / ";
-                TableCell cell12 = new TableCell();
-                cell12.Controls.Add(link1);
-                cell12.Controls.Add(l);
-                cell12.Controls.Add(link12);
-                row.Cells.Add(cell12);
-
-                HyperLink link2 = new HyperLink();
-                link2.NavigateUrl = "~/Turnierverwaltung.aspx?do=entfernen&item=" + turnier.Turnier_ID.ToString();
-                link2.Text = "X";
-
-                TableCell cell13 = new TableCell();
-                cell13.Controls.Add(link2);
-                row.Cells.Add(cell13);
-
-                Tbl.Rows.Add(row);
-            }
         }
     }
 }

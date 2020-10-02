@@ -241,6 +241,27 @@ namespace Turnierverwaltung
             spiel.Delete();
             Spiele.Remove(spiel);
         }
+        public TTabelle getTabelle()
+        {
+            TTabelle tabelle = new TTabelle(Spiele);
+            foreach (Mannschaft mannschaft in Mannschaften)
+            {
+                TRow row = new TRow();
+                row.Mannschaft = mannschaft;
+                row.Spiele = tabelle.getAnzahlSpiele(mannschaft.Mannschaft_ID);
+                row.Siege = tabelle.getSiege(mannschaft.Mannschaft_ID);
+                row.Unentschieden = tabelle.getUnentschieden(mannschaft.Mannschaft_ID);
+                row.Niederlagen = tabelle.getNiederlagen(mannschaft.Mannschaft_ID);
+                row.Tore = tabelle.getTore(mannschaft.Mannschaft_ID);
+                row.gegenTore = tabelle.getGegenTore(mannschaft.Mannschaft_ID);
+                row.Tordifferenz = row.Tore - row.gegenTore;
+                tabelle.Rows.Add(row);
+                
+            }
+            tabelle.Rows.OrderBy(row => row.Tore).ThenBy(row => row.gegenTore).ThenBy(row => row.Siege);
+            return tabelle;
+        }
+
         #endregion
     }
 }

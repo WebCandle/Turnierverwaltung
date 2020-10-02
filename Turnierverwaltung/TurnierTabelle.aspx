@@ -10,8 +10,8 @@
             <asp:TableHeaderCell>Unentschieden</asp:TableHeaderCell>
             <asp:TableHeaderCell>Niederlage</asp:TableHeaderCell>
             <asp:TableHeaderCell>Tore</asp:TableHeaderCell>
+            <asp:TableHeaderCell>Gegentore</asp:TableHeaderCell>
             <asp:TableHeaderCell>Tordifferenz</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Punkte</asp:TableHeaderCell>
         </asp:TableHeaderRow>
     </asp:Table>
 </asp:Content>
