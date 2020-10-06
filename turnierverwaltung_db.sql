@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Erstellungszeit: 02. Okt 2020 um 12:29
--- Server-Version: 10.1.37-MariaDB
--- PHP-Version: 7.2.12
+-- Host: 127.0.0.1
+-- Erstellungszeit: 06. Okt 2020 um 14:00
+-- Server-Version: 10.4.11-MariaDB
+-- PHP-Version: 7.2.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -31,8 +31,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `fussballspieler` (
   `Fussballspieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Tore` int(5) NOT NULL DEFAULT '0',
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Tore` int(5) NOT NULL DEFAULT 0,
   `Position` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -41,8 +41,11 @@ CREATE TABLE `fussballspieler` (
 --
 
 INSERT INTO `fussballspieler` (`Fussballspieler_ID`, `Person_ID`, `Spiele`, `Tore`, `Position`) VALUES
-(1, 1, 50, 60, 'Strümer'),
-(2, 3, 544, 544, 'asdf');
+(2, 3, 544, 544, 'asdfffffccccc'),
+(3, 4, 222, 3333, 'xxxxxxxxxx'),
+(4, 5, 50, 22, 'Strümerr'),
+(5, 6, 333, 444, 'Verteidiger'),
+(6, 11, 11, 22, 'Verteidiger');
 
 -- --------------------------------------------------------
 
@@ -53,8 +56,8 @@ INSERT INTO `fussballspieler` (`Fussballspieler_ID`, `Person_ID`, `Spiele`, `Tor
 CREATE TABLE `handballspieler` (
   `Handballspieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Tore` int(5) DEFAULT '0',
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Tore` int(5) DEFAULT 0,
   `Position` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -125,9 +128,14 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`Person_ID`, `Art`, `Art_ID`, `Vorname`, `Nachname`, `Geburtsdatum`) VALUES
-(1, 'FussballSpieler', 1, 'f', 'f', '2020-09-17'),
-(2, '', 0, 'h', 'h', '2020-09-17'),
-(3, 'FussballSpieler', 2, 'sdfg', 'asdf', '2020-09-24');
+(3, 'FussballSpieler', 2, 'sdfg', 'asdf', '2020-10-06'),
+(4, 'FussballSpieler', 3, 'asdfasdfasdf', 'asdfasdfasdf', '2020-10-23'),
+(5, 'FussballSpieler', 4, 'Lionel', 'Messi', '2020-11-04'),
+(6, 'FussballSpieler', 5, 'eee', 'ddd', '2020-10-06'),
+(9, 'TennisSpieler', 2, 't', 'tt', '2020-10-29'),
+(10, 'TennisSpieler', 3, 't1', 't1', '2020-10-21'),
+(11, 'FussballSpieler', 6, 'aa', 'aa', '2020-10-07'),
+(12, 'Spieler', 1, 'spieler1', 'spieler111', '2020-10-05');
 
 -- --------------------------------------------------------
 
@@ -138,7 +146,7 @@ INSERT INTO `person` (`Person_ID`, `Art`, `Art_ID`, `Vorname`, `Nachname`, `Gebu
 CREATE TABLE `physiotherapeut` (
   `Physiotherapeut_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Jahre` int(5) NOT NULL DEFAULT '0',
+  `Jahre` int(5) NOT NULL DEFAULT 0,
   `Sport_Art` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -179,10 +187,17 @@ INSERT INTO `spiel` (`Spiel_ID`, `Turnier_ID`, `Mannschaft_ID`, `Punkte`, `Gegen
 CREATE TABLE `spieler` (
   `Spieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Gewonnene_Spiele` int(5) NOT NULL DEFAULT '0',
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Gewonnene_Spiele` int(5) NOT NULL DEFAULT 0,
   `Sport_Art` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
+
+--
+-- Daten für Tabelle `spieler`
+--
+
+INSERT INTO `spieler` (`Spieler_ID`, `Person_ID`, `Spiele`, `Gewonnene_Spiele`, `Sport_Art`) VALUES
+(1, 12, 2, 0, 'Tennis');
 
 -- --------------------------------------------------------
 
@@ -213,9 +228,17 @@ INSERT INTO `sportart` (`Sport_Art_ID`, `name`) VALUES
 CREATE TABLE `tennisspieler` (
   `Tennisspieler_ID` int(5) NOT NULL,
   `Person_ID` int(5) NOT NULL,
-  `Spiele` int(5) NOT NULL DEFAULT '0',
-  `Gewonnene_Spiele` int(5) NOT NULL DEFAULT '0'
+  `Spiele` int(5) NOT NULL DEFAULT 0,
+  `Tore` int(5) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
+
+--
+-- Daten für Tabelle `tennisspieler`
+--
+
+INSERT INTO `tennisspieler` (`Tennisspieler_ID`, `Person_ID`, `Spiele`, `Tore`) VALUES
+(2, 9, 33, 0),
+(3, 10, 1, 23);
 
 -- --------------------------------------------------------
 
@@ -225,8 +248,8 @@ CREATE TABLE `tennisspieler` (
 
 CREATE TABLE `trainer` (
   `Trainer_ID` int(11) NOT NULL,
-  `Person_ID` int(5) NOT NULL DEFAULT '0',
-  `Vereine` int(5) NOT NULL DEFAULT '0',
+  `Person_ID` int(5) NOT NULL DEFAULT 0,
+  `Vereine` int(5) NOT NULL DEFAULT 0,
   `Sport_Art` varchar(50) COLLATE utf8mb4_german2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_german2_ci;
 
@@ -394,13 +417,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT für Tabelle `fussballspieler`
 --
 ALTER TABLE `fussballspieler`
-  MODIFY `Fussballspieler_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Fussballspieler_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT für Tabelle `handballspieler`
 --
 ALTER TABLE `handballspieler`
-  MODIFY `Handballspieler_ID` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `Handballspieler_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `mannschaft`
@@ -418,13 +441,13 @@ ALTER TABLE `mannschaft_mitglieder`
 -- AUTO_INCREMENT für Tabelle `mitarbeiter`
 --
 ALTER TABLE `mitarbeiter`
-  MODIFY `Mitarbeiter_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Mitarbeiter_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `person`
 --
 ALTER TABLE `person`
-  MODIFY `Person_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Person_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT für Tabelle `physiotherapeut`
@@ -442,19 +465,19 @@ ALTER TABLE `spiel`
 -- AUTO_INCREMENT für Tabelle `spieler`
 --
 ALTER TABLE `spieler`
-  MODIFY `Spieler_ID` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `Spieler_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `tennisspieler`
 --
 ALTER TABLE `tennisspieler`
-  MODIFY `Tennisspieler_ID` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `Tennisspieler_ID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT für Tabelle `trainer`
 --
 ALTER TABLE `trainer`
-  MODIFY `Trainer_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Trainer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT für Tabelle `turnier`

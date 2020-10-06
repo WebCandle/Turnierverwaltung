@@ -13,14 +13,15 @@ namespace Turnierverwaltung
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["auth"] == null || !(bool)Session["auth"])
+            User user = new User(Session);
+            if (!user.Auth)
             {
                 Session["redirect"] = "~/Personenverwaltung.aspx";
                 Response.Redirect("~/Login.aspx", true);
             }
             else
             {
-                if(Has_Permission("admin"))
+                if(user.Has_Permission("admin"))
                 {
                     PnlVerwaltung.Visible = true;
                     if (Page.IsCallback == false)
@@ -111,7 +112,7 @@ namespace Turnierverwaltung
                         Sportart.Items.Add("Fussball");
                         Sportart.Items.Add("Handball");
                         Sportart.Items.Add("Tennis");
-                        Txt_Datum.Text = DateTime.Now.ToString("yyyy-MM-dd"); ;
+                        //Txt_Datum.Text = DateTime.Now.ToString("yyyy-MM-dd"); ;
                     }
                 }
                 else
@@ -127,9 +128,11 @@ namespace Turnierverwaltung
         protected void RenderFussballForm()
         {
             Lbl1.Text = "Anzahl Spiele";
+            Txt1.TextMode = TextBoxMode.Number;
             Lbl2.Text = "Geschossene Tore";
             Lbl2.Visible = true;
             Txt2.Visible = true;
+            Txt2.TextMode = TextBoxMode.Number;
             Lbl3.Visible = true;
             Txt3.Visible = true;
             Lbl3.Text = "Spielposition";
@@ -139,6 +142,8 @@ namespace Turnierverwaltung
         {
             Lbl1.Text = "Anzahl Spiele";
             Lbl2.Text = "	Geworfene Tore";
+            Txt1.TextMode = TextBoxMode.Number;
+            Txt2.TextMode = TextBoxMode.Number;
             Lbl3.Text = "Einsatzbereich";
             Lbl2.Visible = true;
             Txt2.Visible = true;
@@ -149,6 +154,8 @@ namespace Turnierverwaltung
         {
             Lbl1.Text = "Anzahl Spiele";
             Lbl2.Text = "	Gewonnene Spiele";
+            Txt1.TextMode = TextBoxMode.Number;
+            Txt2.TextMode = TextBoxMode.Number;
             Lbl2.Visible = true;
             Txt2.Visible = true;
             Lbl3.Visible = false;
@@ -159,6 +166,8 @@ namespace Turnierverwaltung
         {
             Lbl1.Text = "Anzahl Spiele";
             Lbl2.Text = "Gewonnene Spiele";
+            Txt1.TextMode = TextBoxMode.Number;
+            Txt2.TextMode = TextBoxMode.Number;
             Lbl2.Visible = true;
             Txt2.Visible = true;
             Lbl3.Visible = true;
@@ -169,6 +178,7 @@ namespace Turnierverwaltung
         protected void RenderPhysiotherapeutForm()
         {
             Lbl1.Text = "Anzahl Jahre";
+            Txt1.TextMode = TextBoxMode.Number;
             Lbl2.Visible = false;
             Txt2.Visible = false;
             Lbl3.Visible = true;
@@ -179,6 +189,7 @@ namespace Turnierverwaltung
         protected void RenderTrainerForm()
         {
             Lbl1.Text = "Anzahl Vereine";
+            Txt1.TextMode = TextBoxMode.Number;
             Lbl2.Visible = false;
             Txt2.Visible = false;
             Txt3.Visible = false;
@@ -189,6 +200,7 @@ namespace Turnierverwaltung
         protected void RenderMitarbeiterForm()
         {
             Lbl1.Text = "Aufgaben";
+            Txt1.TextMode = TextBoxMode.SingleLine;
             Lbl2.Visible = false;
             Txt2.Visible = false;
             Lbl3.Visible = true;
@@ -241,42 +253,48 @@ namespace Turnierverwaltung
         {
             if(Has_Permission("admin"))
             {
+                string name = Request.Form["ctl00$MainContent$Txt_Name"];
+                string vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                DateTime datum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                string txt1 = Request.Form["ctl00$MainContent$Txt1"];
+                string txt2 = Request.Form["ctl00$MainContent$Txt2"];
+                string txt3 = Request.Form["ctl00$MainContent$Txt3"];
+                string sportart = Request.Form["ctl00$MainContent$Sportart"];
                 if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
                 {
-                    FussballSpieler fussballSpieler = new FussballSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Txt3.Text);
+                    FussballSpieler fussballSpieler = new FussballSpieler(name, vorname,datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), txt3);
                     Lbl_Msg.Visible = true;
-                    Lbl_Msg.Text = "FussballSpieler wurde erfolgreich hinzugefügt!";
                     fussballSpieler.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Handballspieler")
                 {
-                    HandballSpieler handballSpieler = new HandballSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Txt3.Text);
+                    HandballSpieler handballSpieler = new HandballSpieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), txt3);
                     handballSpieler.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
                 {
-                    TennisSpieler tennisSpieler = new TennisSpieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text));
+                    TennisSpieler tennisSpieler = new TennisSpieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2));
                     tennisSpieler.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "anderer Spielertyp")
                 {
-                    Spieler spieler = new Spieler(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Convert.ToInt32(Txt2.Text), Sportart.Text);
+                    Spieler spieler = new Spieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), sportart);
                     spieler.Save();
 
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
                 {
-                    Physiotherapeut physiotherapeut = new Physiotherapeut(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Sportart.Text);
+                    Physiotherapeut physiotherapeut = new Physiotherapeut(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), sportart);
                     physiotherapeut.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
                 {
-                    Trainer trainer = new Trainer(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Convert.ToInt32(Txt1.Text), Sportart.Text);
+                    Trainer trainer = new Trainer(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), sportart);
                     trainer.Save();
                 }
                 else if (RadioButtonListPersonenType.SelectedItem.Value == "Person mit anderen Aufgaben")
                 {
-                    Mitarbeiter mitarbeiter = new Mitarbeiter(Txt_Name.Text, Txt_Vorname.Text, Convert.ToDateTime(Txt_Datum.Text), Geschlecht.Maenlich, Txt1.Text, Sportart.Text);
+                    Mitarbeiter mitarbeiter = new Mitarbeiter(name, vorname, datum, Geschlecht.Maenlich, txt1, sportart);
                     mitarbeiter.Save();
                 }
                 Response.Redirect("~/Personenverwaltung.aspx");

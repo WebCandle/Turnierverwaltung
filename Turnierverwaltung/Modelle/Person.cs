@@ -114,7 +114,7 @@ namespace Turnierverwaltung
                         if (Person_ID != 0)
                         {
                             //update
-                            qry = string.Format("UPDATE `person` SET `Vorname`=[value-4],`Nachname`=[value-5],`Geburtsdatum`=[value-6] WHERE 1", MySqlHelper.EscapeString(this.Vorname), MySqlHelper.EscapeString(this.Name), MySqlHelper.EscapeString(Geburtsdatum.ToShortDateString()));
+                            qry = string.Format("UPDATE `person` SET `Vorname`=\"{0}\",`Nachname`=\"{1}\",`Geburtsdatum`= STR_TO_DATE(\"{2}\", '%d.%m.%y') WHERE  `Person_ID`= {3}", MySqlHelper.EscapeString(this.Vorname), MySqlHelper.EscapeString(this.Name), MySqlHelper.EscapeString(Geburtsdatum.ToShortDateString()),this.Person_ID);
                             cmd.CommandText = qry;
                             cmd.ExecuteNonQuery();
                         }
@@ -134,86 +134,183 @@ namespace Turnierverwaltung
                         {
                             case "Turnierverwaltung.FussballSpieler":
                                 FussballSpieler fussballSpieler = this as FussballSpieler;
-                                qry = string.Format("INSERT INTO `fussballspieler`( `Person_ID`, `Spiele`, `Tore`, `Position`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, fussballSpieler.Spiele, fussballSpieler.Tore, fussballSpieler.Position);
+                                if(fussballSpieler.FussballSpieler_ID >0)
+                                {
+                                    //update
+                                    qry = string.Format("UPDATE `fussballspieler` SET `Spiele`={0},`Tore`={1},`Position`=\"{2}\" WHERE `Fussballspieler_ID`={3}", fussballSpieler.Spiele, fussballSpieler.Tore, fussballSpieler.Position, fussballSpieler.FussballSpieler_ID);
+                                }
+                                else
+                                {
+                                    //Insert
+                                    qry = string.Format("INSERT INTO `fussballspieler`( `Person_ID`, `Spiele`, `Tore`, `Position`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, fussballSpieler.Spiele, fussballSpieler.Tore, fussballSpieler.Position);
+                                }
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
                                     cmd2.ExecuteNonQuery();
-                                    fussballSpieler.FussballSpieler_ID = cmd2.LastInsertedId;
+                                    if(fussballSpieler.FussballSpieler_ID == 0)
+                                    {
+                                        //insert
+                                        fussballSpieler.FussballSpieler_ID = cmd2.LastInsertedId;
+                                    }
                                     art = "FussballSpieler";
-                                    art_id = cmd2.LastInsertedId;
+                                    art_id = fussballSpieler.FussballSpieler_ID;
                                 }
                                 break;
                             case "Turnierverwaltung.HandballSpieler":
                                 HandballSpieler handballSpieler = this as HandballSpieler;
-                                qry = string.Format("INSERT INTO `handballspieler`(`Person_ID`, `Spiele`, `Tore`, `Position`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, handballSpieler.Spiele, handballSpieler.Tore, handballSpieler.Position);
+                                if (handballSpieler.HandballSpieler_ID > 0)
+                                {
+                                    //update
+                                    qry = string.Format("UPDATE `handballspieler` SET `Spiele`={0},`Tore`={1},`Position`=\"{2}\" WHERE `Handballspieler_ID`={3}", handballSpieler.Spiele, handballSpieler.Tore, handballSpieler.Position, handballSpieler.HandballSpieler_ID);
+                                }
+                                else
+                                {
+                                    //Insert
+                                    qry = string.Format("INSERT INTO `handballspieler`(`Person_ID`, `Spiele`, `Tore`, `Position`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, handballSpieler.Spiele, handballSpieler.Tore, handballSpieler.Position);
+                                }
+                                
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
                                     cmd2.ExecuteNonQuery();
-                                    handballSpieler.HandballSpieler_ID = cmd2.LastInsertedId;
+                                    if(handballSpieler.HandballSpieler_ID == 0)
+                                    {
+                                        //insert
+                                        handballSpieler.HandballSpieler_ID = cmd2.LastInsertedId;
+                                    }
+                                    
                                     art = "HandballSpieler";
-                                    art_id = cmd2.LastInsertedId;
+                                    art_id = handballSpieler.HandballSpieler_ID;
                                 }
                                 break;
                             case "Turnierverwaltung.TennisSpieler":
                                 TennisSpieler tennisSpieler = this as TennisSpieler;
-                                qry = string.Format("INSERT INTO `tennisspieler`(`Person_ID`, `Spiele`, `Gewonnene_Spiele`) VALUES ({0},{1},{2})", Person_ID, tennisSpieler.Spiele, tennisSpieler.Tore);
+                                if(tennisSpieler.TennisSpieler_ID == 0)
+                                {
+                                    //insert
+                                    qry = string.Format("INSERT INTO `tennisspieler`(`Person_ID`, `Spiele`, `Tore`) VALUES ({0},{1},{2})", Person_ID, tennisSpieler.Spiele, tennisSpieler.Tore);
+                                }
+                                else
+                                {
+                                    //update
+                                    qry = string.Format("UPDATE `tennisspieler` SET `Spiele`={0},`Tore`={1} WHERE `Tennisspieler_ID`= {2}", tennisSpieler.Spiele, tennisSpieler.Tore,tennisSpieler.TennisSpieler_ID);
+                                }
+                                
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
                                     cmd2.ExecuteNonQuery();
-                                    tennisSpieler.TennisSpieler_ID = cmd2.LastInsertedId;
+                                    if(tennisSpieler.TennisSpieler_ID == 0)
+                                    {
+                                        //insert
+                                        tennisSpieler.TennisSpieler_ID = cmd2.LastInsertedId;
+                                    }
+                                    
                                     art = "TennisSpieler";
-                                    art_id = cmd2.LastInsertedId;
+                                    art_id = tennisSpieler.TennisSpieler_ID;
                                 }
                                 break;
                             case "Turnierverwaltung.Spieler":
                                 Spieler spieler = this as Spieler;
-                                qry = string.Format("INSERT INTO `spieler`(`Person_ID`, `Spiele`, `Gewonnene_Spiele`, `Sport_Art`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, spieler.Spiele, spieler.Tore, spieler.Sportart);
+                                if(spieler.Spieler_ID > 0)
+                                {
+                                    //update
+                                    qry = string.Format("UPDATE `spieler` SET `Spiele`={0},`Gewonnene_Spiele`={1},`Sport_Art`=\"{2}\" WHERE `Spieler_ID`={3}",spieler.Spiele, spieler.Tore, spieler.Sportart,spieler.Spieler_ID);
+                                }
+                                else
+                                {
+                                    //insert
+                                    qry = string.Format("INSERT INTO `spieler`(`Person_ID`, `Spiele`, `Gewonnene_Spiele`, `Sport_Art`) VALUES ({0},{1},{2},\"{3}\")", Person_ID, spieler.Spiele, spieler.Tore, spieler.Sportart);
+                                }
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
                                     cmd2.ExecuteNonQuery();
-                                    spieler.Spieler_ID = cmd2.LastInsertedId;
+                                    if(spieler.Spieler_ID == 0)
+                                    {
+                                        //insert
+                                        spieler.Spieler_ID = cmd2.LastInsertedId;
+                                    }
                                     art = "Spieler";
-                                    art_id = cmd2.LastInsertedId;
+                                    art_id = spieler.Spieler_ID;
                                 }
                                 break;
                             case "Turnierverwaltung.Physiotherapeut":
                                 Physiotherapeut physiotherapeut = this as Physiotherapeut;
-                                qry = string.Format("INSERT INTO `physiotherapeut`(`Person_ID`, `Jahre`, `Sport_Art`) VALUES ({0},{1},\"{2}\")", Person_ID, physiotherapeut.Jahre, physiotherapeut.Sportart);
+                                if(physiotherapeut.Physiotherapeut_ID>0)
+                                {
+                                    //update
+                                    qry = string.Format("UPDATE `physiotherapeut` SET `Jahre`={0},`Sport_Art`=\"{1}\" WHERE `Physiotherapeut_ID`={2}", physiotherapeut.Jahre, physiotherapeut.Sportart,physiotherapeut.Physiotherapeut_ID);
+                                }
+                                else
+                                {
+                                    //insert
+                                    qry = string.Format("INSERT INTO `physiotherapeut`(`Person_ID`, `Jahre`, `Sport_Art`) VALUES ({0},{1},\"{2}\")", Person_ID, physiotherapeut.Jahre, physiotherapeut.Sportart);
+                                }
+                                
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
                                     cmd2.ExecuteNonQuery();
-                                    physiotherapeut.Physiotherapeut_ID = cmd2.LastInsertedId;
+                                    if(physiotherapeut.Physiotherapeut_ID==0)
+                                    {
+                                        //insert
+                                        physiotherapeut.Physiotherapeut_ID = cmd2.LastInsertedId;
+                                    }
                                     art = "Physiotherapeut";
-                                    art_id = cmd2.LastInsertedId;
+                                    art_id = physiotherapeut.Physiotherapeut_ID;
                                 }
                                 break;
                             case "Turnierverwaltung.Trainer":
                                 Trainer trainer = this as Trainer;
-                                qry = string.Format("INSERT INTO `trainer`(`Person_ID`, `Vereine`, `Sport_Art`) VALUES ({0},{1},\"{2}\")", Person_ID, trainer.Vereine, trainer.Sportart);
+                                if(trainer.Trainer_ID>0)
+                                {
+                                    //update
+                                    qry = string.Format("UPDATE `trainer` SET `Vereine`={0},`Sport_Art`=\"{1}\" WHERE `Trainer_ID`={2}", trainer.Vereine, trainer.Sportart,trainer.Trainer_ID);
+                                }
+                                else
+                                {
+                                    //insert
+                                    qry = string.Format("INSERT INTO `trainer`(`Person_ID`, `Vereine`, `Sport_Art`) VALUES ({0},{1},\"{2}\")", Person_ID, trainer.Vereine, trainer.Sportart);
+                                }
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
                                     cmd2.ExecuteNonQuery();
-                                    trainer.Trainer_ID = cmd2.LastInsertedId;
+                                    if(trainer.Trainer_ID==0)
+                                    {
+                                        //insert
+                                        trainer.Trainer_ID = cmd2.LastInsertedId;
+                                    }
                                     art = "Trainer";
-                                    art_id = cmd2.LastInsertedId;
+                                    art_id = trainer.Trainer_ID;
                                 }
                                 break;
                             case "Turnierverwaltung.Mitarbeiter":
                                 Mitarbeiter mitarbeiter = this as Mitarbeiter;
-                                qry = string.Format("INSERT INTO `mitarbeiter`(`Person_ID`, `Aufgabe`, `Sport_Art`) VALUES ({0},\"{1}\",\"{2}\")", Person_ID, mitarbeiter.Aufgabe, mitarbeiter.Sportart);
+                                if(mitarbeiter.Mitarbeiter_ID>0)
+                                {
+                                    //update
+                                    qry = string.Format("UPDATE `mitarbeiter` SET `Aufgabe`=\"{0}\",`Sport_Art`=\"{1}\" WHERE `Mitarbeiter_ID`={2}", mitarbeiter.Aufgabe, mitarbeiter.Sportart,mitarbeiter.Mitarbeiter_ID);
+                                }
+                                else
+                                {
+                                    //insert
+                                    qry = string.Format("INSERT INTO `mitarbeiter`(`Person_ID`, `Aufgabe`, `Sport_Art`) VALUES ({0},\"{1}\",\"{2}\")", Person_ID, mitarbeiter.Aufgabe, mitarbeiter.Sportart);
+                                }
+                                
                                 using (MySqlCommand cmd2 = conn.CreateCommand())
                                 {
                                     cmd2.CommandText = qry;
                                     cmd2.ExecuteNonQuery();
-                                    mitarbeiter.Mitarbeiter_ID = cmd2.LastInsertedId;
+                                    if(mitarbeiter.Mitarbeiter_ID==0)
+                                    {
+                                        //insert
+                                        mitarbeiter.Mitarbeiter_ID = cmd2.LastInsertedId;
+                                    }
                                     art = "Mitarbeiter";
-                                    art_id = cmd2.LastInsertedId;
+                                    art_id = mitarbeiter.Mitarbeiter_ID;
                                 }
                                 break;
                         }

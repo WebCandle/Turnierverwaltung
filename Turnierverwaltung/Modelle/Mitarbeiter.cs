@@ -57,7 +57,8 @@ namespace Turnierverwaltung
                                     Aufgabe = reader["Aufgabe"].ToString();
                                     Sportart = reader["Sport_Art"].ToString();
                                     Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
-
+                                    Art = reader["Art"].ToString();
+                                    Art_ID = long.Parse(reader["Art_ID"].ToString());
                                 }
                             }
                         }

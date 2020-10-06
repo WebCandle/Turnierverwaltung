@@ -60,7 +60,8 @@ namespace Turnierverwaltung
                                     Tore = Convert.ToInt32(reader["Tore"].ToString());
                                     Position = reader["Position"].ToString();
                                     Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
-
+                                    Art = reader["Art"].ToString();
+                                    Art_ID = long.Parse(reader["Art_ID"].ToString());
                                 }
                             }
                         }
