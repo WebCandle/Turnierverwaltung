@@ -44,13 +44,13 @@
                         <asp:Label ID="Lbl1" runat="server" Text="Anzahl Spiele"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="Txt1" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="Txt1" runat="server" TextMode="Number"></asp:TextBox>
                     </td>
                     <td>
                         <asp:Label ID="Lbl2" runat="server" Text="Geschossene Tore"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="Txt2" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="Txt2" runat="server" TextMode="Number"></asp:TextBox>
                     </td>
                     <td>
                         <asp:Label ID="Lbl3" runat="server" Text="Spielposition"></asp:Label>

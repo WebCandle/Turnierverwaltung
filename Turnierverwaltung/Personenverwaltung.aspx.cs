@@ -26,6 +26,12 @@ namespace Turnierverwaltung
                     PnlVerwaltung.Visible = true;
                     if (Page.IsCallback == false)
                     {
+                        Sportart.Items.Clear();
+                        Sportart.Items.Add("Fussball");
+                        Sportart.Items.Add("Handball");
+                        Sportart.Items.Add("Tennis");
+                        Txt_Datum.Text = DateTime.Now.ToString("yyyy-MM-dd");
+
                         if (Request.QueryString["do"] == "entfernen")
                         {
                             long item = long.Parse(Request.QueryString["item"]);
@@ -71,7 +77,7 @@ namespace Turnierverwaltung
                                 Spieler s = new Spieler(person.Art_ID);
                                 Txt1.Text = s.Spiele.ToString();
                                 Txt2.Text = s.Tore.ToString();
-                                Sportart.Text = s.Sportart;
+                                Sportart.Items.FindByValue(s.Sportart).Selected = true;
                             }
                             else if (person.Art == "Mitarbeiter")
                             {
@@ -107,12 +113,6 @@ namespace Turnierverwaltung
                             Btn_Bearbeiten.Visible = false;
                             Btn_Cancel.Visible = false;
                         }
-
-                        Sportart.Items.Clear();
-                        Sportart.Items.Add("Fussball");
-                        Sportart.Items.Add("Handball");
-                        Sportart.Items.Add("Tennis");
-                        //Txt_Datum.Text = DateTime.Now.ToString("yyyy-MM-dd"); ;
                     }
                 }
                 else
@@ -240,10 +240,6 @@ namespace Turnierverwaltung
             }
 
         }
-        public bool Has_Permission(string rolle)
-        {
-            return (string)Session["rolle"] == rolle;
-        }
         public void Access_Denied()
         {
             string script = string.Format("alert('{0}');", "Sie haben keine Berichtigung!");
@@ -251,7 +247,8 @@ namespace Turnierverwaltung
         }
         protected void Add_Click(object sender, EventArgs e)
         {
-            if(Has_Permission("admin"))
+            User user = new User(Session);
+            if(user.Has_Permission("admin"))
             {
                 string name = Request.Form["ctl00$MainContent$Txt_Name"];
                 string vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
@@ -542,7 +539,8 @@ namespace Turnierverwaltung
 
         protected void Btn_Bearbeiten_Click(object sender, EventArgs e)
         {
-            if(Has_Permission("admin"))
+            User user = new User(Session);
+            if(user.Has_Permission("admin"))
             {
                 long item = Convert.ToInt32(Request.QueryString["item"]);
                 Person person = new Person(item);

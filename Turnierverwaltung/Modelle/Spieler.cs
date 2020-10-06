@@ -45,7 +45,7 @@ namespace Turnierverwaltung
                     conn.Open();
                     using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = string.Format("SELECT * FROM `spieler` AS F INNER JOIN `person` AS P ON Spieler_ID = Art_ID AND Art = \"Spieler\" WHERE Spieler_ID = {0}", spieler_id);
+                        cmd.CommandText = string.Format("SELECT * FROM `spieler` AS F INNER JOIN `person` AS P ON F.Spieler_ID = P.Art_ID AND Art = \"Spieler\" WHERE Spieler_ID = {0}", spieler_id);
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.HasRows)
@@ -57,7 +57,7 @@ namespace Turnierverwaltung
                                     Name = reader["Nachname"].ToString();
                                     Vorname = reader["Vorname"].ToString();
                                     Spiele = Convert.ToInt32(reader["Spiele"].ToString());
-                                    Tore = Convert.ToInt32(reader["Tore"].ToString());
+                                    Tore = Convert.ToInt32(reader["Gewonnene_Spiele"].ToString());
                                     Sportart = reader["Sport_Art"].ToString();
                                     Geburtsdatum = Convert.ToDateTime(reader["Geburtsdatum"].ToString());
                                     Art = reader["Art"].ToString();
