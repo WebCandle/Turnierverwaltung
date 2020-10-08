@@ -13,8 +13,6 @@ namespace Turnierverwaltung
 {
     public class Global : HttpApplication
     {
-        public static List<Person> Personen;
-        public static List<Mannschaft> Mannschaften;
         public static string mySqlConnectionString;
         void Application_Start(object sender, EventArgs e)
         {
@@ -22,8 +20,6 @@ namespace Turnierverwaltung
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Personen = new List<Person>();
-            Mannschaften = new List<Mannschaft>();
             mySqlConnectionString = "server=localhost;database=Turnierverwaltung_db;uid=root;password=";
 
         }

@@ -13,14 +13,15 @@ namespace Turnierverwaltung
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(Session["auth"] == null || !(bool)Session["auth"])
+            User user = new User(Session);
+            if(!user.Auth)
             {
                 Session["redirect"] = "~/Mannschaftsverwaltung.aspx";
                 Response.Redirect("~/Login.aspx", true);
             }
             else
             {
-                if(Has_Permission("admin"))
+                if(user.Has_Permission("admin"))
                 {
                     PnlVerwaltung.Visible = true;
                     if (Page.IsPostBack == false)
@@ -29,26 +30,25 @@ namespace Turnierverwaltung
                         Sportart.Items.Add("Fussball");
                         Sportart.Items.Add("Handball");
                         Sportart.Items.Add("Tennis");
-
-                        int k = 0;
                         LstBxP.Items.Clear();
-                        foreach (var person in Global.Personen)
+                        foreach (var person in Person.GetAll())
                         {
-                            ListItem item = new ListItem(person.Name, k.ToString());
+                            ListItem item = new ListItem(person.getName(), person.Person_ID.ToString());
                             LstBxP.Items.Add(item);
-                            k++;
                         }
 
                         if (Request.QueryString["do"] == "entfernen")
                         {
-                            int item = Convert.ToInt32(Request.QueryString["item"]);
-                            Global.Mannschaften.RemoveAt(item);
+                            long mannschaft_id = long.Parse(Request.QueryString["item"]);
+                            Mannschaft mannschaft = new Mannschaft(mannschaft_id);
+                            mannschaft.Delete();
                             Response.Redirect("~/Mannschaftsverwaltung.aspx");
                         }
                         else if (Request.QueryString["do"] == "bearbeiten")
                         {
                             personentbl.Visible = false;
-                            Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
+                            long mannschaft_id = long.Parse(Request.QueryString["item"]);
+                            Mannschaft mannschaft = new Mannschaft(mannschaft_id);
                             Txt_Name.Text = mannschaft.Name;
                             Sportart.Text = mannschaft.Sportart;
 
@@ -106,12 +106,11 @@ namespace Turnierverwaltung
 
             Tbl.Rows.Add(header);
 
-            int k = 0;
-            foreach (Mannschaft m in Global.Mannschaften)
+            foreach (Mannschaft m in Mannschaft.GetAll())
             {
                 TableRow row = new TableRow();
                 TableCell cell1 = new TableCell();
-                cell1.Text = k.ToString();
+                cell1.Text = m.Mannschaft_ID.ToString();
                 row.Cells.Add(cell1);
                 TableCell cell2 = new TableCell();
                 cell2.Text = m.Name;
@@ -123,19 +122,19 @@ namespace Turnierverwaltung
                 cell3.Text = "";
                 foreach (Person person in m.Mitglieder)
                 {
-                    cell3.Text += person.Name+"<br />";
+                    cell3.Text += person.getName()+"<br />";
                 }
                 row.Cells.Add(cell3);
 
                 HyperLink link1 = new HyperLink();
-                link1.NavigateUrl = "~/Mannschaftsverwaltung.aspx?do=bearbeiten&item=" + k;
+                link1.NavigateUrl = "~/Mannschaftsverwaltung.aspx?do=bearbeiten&item=" + m.Mannschaft_ID;
                 link1.Text = "Berabeiten";
                 TableCell cell12 = new TableCell();
                 cell12.Controls.Add(link1);
                 row.Cells.Add(cell12);
 
                 HyperLink link2 = new HyperLink();
-                link2.NavigateUrl = "~/Mannschaftsverwaltung.aspx?do=entfernen&item=" + k;
+                link2.NavigateUrl = "~/Mannschaftsverwaltung.aspx?do=entfernen&item=" + m.Mannschaft_ID;
                 link2.Text = "Entfernen";
 
                 TableCell cell13 = new TableCell();
@@ -143,7 +142,6 @@ namespace Turnierverwaltung
                 row.Cells.Add(cell13);
 
                 Tbl.Rows.Add(row);
-                k++;
             }
         }
 
@@ -168,10 +166,10 @@ namespace Turnierverwaltung
                 mannschaft.Sportart = Sportart.Text;
                 foreach (ListItem item in LstBxM.Items)
                 {
-                    Person person = Global.Personen.ElementAt(Convert.ToInt32(item.Value));
+                    Person person = new Person(long.Parse(item.Value));
                     mannschaft.MitgliedAnnehmen(person);
                 }
-                Global.Mannschaften.Add(mannschaft);
+                mannschaft.Save();
                 Render();
             }
             else
@@ -196,9 +194,10 @@ namespace Turnierverwaltung
         {
             if (Has_Permission("admin"))
             {
-                Mannschaft mannschaft = Global.Mannschaften.ElementAt(Convert.ToInt32(Request.QueryString["item"]));
+                Mannschaft mannschaft = new Mannschaft(long.Parse(Request.QueryString["item"]));
                 mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
                 mannschaft.Sportart = Request.Form["ctl00$MainContent$Sportart"];
+                mannschaft.Save();
                 Response.Redirect("~/Mannschaftsverwaltung.aspx");
             }
             else

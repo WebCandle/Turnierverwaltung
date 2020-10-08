@@ -38,7 +38,6 @@ namespace Turnierverwaltung
         }
         public Mannschaft(long id)
         {
-            _Mannschaft_ID = id;
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
@@ -46,16 +45,17 @@ namespace Turnierverwaltung
                     conn.Open();
                     using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = string.Format("SELECT `Mannschaft_ID`, `Name`, `Sport_Art` FROM `mannschaft` WHERE `Mannschaft_ID` = {0} LIMIT 1",_Mannschaft_ID);
+                        cmd.CommandText = string.Format("SELECT `Mannschaft_ID`, `Name`, `Sport_Art` FROM `mannschaft` WHERE `Mannschaft_ID` = {0} LIMIT 1",id);
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.HasRows)
                             {
                                 while (reader.Read())
                                 {
+                                    _Mannschaft_ID = long.Parse(reader["Mannschaft_ID"].ToString());
                                     Name = reader["Name"].ToString();
                                     Sportart = reader["Sport_Art"].ToString();
-                                    
+                                    Mitglieder = Person.GetAllByMannschaftID(_Mannschaft_ID);
                                 }
                             }
                         }
@@ -111,6 +111,38 @@ namespace Turnierverwaltung
             //    }
             //} while (!PaarSortiert);
         }
+        public void Save()
+        {
+
+        }
+        public void Delete()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        string qry = string.Format("DELETE FROM `mannschaft` WHERE `Mannschaft_ID` = {0} LIMIT 1", Mannschaft_ID);
+                        cmd.CommandText = qry;
+                        cmd.ExecuteNonQuery();
+                        using (MySqlCommand cmd1 = conn.CreateCommand())
+                        {
+                            string qry1 = string.Format("DELETE FROM `mannschaft_mitglieder` WHERE `Mannschaft_ID` =  {0}", Mannschaft_ID);
+                            cmd1.CommandText = qry1;
+                            cmd1.ExecuteNonQuery();
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
         public static List<Mannschaft> GetAll()
         {
             List<Mannschaft> mannschaften = new List<Mannschaft>();
@@ -121,17 +153,15 @@ namespace Turnierverwaltung
                     conn.Open();
                     using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT * FROM `mannschaft`";
+                        cmd.CommandText = "SELECT Mannschaft_ID FROM `mannschaft`";
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.HasRows)
                             {
                                 while (reader.Read())
                                 {
-                                    long id = long.Parse(reader["Mannschaft_ID"].ToString());
-                                    string name = reader["Name"].ToString();
-                                    string sportart = reader["Sport_Art"].ToString();
-                                    Mannschaft mannschaft = new Mannschaft(id, name, sportart);
+                                    long mannschaft_id = long.Parse(reader["Mannschaft_ID"].ToString());
+                                    Mannschaft mannschaft = new Mannschaft(mannschaft_id);
                                     mannschaften.Add(mannschaft);
                                 }
                             }

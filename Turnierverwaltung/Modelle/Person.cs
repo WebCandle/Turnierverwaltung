@@ -390,6 +390,68 @@ namespace Turnierverwaltung
             }
             return personen;
         }
+        public static List<Person> GetAllByMannschaftID(long mannschaft_id)
+        {
+            List<Person> personen = new List<Person>();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandText = string.Format("SELECT * FROM `mannschaft_mitglieder` AS `M` INNER JOIN `person` AS `P` ON `P`.`Person_ID` = `P`.`Person_ID` WHERE `M`.`Mannschaft_ID` = {0}", mannschaft_id);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    string art = reader["Art"].ToString();
+                                    long art_id = long.Parse(reader["Art_ID"].ToString());
+                                    switch (art)
+                                    {
+                                        case "FussballSpieler":
+                                            Person fussballspieler = new FussballSpieler(art_id);
+                                            personen.Add(fussballspieler);
+                                            break;
+                                        case "HandballSpieler":
+                                            Person handballspieler = new HandballSpieler(art_id);
+                                            personen.Add(handballspieler);
+                                            break;
+                                        case "TennisSpieler":
+                                            Person tenissspieler = new TennisSpieler(art_id);
+                                            personen.Add(tenissspieler);
+                                            break;
+                                        case "Spieler":
+                                            Person spieler = new Spieler(art_id);
+                                            personen.Add(spieler);
+                                            break;
+                                        case "Mitarbeiter":
+                                            Person mitarbeiter = new Mitarbeiter(art_id);
+                                            personen.Add(mitarbeiter);
+                                            break;
+                                        case "Physiotherapeut":
+                                            Person physiotherapeut = new Physiotherapeut(art_id);
+                                            personen.Add(physiotherapeut);
+                                            break;
+                                        case "Trainer":
+                                            Person trainer = new Trainer(art_id);
+                                            personen.Add(trainer);
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return personen;
+        }
         public void Delete()
         {
             try
@@ -443,6 +505,10 @@ namespace Turnierverwaltung
             {
 
             }
+        }
+        public string getName()
+        {
+            return Art + " - " + Name + ", " + Vorname;
         }
         #endregion
     }
