@@ -4,31 +4,35 @@
     <h2>Mannschaftsverwaltung</h2>
     <asp:Panel ID="PnlVerwaltung" runat="server">
         <h3>Hinzufügen oder Bearbeiten einer Turnier Mannschaft</h3>
-        <asp:Label ID="Label1" runat="server" Text="Eine Sportart für die Mannschaft auswählen"></asp:Label>
+
         <br />
-        <asp:DropDownList ID="Sportart" runat="server"></asp:DropDownList>
-        <br />
-        <asp:Label ID="Label2" runat="server" Text="Mannschaftsname:"></asp:Label>
-        <br />
-        <asp:TextBox ID="Txt_Name" runat="server"></asp:TextBox>
+
         <table style="width: 100%;" id="personentbl" runat="server">
             <tr>
-                <td style="width: 40%;">
+                <td style="width: 40%;"><asp:Label ID="Label2" runat="server" Text="Mannschaftsname:"></asp:Label>
+        <br />
+        <asp:TextBox ID="Txt_Name" runat="server"></asp:TextBox></td>
+                <td style="width: 10%; text-align: center;"></td>
+                <td style="width: 10%; text-align: center;"></td>
+                <td style="width: 40%; text-align:center">        <asp:Label ID="Label1" runat="server" Text="Sportart"></asp:Label>
+        <br />
+        <asp:DropDownList ID="Sportart" runat="server" OnSelectedIndexChanged="Sportart_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList></td>
+
+            </tr>
+            <tr>
+                <td>
                     <asp:Label ID="Label3" runat="server" Text="Mitglieder der Mannschaft:"></asp:Label>
                     <br />
-                    <asp:ListBox ID="LstBxM" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox>
-                </td>
-                <td style="width: 10%; text-align: center;">
-                    <asp:Button ID="Btn2" runat="server" Text=">" OnClick="Btn2_Click" />
-                </td>
-                <td style="width: 10%; text-align: center;">
-                    <asp:Button ID="Button1" runat="server" Text="<" OnClick="Button1_Click" />
-                </td>
-                <td style="width: 40%;">
+                    <asp:ListBox ID="LstBxM" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
+                <td>
+                    <asp:Button ID="Btn2" runat="server" Text=">" OnClick="Btn2_Click" /></td>
+                <td style="text-align: center;">
+                    <asp:Button ID="Button1" runat="server" Text="<" OnClick="Button1_Click" /></td>
+                <td style="text-align: center;">
                     <asp:Label ID="Label4" runat="server" Text="verfügbare Personen:"></asp:Label>
                     <br />
-                    <asp:ListBox ID="LstBxP" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox>
-                </td>
+                    <asp:ListBox ID="LstBxP" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
+
             </tr>
         </table>
         <asp:Button ID="Btn_Add" runat="server" Text="Manschaft Hinzufügen" OnClick="Btn_add" />&nbsp;&nbsp;

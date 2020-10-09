@@ -22,22 +22,13 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Panel PnlVerwaltung;
         
         /// <summary>
-        /// Label1-Steuerelement
+        /// personentbl-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
-        
-        /// <summary>
-        /// Sportart-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList Sportart;
+        protected global::System.Web.UI.HtmlControls.HtmlTable personentbl;
         
         /// <summary>
         /// Label2-Steuerelement
@@ -58,13 +49,22 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.TextBox Txt_Name;
         
         /// <summary>
-        /// personentbl-Steuerelement
+        /// Label1-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable personentbl;
+        protected global::System.Web.UI.WebControls.Label Label1;
+        
+        /// <summary>
+        /// Sportart-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList Sportart;
         
         /// <summary>
         /// Label3-Steuerelement

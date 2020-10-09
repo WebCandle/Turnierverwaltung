@@ -216,5 +216,51 @@ namespace Turnierverwaltung
             //Response.Redirect("~/Files/Personen.xml");
             //Response.AddHeader("Content-Disposition", "attachment; filename="+name);
         }
+
+        protected void Sportart_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LstBxP.Items.Clear();
+            LstBxM.Items.Clear();
+            foreach (var person in Person.GetAll())
+            {
+                ListItem item = new ListItem(person.getName(), person.Person_ID.ToString());
+                if (Sportart.SelectedItem.Value == "Fussball")
+                {
+                    if(person is HandballSpieler || person is TennisSpieler)
+                    {
+                        // nichts
+                    }
+                    else
+                    {
+                        LstBxP.Items.Add(item);
+                    }
+                }
+                else if (Sportart.SelectedItem.Value == "Handball")
+                {
+                    if (person is FussballSpieler || person is TennisSpieler)
+                    {
+                        // nichts
+                    }
+                    else
+                    {
+                        LstBxP.Items.Add(item);
+                    }
+                }
+                else
+                {
+                    //Teniss
+                    if (person is FussballSpieler || person is HandballSpieler)
+                    {
+                        // nichts
+                    }
+                    else
+                    {
+                        LstBxP.Items.Add(item);
+                    }
+                }
+                    
+                
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@
         <br />
         <asp:Button ID="btnAdd" runat="server" Text="Sichern" OnClick="btnAdd_Click" />
     </asp:Panel>
-    <h2>verfügbare Mannschaften:</h2>
+    <h2>verfügbare Turniere:</h2>
     <asp:Table ID="Tbl" runat="server" Width="100%" GridLines="Both">
         <asp:TableHeaderRow>
             <asp:TableHeaderCell>Verein</asp:TableHeaderCell>

@@ -54,6 +54,7 @@
                         <li><a runat="server" href="~/Personenverwaltung.aspx">Personenverwaltung</a></li>
                         <li><a runat="server" href="~/Mannschaftsverwaltung.aspx">Mannschaftsverwaltung</a></li>
                         <li><a runat="server" href="~/Turnierverwaltung.aspx">Turnierverwaltung</a></li>
+                        <li><a runat="server" href="~/TurnierTabelle.aspx">Turniertabellen</a></li>
                         <% if (Session["auth"] == null || !(bool)Session["auth"])
                             { %>
                         <li><a runat="server" href="~/Login.aspx">Login</a></li>

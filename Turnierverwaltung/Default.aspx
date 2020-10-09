@@ -25,6 +25,7 @@
         <a href="~/Turnierverwaltung.aspx" runat="server">
         <h3>Turnierverwaltung</h3>
     </a>
+    <li><a runat="server" href="~/TurnierTabelle.aspx"><h3>Turniertabellen</h3></a></li>
 
     <% } %>
 </asp:Content>
