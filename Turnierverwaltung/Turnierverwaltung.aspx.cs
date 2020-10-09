@@ -14,7 +14,7 @@ namespace Turnierverwaltung
             User user = new User(Session);
             if (!user.Auth)
             {
-                Session["redirect"] = "~/Personenverwaltung.aspx";
+                Session["redirect"] = "~/Turnierverwaltung.aspx";
                 Response.Redirect("~/Login.aspx", true);
             }
             else
