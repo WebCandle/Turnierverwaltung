@@ -113,7 +113,70 @@ namespace Turnierverwaltung
         }
         public void Save()
         {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
 
+                    using (MySqlCommand cmd1 = conn.CreateCommand())
+                    {
+                        string qry1;
+                        if (Mannschaft_ID != 0)
+                        {
+                            //Update
+                            qry1 = string.Format("UPDATE `mannschaft` SET `Name`=\"{0}\",`Sport_Art`=\"{1}\" WHERE `Mannschaft_ID` = {2} LIMIT 1", Name, Sportart, Mannschaft_ID);
+                            cmd1.CommandText = qry1;
+                            cmd1.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            //Insert
+                            qry1 = string.Format("INSERT INTO `mannschaft`(`Name`, `Sport_Art`) VALUES (\"{0}\",\"{1}\")", Name, Sportart);
+                            cmd1.CommandText = qry1;
+                            cmd1.ExecuteNonQuery();
+                            Mannschaft_ID = cmd1.LastInsertedId;
+                        }
+                        DeleteMitglieder();
+                        foreach (Person person in Mitglieder)
+                        {
+                            qry1 = string.Format("INSERT INTO `mannschaft_mitglieder`( `Mannschaft_ID`, `Person_ID`) VALUES (\"{0}\",\"{1}\")", Mannschaft_ID, person.Person_ID);
+                            cmd1.CommandText = qry1;
+                            cmd1.ExecuteNonQuery();
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void DeleteMitglieder()
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(Global.mySqlConnectionString))
+                {
+                    conn.Open();
+
+                    using (MySqlCommand cmd1 = conn.CreateCommand())
+                    {
+                        string qry1 = string.Format("DELETE FROM `mannschaft_mitglieder` WHERE `Mannschaft_ID` =  {0}", Mannschaft_ID);
+                        cmd1.CommandText = qry1;
+                        cmd1.ExecuteNonQuery();
+                        Mitglieder.Clear();
+                    }
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
         public void Delete()
         {
@@ -127,12 +190,7 @@ namespace Turnierverwaltung
                         string qry = string.Format("DELETE FROM `mannschaft` WHERE `Mannschaft_ID` = {0} LIMIT 1", Mannschaft_ID);
                         cmd.CommandText = qry;
                         cmd.ExecuteNonQuery();
-                        using (MySqlCommand cmd1 = conn.CreateCommand())
-                        {
-                            string qry1 = string.Format("DELETE FROM `mannschaft_mitglieder` WHERE `Mannschaft_ID` =  {0}", Mannschaft_ID);
-                            cmd1.CommandText = qry1;
-                            cmd1.ExecuteNonQuery();
-                        }
+                        DeleteMitglieder();
                     }
                     conn.Close();
                 }

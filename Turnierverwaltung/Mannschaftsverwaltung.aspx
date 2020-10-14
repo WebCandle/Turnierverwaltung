@@ -9,14 +9,16 @@
 
         <table style="width: 100%;" id="personentbl" runat="server">
             <tr>
-                <td style="width: 40%;"><asp:Label ID="Label2" runat="server" Text="Mannschaftsname:"></asp:Label>
-        <br />
-        <asp:TextBox ID="Txt_Name" runat="server"></asp:TextBox></td>
+                <td style="width: 40%;">
+                    <asp:Label ID="Label2" runat="server" Text="Mannschaftsname:"></asp:Label>
+                    <br />
+                    <asp:TextBox ID="Txt_Name" runat="server"></asp:TextBox></td>
                 <td style="width: 10%; text-align: center;"></td>
                 <td style="width: 10%; text-align: center;"></td>
-                <td style="width: 40%; text-align:center">        <asp:Label ID="Label1" runat="server" Text="Sportart"></asp:Label>
-        <br />
-        <asp:DropDownList ID="Sportart" runat="server" OnSelectedIndexChanged="Sportart_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList></td>
+                <td style="width: 40%; text-align: center">
+                    <asp:Label ID="Label1" runat="server" Text="Sportart"></asp:Label>
+                    <br />
+                    <asp:DropDownList ID="Sportart" runat="server" OnSelectedIndexChanged="Sportart_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList></td>
 
             </tr>
             <tr>
@@ -35,21 +37,24 @@
 
             </tr>
         </table>
-        <asp:Button ID="Btn_Add" runat="server" Text="Manschaft Hinzufügen" OnClick="Btn_add" />&nbsp;&nbsp;
-    <asp:Button ID="Btn_Sichern" runat="server" Text="Sichern" Visible="false" OnClick="Btn_Sichern_Click" />&nbsp;&nbsp;
-    <asp:Button ID="Btn_Abbrechen" runat="server" Text="Abbrechen" Visible="false" OnClick="Btn_Abbrechen_Click" />
+        <asp:Button ID="Btn_Add" runat="server" Text="Manschaft Hinzufügen" OnClick="Btn_add" />
+        <asp:Button ID="Btn_Abbrechen" runat="server" Text="Abbrechen" Visible="false" OnClick="Btn_Abbrechen_Click" />&nbsp;&nbsp;
+        <asp:Button ID="Btn_Sichern" runat="server" Text="Sichern" Visible="false" OnClick="Btn_Sichern_Click" />
+
     </asp:Panel>
-    <h2>verfügbare Mannschaften:</h2>
-    <asp:Table ID="Tbl" runat="server" Width="100%" GridLines="Both">
-        <asp:TableHeaderRow>
-            <asp:TableHeaderCell>ID</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Name</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Sportart</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Mitglieder</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Bearbeiten</asp:TableHeaderCell>
-            <asp:TableHeaderCell>Entfernen</asp:TableHeaderCell>
-        </asp:TableHeaderRow>
-    </asp:Table>
-    <br />
-    <asp:Button ID="Btn_XMLDownload" runat="server" Text="Als XML Herunterladen" OnClick="Btn_XMLDownload_Click" />
+    <asp:Panel ID="PnlMannschaften" runat="server">
+        <h2>verfügbare Mannschaften:</h2>
+        <asp:Table ID="Tbl" runat="server" Width="100%" GridLines="Both">
+            <asp:TableHeaderRow>
+                <asp:TableHeaderCell>ID</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Name</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Sportart</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Mitglieder</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Bearbeiten</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Entfernen</asp:TableHeaderCell>
+            </asp:TableHeaderRow>
+        </asp:Table>
+        <br />
+        <asp:Button ID="Btn_XMLDownload" runat="server" Text="Als XML Herunterladen" OnClick="Btn_XMLDownload_Click" />
+    </asp:Panel>
 </asp:Content>

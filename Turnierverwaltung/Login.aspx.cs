@@ -20,6 +20,7 @@ namespace Turnierverwaltung
                 Session.Clear();
                 Response.Redirect("~/Default.aspx",true);
             }
+            Page.Form.DefaultFocus = LoginMaske.FindControl("UserName").ClientID;
         }
         public string MD5(string input)
         {

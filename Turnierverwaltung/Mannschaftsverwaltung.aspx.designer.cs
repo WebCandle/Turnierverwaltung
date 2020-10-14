@@ -130,6 +130,15 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Button Btn_Add;
         
         /// <summary>
+        /// Btn_Abbrechen-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Abbrechen;
+        
+        /// <summary>
         /// Btn_Sichern-Steuerelement
         /// </summary>
         /// <remarks>
@@ -139,13 +148,13 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Button Btn_Sichern;
         
         /// <summary>
-        /// Btn_Abbrechen-Steuerelement
+        /// PnlMannschaften-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btn_Abbrechen;
+        protected global::System.Web.UI.WebControls.Panel PnlMannschaften;
         
         /// <summary>
         /// Tbl-Steuerelement
