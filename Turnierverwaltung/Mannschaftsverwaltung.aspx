@@ -4,7 +4,7 @@
     <h2>Mannschaftsverwaltung</h2>
     <asp:Panel ID="PnlVerwaltung" runat="server">
         <h3>Hinzufügen oder Bearbeiten einer Turnier Mannschaft</h3>
-
+        <div runat="server" ID="Msg" visible="false"></div>
         <br />
 
         <table style="width: 100%;" id="personentbl" runat="server">

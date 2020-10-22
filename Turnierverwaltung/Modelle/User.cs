@@ -33,7 +33,7 @@ namespace Turnierverwaltung
                 ID = 0;
                 Name = "Gast";
                 Auth = false;
-                Rolle = "";
+                Rolle = "Gast";
             }
         }
     }

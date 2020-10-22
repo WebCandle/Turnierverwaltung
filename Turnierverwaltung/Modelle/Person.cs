@@ -400,7 +400,7 @@ namespace Turnierverwaltung
                     conn.Open();
                     using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        cmd.CommandText = string.Format("SELECT * FROM `mannschaft_mitglieder` AS `M` INNER JOIN `person` AS `P` ON `P`.`Person_ID` = `P`.`Person_ID` WHERE `M`.`Mannschaft_ID` = {0}", mannschaft_id);
+                        cmd.CommandText = string.Format("SELECT * FROM `mannschaft_mitglieder` AS `M` INNER JOIN `person` AS `P` ON `P`.`Person_ID` = `M`.`Person_ID` WHERE `M`.`Mannschaft_ID` = {0}", mannschaft_id);
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.HasRows)

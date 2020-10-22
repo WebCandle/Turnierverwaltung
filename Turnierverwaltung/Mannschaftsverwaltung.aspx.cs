@@ -144,14 +144,20 @@ namespace Turnierverwaltung
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            LstBxM.Items.Add(LstBxP.SelectedItem);
-            LstBxP.Items.Remove(LstBxP.SelectedItem);
+            if(LstBxP.SelectedItem != null)
+            {
+                LstBxM.Items.Add(LstBxP.SelectedItem);
+                LstBxP.Items.Remove(LstBxP.SelectedItem);
+            }
         }
 
         protected void Btn2_Click(object sender, EventArgs e)
         {
-            LstBxP.Items.Add(LstBxM.SelectedItem);
-            LstBxM.Items.Remove(LstBxM.SelectedItem);
+            if(LstBxM.SelectedItem != null)
+            {
+                LstBxP.Items.Add(LstBxM.SelectedItem);
+                LstBxM.Items.Remove(LstBxM.SelectedItem);
+            }
         }
 
         protected void Btn_add(object sender, EventArgs e)
@@ -162,7 +168,11 @@ namespace Turnierverwaltung
                 Mannschaft mannschaft = new Mannschaft();
                 mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
                 mannschaft.Sportart = Request.Form["ctl00$MainContent$Sportart"];
-                var mitglieder= Request.Form["ctl00$MainContent$LstBxM"].Split(',');
+                var mitglieder = new string[0];
+                if (Request.Form["ctl00$MainContent$LstBxM"] != null)
+                {
+                    mitglieder = Request.Form["ctl00$MainContent$LstBxM"].Split(',');
+                }
                 foreach (string person_id in mitglieder)
                 {
                     Person person = new Person(long.Parse(person_id));
@@ -186,8 +196,11 @@ namespace Turnierverwaltung
         }
         public void Access_Denied()
         {
-            string script = string.Format("alert('{0}');", "Sie haben keine Berichtigung!");
-            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+            //string script = string.Format("alert('{0}');", "Sie haben keine Berichtigung!");
+            //ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+            Msg.InnerText = "Sie haben keine Berichtigung!";
+            Msg.Attributes["class"] = "alert alert-warning";
+            Msg.Visible = true;
         }
         protected void Btn_Sichern_Click(object sender, EventArgs e)
         {
@@ -195,7 +208,12 @@ namespace Turnierverwaltung
             {
                 Mannschaft mannschaft = new Mannschaft(long.Parse(Request.QueryString["item"]));
                 mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                mannschaft.Sportart = Request.Form["ctl00$MainContent$Sportart"];
+                mannschaft.Mitglieder.Clear();
+                foreach (ListItem item in LstBxM.Items)
+                {
+                    Person person = new Person(long.Parse(item.Value));
+                    mannschaft.MitgliedAnnehmen(person);
+                }
                 mannschaft.Save();
                 Response.Redirect("~/Mannschaftsverwaltung.aspx");
             }
@@ -222,85 +240,63 @@ namespace Turnierverwaltung
             foreach (var person in Person.GetAll())
             {
                 ListItem item = new ListItem(person.getName(), person.Person_ID.ToString());
-                if (nach_sportart == "Fussball")
+                if (mannschaft != null)
                 {
-                    if (person is HandballSpieler || person is TennisSpieler)
+                    if (mannschaft.Mitglieder.Find(x => x.Person_ID == person.Person_ID) != null)
                     {
-                        // nichts
+                        LstBxM.Items.Add(item);
                     }
                     else
                     {
-                        if(mannschaft != null)
+                        if (mannschaft.Sportart == "Fussball")
                         {
-                            if( mannschaft.Mitglieder.Find(x => x.Person_ID == person.Person_ID) != null )
+                            if (person is HandballSpieler == false && person is TennisSpieler == false)
                             {
-                                LstBxM.Items.Add(item);
+                                LstBxP.Items.Add(item);
                             }
-                            else
+                        }
+                        else if (mannschaft.Sportart == "Handball")
+                        {
+                            if (person is FussballSpieler == false && person is TennisSpieler == false)
                             {
                                 LstBxP.Items.Add(item);
                             }
                         }
                         else
                         {
-                            LstBxP.Items.Add(item);
-                        }
-                        
-                    }
-                }
-                else if (nach_sportart == "Handball")
-                {
-                    if (person is FussballSpieler || person is TennisSpieler)
-                    {
-                        // nichts
-                    }
-                    else
-                    {
-                        if (mannschaft != null)
-                        {
-                            if (mannschaft.Mitglieder.Find(x => x.Person_ID == person.Person_ID) != null)
-                            {
-                                LstBxM.Items.Add(item);
-                            }
-                            else
+                            //Teniss
+                            if (person is FussballSpieler == false && person is HandballSpieler == false)
                             {
                                 LstBxP.Items.Add(item);
                             }
-                        }
-                        else
-                        {
-                            LstBxP.Items.Add(item);
                         }
                     }
                 }
                 else
                 {
-                    //Teniss
-                    if (person is FussballSpieler || person is HandballSpieler)
+                    if (nach_sportart == "Fussball")
                     {
-                        // nichts
+                        if (person is  HandballSpieler == false && person is TennisSpieler == false)
+                        {
+                            LstBxP.Items.Add(item);
+                        }
+                    }
+                    else if (nach_sportart == "Handball")
+                    {
+                        if (person is FussballSpieler == false && person is TennisSpieler == false)
+                        {
+                            LstBxP.Items.Add(item);
+                        }
                     }
                     else
                     {
-                        if (mannschaft != null)
-                        {
-                            if (mannschaft.Mitglieder.Find(x => x.Person_ID == person.Person_ID) != null)
-                            {
-                                LstBxM.Items.Add(item);
-                            }
-                            else
-                            {
-                                LstBxP.Items.Add(item);
-                            }
-                        }
-                        else
+                        //Teniss
+                        if (person is FussballSpieler == false && person is HandballSpieler == false)
                         {
                             LstBxP.Items.Add(item);
                         }
                     }
                 }
-
-
             }
         }
         protected void Sportart_SelectedIndexChanged(object sender, EventArgs e)

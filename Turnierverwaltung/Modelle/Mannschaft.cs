@@ -168,7 +168,6 @@ namespace Turnierverwaltung
                         string qry1 = string.Format("DELETE FROM `mannschaft_mitglieder` WHERE `Mannschaft_ID` =  {0}", Mannschaft_ID);
                         cmd1.CommandText = qry1;
                         cmd1.ExecuteNonQuery();
-                        Mitglieder.Clear();
                     }
                     conn.Close();
                 }
