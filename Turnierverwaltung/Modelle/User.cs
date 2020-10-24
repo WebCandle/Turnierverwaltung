@@ -26,7 +26,6 @@ namespace Turnierverwaltung
                 Name = Session["name"].ToString();
                 Rolle = Session["rolle"].ToString();
                 Auth = (bool)Session["auth"];
-                Rolle = "admin";
             }
             else
             {

@@ -21,58 +21,53 @@ namespace Turnierverwaltung
             }
             else
             {
-                if(user.Has_Permission("admin"))
+                if (Page.IsPostBack == false)
                 {
-                    PnlVerwaltung.Visible = true;
-                    if (Page.IsPostBack == false)
-                    {
-                        Sportart.Items.Clear();
-                        Sportart.Items.Add("Fussball");
-                        Sportart.Items.Add("Handball");
-                        Sportart.Items.Add("Tennis");
+                    Sportart.Items.Clear();
+                    Sportart.Items.Add("Fussball");
+                    Sportart.Items.Add("Handball");
+                    Sportart.Items.Add("Tennis");
 
-                        if (Request.QueryString["do"] == "entfernen")
+                    if (Request.QueryString["do"] == "entfernen")
+                    {
+                        if (user.Has_Permission("admin"))
                         {
                             long mannschaft_id = long.Parse(Request.QueryString["item"]);
                             Mannschaft mannschaft = new Mannschaft(mannschaft_id);
                             mannschaft.Delete();
                             Response.Redirect("~/Mannschaftsverwaltung.aspx");
                         }
-                        else if (Request.QueryString["do"] == "bearbeiten")
-                        {
-                            PnlMannschaften.Visible = false;
-                            long mannschaft_id = long.Parse(Request.QueryString["item"]);
-                            Mannschaft mannschaft = new Mannschaft(mannschaft_id);
-                            Txt_Name.Text = mannschaft.Name;
-                            Sportart.Text = mannschaft.Sportart;
-                            Fill_Personen(mannschaft.Sportart, mannschaft);
-                            Sportart.Enabled = false;
-                            Btn_Add.Visible = false;
-                            Btn_Sichern.Visible = true;
-                            Btn_Abbrechen.Visible = true;
-                        }
                         else
                         {
-                            Fill_Personen("Fussball",null);
-                            Sportart.Enabled = true;
-                            PnlMannschaften.Visible = true;
-                            Btn_Add.Visible = true;
-                            Btn_Sichern.Visible = false;
-                            Btn_Abbrechen.Visible = false;
+                            Access_Denied();
                         }
                     }
+                    else if (Request.QueryString["do"] == "bearbeiten")
+                    {
+                        PnlMannschaften.Visible = false;
+                        long mannschaft_id = long.Parse(Request.QueryString["item"]);
+                        Mannschaft mannschaft = new Mannschaft(mannschaft_id);
+                        Txt_Name.Text = mannschaft.Name;
+                        Sportart.Text = mannschaft.Sportart;
+                        Fill_Personen(mannschaft.Sportart, mannschaft);
+                        Sportart.Enabled = false;
+                        Btn_Add.Visible = false;
+                        Btn_Sichern.Visible = true;
+                        Btn_Abbrechen.Visible = true;
+                    }
+                    else
+                    {
+                        Fill_Personen("Fussball", null);
+                        Sportart.Enabled = true;
+                        PnlMannschaften.Visible = true;
+                        Btn_Add.Visible = true;
+                        Btn_Sichern.Visible = false;
+                        Btn_Abbrechen.Visible = false;
+                    }
                 }
-                else
-                {
-                    PnlVerwaltung.Visible = false;
-                }
-        
-
                 Render();
             }
-
         }
-
         private void Render()
         {
             Tbl.Rows.Clear();
@@ -165,21 +160,32 @@ namespace Turnierverwaltung
             User user = new User(Session);
             if(user.Has_Permission("admin"))
             {
-                Mannschaft mannschaft = new Mannschaft();
-                mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                mannschaft.Sportart = Request.Form["ctl00$MainContent$Sportart"];
-                var mitglieder = new string[0];
-                if (Request.Form["ctl00$MainContent$LstBxM"] != null)
+                if(Request.Form["ctl00$MainContent$Txt_Name"] != "")
                 {
-                    mitglieder = Request.Form["ctl00$MainContent$LstBxM"].Split(',');
+                    Mannschaft mannschaft = new Mannschaft();
+                    mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                    mannschaft.Sportart = Request.Form["ctl00$MainContent$Sportart"];
+                    var mitglieder = new string[0];
+                    if (Request.Form["ctl00$MainContent$LstBxM"] != null)
+                    {
+                        mitglieder = Request.Form["ctl00$MainContent$LstBxM"].Split(',');
+                    }
+                    foreach (string person_id in mitglieder)
+                    {
+                        Person person = new Person(long.Parse(person_id));
+                        mannschaft.MitgliedAnnehmen(person);
+                    }
+                    mannschaft.Save();
+                    Render();
+                    Txt_Name_Container.Attributes["class"] = "form-group";
+                    Msg.Visible = false;
                 }
-                foreach (string person_id in mitglieder)
+                else
                 {
-                    Person person = new Person(long.Parse(person_id));
-                    mannschaft.MitgliedAnnehmen(person);
+                    Txt_Name_Container.Attributes["class"] = "form-group has-error";
+                    Feld_Required();
                 }
-                mannschaft.Save();
-                Render();
+
             }
             else
             {
@@ -190,32 +196,41 @@ namespace Turnierverwaltung
         {
             Response.Redirect("~/Mannschaftsverwaltung.aspx");
         }
-        public bool Has_Permission(string rolle)
-        {
-            return (string)Session["rolle"] == rolle;
-        }
         public void Access_Denied()
         {
-            //string script = string.Format("alert('{0}');", "Sie haben keine Berichtigung!");
-            //ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
             Msg.InnerText = "Sie haben keine Berichtigung!";
+            Msg.Attributes["class"] = "alert alert-warning";
+            Msg.Visible = true;
+        }
+        public void Feld_Required()
+        {
+            Msg.InnerText = "Felder sind erforderlich!";
             Msg.Attributes["class"] = "alert alert-warning";
             Msg.Visible = true;
         }
         protected void Btn_Sichern_Click(object sender, EventArgs e)
         {
-            if (Has_Permission("admin"))
+            User user = new User(Session);
+            if (user.Has_Permission("admin"))
             {
-                Mannschaft mannschaft = new Mannschaft(long.Parse(Request.QueryString["item"]));
-                mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                mannschaft.Mitglieder.Clear();
-                foreach (ListItem item in LstBxM.Items)
+                if (Request.Form["ctl00$MainContent$Txt_Name"] != "")
                 {
-                    Person person = new Person(long.Parse(item.Value));
-                    mannschaft.MitgliedAnnehmen(person);
+                    Mannschaft mannschaft = new Mannschaft(long.Parse(Request.QueryString["item"]));
+                    mannschaft.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                    mannschaft.Mitglieder.Clear();
+                    foreach (ListItem item in LstBxM.Items)
+                    {
+                        Person person = new Person(long.Parse(item.Value));
+                        mannschaft.MitgliedAnnehmen(person);
+                    }
+                    mannschaft.Save();
+                    Response.Redirect("~/Mannschaftsverwaltung.aspx");
                 }
-                mannschaft.Save();
-                Response.Redirect("~/Mannschaftsverwaltung.aspx");
+                else
+                {
+                    Txt_Name_Container.Attributes["class"] = "form-group has-error";
+                    Feld_Required();
+                }
             }
             else
             {

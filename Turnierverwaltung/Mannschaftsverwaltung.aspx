@@ -12,34 +12,37 @@
                 <td style="width: 40%;">
                     <asp:Label ID="Label2" runat="server" Text="Mannschaftsname:"></asp:Label>
                     <br />
-                    <asp:TextBox ID="Txt_Name" runat="server"></asp:TextBox></td>
+                    <div id="Txt_Name_Container" runat="server">
+                    <asp:TextBox ID="Txt_Name" CssClass="form-control" runat="server"></asp:TextBox>
+                        </div>
+                        </td>
                 <td style="width: 10%; text-align: center;"></td>
                 <td style="width: 10%; text-align: center;"></td>
-                <td style="width: 40%; text-align: center">
+                <td style="width: 40%;">
                     <asp:Label ID="Label1" runat="server" Text="Sportart"></asp:Label>
                     <br />
-                    <asp:DropDownList ID="Sportart" runat="server" OnSelectedIndexChanged="Sportart_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList></td>
-
+                    <asp:DropDownList ID="Sportart" CssClass="form-control" runat="server" OnSelectedIndexChanged="Sportart_SelectedIndexChanged" AutoPostBack="True"></asp:DropDownList></td>
+                
             </tr>
             <tr>
-                <td>
+                <td style="width: 40%;">
                     <asp:Label ID="Label3" runat="server" Text="Mitglieder der Mannschaft:"></asp:Label>
                     <br />
-                    <asp:ListBox ID="LstBxM" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
-                <td>
-                    <asp:Button ID="Btn2" runat="server" Text=">" OnClick="Btn2_Click" /></td>
-                <td style="text-align: center;">
-                    <asp:Button ID="Button1" runat="server" Text="<" OnClick="Button1_Click" /></td>
-                <td style="text-align: center;">
+                    <asp:ListBox ID="LstBxM" CssClass="form-control" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
+                <td style="width: 10%; text-align:center">
+                    <asp:Button ID="Btn2" runat="server" CssClass="btn btn-info" Text=">" OnClick="Btn2_Click" /></td>
+                <td style="width: 10%; text-align:center">
+                    <asp:Button ID="Button1" runat="server" Text="<" CssClass="btn btn-info" OnClick="Button1_Click" /></td>
+                <td  style="width: 40%;">
                     <asp:Label ID="Label4" runat="server" Text="verfügbare Personen:"></asp:Label>
                     <br />
-                    <asp:ListBox ID="LstBxP" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
+                    <asp:ListBox ID="LstBxP" CssClass="form-control" runat="server" Width="100%" SelectionMode="Multiple"></asp:ListBox></td>
 
             </tr>
         </table>
-        <asp:Button ID="Btn_Add" runat="server" Text="Manschaft Hinzufügen" OnClick="Btn_add" />
-        <asp:Button ID="Btn_Abbrechen" runat="server" Text="Abbrechen" Visible="false" OnClick="Btn_Abbrechen_Click" />&nbsp;&nbsp;
-        <asp:Button ID="Btn_Sichern" runat="server" Text="Sichern" Visible="false" OnClick="Btn_Sichern_Click" />
+        <asp:Button ID="Btn_Add" CssClass="btn btn-success" runat="server" Text="Manschaft Hinzufügen" OnClick="Btn_add" />
+        <asp:Button ID="Btn_Abbrechen" CssClass="btn btn-secondary" runat="server" Text="Abbrechen" Visible="false" OnClick="Btn_Abbrechen_Click" />&nbsp;&nbsp;
+        <asp:Button ID="Btn_Sichern" runat="server" CssClass="btn btn-success" Text="Sichern" Visible="false" OnClick="Btn_Sichern_Click" />
 
     </asp:Panel>
     <asp:Panel ID="PnlMannschaften" runat="server">
@@ -55,6 +58,6 @@
             </asp:TableHeaderRow>
         </asp:Table>
         <br />
-        <asp:Button ID="Btn_XMLDownload" runat="server" Text="Als XML Herunterladen" OnClick="Btn_XMLDownload_Click" />
+        <asp:Button ID="Btn_XMLDownload" CssClass="btn btn-primary" runat="server" Text="Als XML Herunterladen" OnClick="Btn_XMLDownload_Click" />
     </asp:Panel>
 </asp:Content>

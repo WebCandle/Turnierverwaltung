@@ -22,6 +22,15 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Panel PnlVerwaltung;
         
         /// <summary>
+        /// Msg-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Msg;
+        
+        /// <summary>
         /// lblTitle-Steuerelement
         /// </summary>
         /// <remarks>
@@ -49,6 +58,15 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Label Lbl_Vorname;
         
         /// <summary>
+        /// Txt_Vorname_Container-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Txt_Vorname_Container;
+        
+        /// <summary>
         /// Txt_Vorname-Steuerelement
         /// </summary>
         /// <remarks>
@@ -65,6 +83,15 @@ namespace Turnierverwaltung {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl_Name;
+        
+        /// <summary>
+        /// Txt_Name_Container-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Txt_Name_Container;
         
         /// <summary>
         /// Txt_Name-Steuerelement
@@ -103,6 +130,15 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Label Lbl1;
         
         /// <summary>
+        /// Txt1_Container-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Txt1_Container;
+        
+        /// <summary>
         /// Txt1-Steuerelement
         /// </summary>
         /// <remarks>
@@ -119,6 +155,15 @@ namespace Turnierverwaltung {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Lbl2;
+        
+        /// <summary>
+        /// Txt2_Container-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Txt2_Container;
         
         /// <summary>
         /// Txt2-Steuerelement

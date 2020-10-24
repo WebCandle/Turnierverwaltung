@@ -49,6 +49,15 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
+        /// Txt_Name_Container-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Txt_Name_Container;
+        
+        /// <summary>
         /// Txt_Name-Steuerelement
         /// </summary>
         /// <remarks>

@@ -4,6 +4,7 @@
     <h1>Personenverwaltung</h1>
     <asp:Panel ID="PnlVerwaltung" runat="server">
         <h2 style="font-weight: bold">Hinzufügen oder Bearbeiten von Personen</h2>
+        <div runat="server" ID="Msg" visible="false"></div>
         <asp:Label ID="lblTitle" runat="server" Text="Auswahl des Personen Typs:" Font-Bold="True" Font-Size="X-Large"></asp:Label>
         <asp:RadioButtonList ID="RadioButtonListPersonenType" runat="server" AutoPostBack="True" OnSelectedIndexChanged="RadioButtonListPersonenType_SelectedIndexChanged">
             <asp:ListItem Selected="True" Value="Fussballspieler">&nbsp;Fussballspieler</asp:ListItem>
@@ -19,17 +20,17 @@
             <table style="width: 100%;">
                 <tr>
                     <td>
-                        <asp:Label ID="Lbl_Vorname" runat="server" Text="Vorname"></asp:Label></td>
+                        <asp:Label ID="Lbl_Vorname" runat="server" Text=" Vorname"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="Txt_Vorname" runat="server"></asp:TextBox></td>
+                        <div id="Txt_Vorname_Container" runat="server"><asp:TextBox  CssClass="form-control" ID="Txt_Vorname" runat="server"></asp:TextBox></div></td>
                     <td>
-                        <asp:Label ID="Lbl_Name" runat="server" Text="Name"></asp:Label></td>
+                        <asp:Label ID="Lbl_Name" runat="server" Text=" Name"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="Txt_Name" runat="server"></asp:TextBox></td>
+                        <div id="Txt_Name_Container" runat="server"><asp:TextBox ID="Txt_Name"  CssClass="form-control" runat="server"></asp:TextBox></div></td>
                     <td>
-                        <asp:Label ID="Lbl_Datum" runat="server" Text="Geburtsdatum"></asp:Label></td>
+                        <asp:Label ID="Lbl_Datum" runat="server" Text=" Geburtsdatum"></asp:Label></td>
                     <td>
-                        <asp:TextBox ID="Txt_Datum" runat="server" TextMode="Date"></asp:TextBox></td>
+                        <asp:TextBox ID="Txt_Datum" runat="server"  CssClass="form-control" TextMode="Date"></asp:TextBox></td>
                 </tr>
                 <tr>
                     <td>&nbsp;</td>
@@ -41,32 +42,32 @@
                 </tr>
                 <tr>
                     <td>
-                        <asp:Label ID="Lbl1" runat="server" Text="Anzahl Spiele"></asp:Label>
+                        <asp:Label ID="Lbl1" runat="server" Text=" Anzahl Spiele"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="Txt1" runat="server" TextMode="Number"></asp:TextBox>
+                        <div id="Txt1_Container" runat="server"><asp:TextBox ID="Txt1"  CssClass="form-control" runat="server" TextMode="Number"></asp:TextBox></div>
                     </td>
                     <td>
-                        <asp:Label ID="Lbl2" runat="server" Text="Geschossene Tore"></asp:Label>
+                        <asp:Label ID="Lbl2" runat="server" Text=" Geschossene Tore"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="Txt2" runat="server" TextMode="Number"></asp:TextBox>
+                        <div id="Txt2_Container" runat="server"><asp:TextBox ID="Txt2"  CssClass="form-control" runat="server" TextMode="Number"></asp:TextBox></div>
                     </td>
                     <td>
-                        <asp:Label ID="Lbl3" runat="server" Text="Spielposition"></asp:Label>
+                        <asp:Label ID="Lbl3" runat="server" Text=" Spielposition"></asp:Label>
                     </td>
                     <td>
-                        <asp:TextBox ID="Txt3" runat="server"></asp:TextBox>
-                        <asp:DropDownList ID="Sportart" runat="server" Visible="false"></asp:DropDownList>
+                        <asp:TextBox ID="Txt3" runat="server"  CssClass="form-control"></asp:TextBox>
+                        <asp:DropDownList ID="Sportart" runat="server" Visible="false"  CssClass="form-control"></asp:DropDownList>
                     </td>
                 </tr>
             </table>
         </div>
         <hr />
         <asp:Label ID="Lbl_Msg" runat="server" Text=""></asp:Label>
-        <asp:Button ID="Btn_Add" runat="server" Text="Hinzufügen" OnClick="Add_Click" />&nbsp;
-    <asp:Button ID="Btn_Bearbeiten" runat="server" Text="Sichern" OnClick="Btn_Bearbeiten_Click" Visible="false" />&nbsp;&nbsp;
-    <asp:Button ID="Btn_Cancel" runat="server" Text="Abbrechen" OnClick="Btn_Cancel_Click" Visible="false" />
+        <asp:Button ID="Btn_Add" CssClass="btn btn-success" runat="server" Text="Hinzufügen" OnClick="Add_Click" />&nbsp;
+    <asp:Button ID="Btn_Bearbeiten" runat="server" Text="Sichern" CssClass="btn btn-success" OnClick="Btn_Bearbeiten_Click" Visible="false" />&nbsp;&nbsp;
+    <asp:Button ID="Btn_Cancel" CssClass="btn btn-secondary" runat="server" Text="Abbrechen" OnClick="Btn_Cancel_Click" Visible="false" />
         <br />
     </asp:Panel>
     <br />
@@ -89,5 +90,5 @@
         </asp:TableHeaderRow>
     </asp:Table>
     <br />
-    <asp:Button ID="Btn_XMLDownload" runat="server" Text="Als XML Herunterladen" OnClick="Btn_XMLDownload_Click" />
+    <asp:Button ID="Btn_XMLDownload" CssClass="btn btn-primary" runat="server" Text="Als XML Herunterladen" OnClick="Btn_XMLDownload_Click" />
 </asp:Content>

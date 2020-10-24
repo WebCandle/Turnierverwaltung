@@ -21,107 +21,105 @@ namespace Turnierverwaltung
             }
             else
             {
-                if(user.Has_Permission("admin"))
+                if (Page.IsCallback == false)
                 {
-                    PnlVerwaltung.Visible = true;
-                    if (Page.IsCallback == false)
-                    {
-                        Sportart.Items.Clear();
-                        Sportart.Items.Add("Fussball");
-                        Sportart.Items.Add("Handball");
-                        Sportart.Items.Add("Tennis");
-                        Txt_Datum.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    Sportart.Items.Clear();
+                    Sportart.Items.Add("Fussball");
+                    Sportart.Items.Add("Handball");
+                    Sportart.Items.Add("Tennis");
+                    Txt_Datum.Text = DateTime.Now.ToString("yyyy-MM-dd");
 
-                        if (Request.QueryString["do"] == "entfernen")
+                    if (Request.QueryString["do"] == "entfernen")
+                    {
+                        if (user.Has_Permission("admin"))
                         {
                             long item = long.Parse(Request.QueryString["item"]);
                             Person person = new Person(item);
                             person.Delete();
                             Response.Redirect("~/Personenverwaltung.aspx");
                         }
-                        else if (Request.QueryString["do"] == "bearbeiten")
-                        {
-                            RadioButtonListPersonenType.Visible = false;
-                            lblTitle.Visible = false;
-                            Btn_Add.Visible = false;
-                            Btn_Bearbeiten.Visible = true;
-                            Btn_Cancel.Visible = true;
-                            long item = Convert.ToInt32(Request.QueryString["item"]);
-                            Person person = new Person(item);
-                            if (person.Art == "FussballSpieler")
-                            {
-                                RenderFussballForm();
-                                FussballSpieler s = new FussballSpieler(person.Art_ID);
-                                Txt1.Text = s.Spiele.ToString();
-                                Txt2.Text = s.Tore.ToString();
-                                Txt3.Text = s.Position;
-                            }
-                            else if (person.Art == "HandballSpieler")
-                            {
-                                RenderHandballForm();
-                                HandballSpieler s = new HandballSpieler(person.Art_ID);
-                                Txt1.Text = s.Spiele.ToString();
-                                Txt2.Text = s.Tore.ToString();
-                                Txt3.Text = s.Position;
-                            }
-                            else if (person.Art == "TennisSpieler")
-                            {
-                                RenderTennisForm();
-                                TennisSpieler s = new TennisSpieler(person.Art_ID);
-                                Txt1.Text = s.Spiele.ToString();
-                                Txt2.Text = s.Tore.ToString();
-                            }
-                            else if (person.Art == "Spieler")
-                            {
-                                RenderSpielerForm();
-                                Spieler s = new Spieler(person.Art_ID);
-                                Txt1.Text = s.Spiele.ToString();
-                                Txt2.Text = s.Tore.ToString();
-                                Sportart.Items.FindByValue(s.Sportart).Selected = true;
-                            }
-                            else if (person.Art == "Mitarbeiter")
-                            {
-                                RenderMitarbeiterForm();
-                                Mitarbeiter m = new Mitarbeiter(person.Art_ID);
-                                Txt1.Text = m.Aufgabe;
-                                Sportart.Text = m.Sportart;
-                            }
-                            else if (person.Art == "Physiotherapeut")
-                            {
-                                RenderPhysiotherapeutForm();
-                                Physiotherapeut ph = new Physiotherapeut(person.Art_ID);
-                                Txt1.Text = ph.Jahre.ToString();
-                                Sportart.Text = ph.Sportart;
-
-                            }
-                            else if (person.Art == "Trainer")
-                            {
-                                RenderTrainerForm();
-                                Trainer t = new Trainer(person.Art_ID);
-                                Txt1.Text = t.Vereine.ToString();
-                                Sportart.Text = t.Sportart;
-                            }
-                            Txt_Name.Text = person.Name;
-                            Txt_Vorname.Text = person.Vorname;
-                            Txt_Datum.Text = person.Geburtsdatum.ToString("yyyy-MM-dd");
-                        }
                         else
                         {
-                            RadioButtonListPersonenType.Visible = true;
-                            lblTitle.Visible = true;
-                            Btn_Add.Visible = true;
-                            Btn_Bearbeiten.Visible = false;
-                            Btn_Cancel.Visible = false;
+                            Access_Denied();
                         }
+
+                    }
+                    else if (Request.QueryString["do"] == "bearbeiten")
+                    {
+                        RadioButtonListPersonenType.Visible = false;
+                        lblTitle.Visible = false;
+                        Btn_Add.Visible = false;
+                        Btn_Bearbeiten.Visible = true;
+                        Btn_Cancel.Visible = true;
+                        long item = Convert.ToInt32(Request.QueryString["item"]);
+                        Person person = new Person(item);
+                        if (person.Art == "FussballSpieler")
+                        {
+                            RenderFussballForm();
+                            FussballSpieler s = new FussballSpieler(person.Art_ID);
+                            Txt1.Text = s.Spiele.ToString();
+                            Txt2.Text = s.Tore.ToString();
+                            Txt3.Text = s.Position;
+                        }
+                        else if (person.Art == "HandballSpieler")
+                        {
+                            RenderHandballForm();
+                            HandballSpieler s = new HandballSpieler(person.Art_ID);
+                            Txt1.Text = s.Spiele.ToString();
+                            Txt2.Text = s.Tore.ToString();
+                            Txt3.Text = s.Position;
+                        }
+                        else if (person.Art == "TennisSpieler")
+                        {
+                            RenderTennisForm();
+                            TennisSpieler s = new TennisSpieler(person.Art_ID);
+                            Txt1.Text = s.Spiele.ToString();
+                            Txt2.Text = s.Tore.ToString();
+                        }
+                        else if (person.Art == "Spieler")
+                        {
+                            RenderSpielerForm();
+                            Spieler s = new Spieler(person.Art_ID);
+                            Txt1.Text = s.Spiele.ToString();
+                            Txt2.Text = s.Tore.ToString();
+                            Sportart.Items.FindByValue(s.Sportart).Selected = true;
+                        }
+                        else if (person.Art == "Mitarbeiter")
+                        {
+                            RenderMitarbeiterForm();
+                            Mitarbeiter m = new Mitarbeiter(person.Art_ID);
+                            Txt1.Text = m.Aufgabe;
+                            Sportart.Text = m.Sportart;
+                        }
+                        else if (person.Art == "Physiotherapeut")
+                        {
+                            RenderPhysiotherapeutForm();
+                            Physiotherapeut ph = new Physiotherapeut(person.Art_ID);
+                            Txt1.Text = ph.Jahre.ToString();
+                            Sportart.Text = ph.Sportart;
+
+                        }
+                        else if (person.Art == "Trainer")
+                        {
+                            RenderTrainerForm();
+                            Trainer t = new Trainer(person.Art_ID);
+                            Txt1.Text = t.Vereine.ToString();
+                            Sportart.Text = t.Sportart;
+                        }
+                        Txt_Name.Text = person.Name;
+                        Txt_Vorname.Text = person.Vorname;
+                        Txt_Datum.Text = person.Geburtsdatum.ToString("yyyy-MM-dd");
+                    }
+                    else
+                    {
+                        RadioButtonListPersonenType.Visible = true;
+                        lblTitle.Visible = true;
+                        Btn_Add.Visible = true;
+                        Btn_Bearbeiten.Visible = false;
+                        Btn_Cancel.Visible = false;
                     }
                 }
-                else
-                {
-                    PnlVerwaltung.Visible = false;
-                }
-    
                 Lbl_Msg.Visible = false;
-
                 Render();
             }
         }
@@ -242,64 +240,15 @@ namespace Turnierverwaltung
         }
         public void Access_Denied()
         {
-            string script = string.Format("alert('{0}');", "Sie haben keine Berichtigung!");
-            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", script, true);
+            Msg.InnerText = "Sie haben keine Berichtigung!";
+            Msg.Attributes["class"] = "alert alert-warning";
+            Msg.Visible = true;
         }
-        protected void Add_Click(object sender, EventArgs e)
+        public void Feld_Required()
         {
-            User user = new User(Session);
-            if(user.Has_Permission("admin"))
-            {
-                string name = Request.Form["ctl00$MainContent$Txt_Name"];
-                string vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
-                DateTime datum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
-                string txt1 = Request.Form["ctl00$MainContent$Txt1"];
-                string txt2 = Request.Form["ctl00$MainContent$Txt2"];
-                string txt3 = Request.Form["ctl00$MainContent$Txt3"];
-                string sportart = Request.Form["ctl00$MainContent$Sportart"];
-                if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
-                {
-                    FussballSpieler fussballSpieler = new FussballSpieler(name, vorname,datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), txt3);
-                    Lbl_Msg.Visible = true;
-                    fussballSpieler.Save();
-                }
-                else if (RadioButtonListPersonenType.SelectedItem.Value == "Handballspieler")
-                {
-                    HandballSpieler handballSpieler = new HandballSpieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), txt3);
-                    handballSpieler.Save();
-                }
-                else if (RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
-                {
-                    TennisSpieler tennisSpieler = new TennisSpieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2));
-                    tennisSpieler.Save();
-                }
-                else if (RadioButtonListPersonenType.SelectedItem.Value == "anderer Spielertyp")
-                {
-                    Spieler spieler = new Spieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), sportart);
-                    spieler.Save();
-
-                }
-                else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
-                {
-                    Physiotherapeut physiotherapeut = new Physiotherapeut(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), sportart);
-                    physiotherapeut.Save();
-                }
-                else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
-                {
-                    Trainer trainer = new Trainer(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), sportart);
-                    trainer.Save();
-                }
-                else if (RadioButtonListPersonenType.SelectedItem.Value == "Person mit anderen Aufgaben")
-                {
-                    Mitarbeiter mitarbeiter = new Mitarbeiter(name, vorname, datum, Geschlecht.Maenlich, txt1, sportart);
-                    mitarbeiter.Save();
-                }
-                Response.Redirect("~/Personenverwaltung.aspx");
-            }
-            else
-            {
-                Access_Denied();
-            }
+            Msg.InnerText = "Felder sind erforderlich!";
+            Msg.Attributes["class"] = "alert alert-warning";
+            Msg.Visible = true;
         }
         private void Render()
         {
@@ -536,56 +485,357 @@ namespace Turnierverwaltung
                 Tbl.Rows.Add(row);
             }
         }
+        protected void Add_Click(object sender, EventArgs e)
+        {
+            User user = new User(Session);
+            if (user.Has_Permission("admin"))
+            {
+                if (Request.Form["ctl00$MainContent$Txt_Vorname"] == "")
+                {
+                    Feld_Required();
+                    Txt_Vorname_Container.Attributes["class"] = "form-group has-error";
+                }
+                else if (Request.Form["ctl00$MainContent$Txt_Name"] == "")
+                {
+                    Feld_Required();
+                    Txt_Name_Container.Attributes["class"] = "form-group has-error";
+                }
+                else
+                {
+                    string name = Request.Form["ctl00$MainContent$Txt_Name"];
+                    string vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                    DateTime datum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                    string txt1 = Request.Form["ctl00$MainContent$Txt1"];
+                    string txt2 = Request.Form["ctl00$MainContent$Txt2"];
+                    string txt3 = Request.Form["ctl00$MainContent$Txt3"];
+                    string sportart = Request.Form["ctl00$MainContent$Sportart"];
+                    int spiele, tore, jahre, vereine;
+                    if (RadioButtonListPersonenType.SelectedItem.Value == "Fussballspieler")
+                    {
+                        bool is_valid = true;
+                        if (Int32.TryParse(txt1, out spiele))
+                        {
+                            if (Int32.TryParse(txt2, out tore))
+                            {
+                                //nichts
+                            }
+                            else
+                            {
+                                Txt2_Container.Attributes["class"] = "form-group has-error";
+                                Feld_Required();
+                                is_valid = false;
+                            }
+                        }
+                        else
+                        {
+                            Txt1_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                        if (is_valid)
+                        {
+                            FussballSpieler fussballSpieler = new FussballSpieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), txt3);
+                            Lbl_Msg.Visible = true;
+                            fussballSpieler.Save();
+                            Response.Redirect("~/Personenverwaltung.aspx");
+                        }
 
+                    }
+                    else if (RadioButtonListPersonenType.SelectedItem.Value == "Handballspieler")
+                    {
+                        bool is_valid = true;
+                        if (Int32.TryParse(txt1, out spiele))
+                        {
+                            if (Int32.TryParse(txt2, out tore))
+                            {
+                                //nichts
+                            }
+                            else
+                            {
+                                Txt2_Container.Attributes["class"] = "form-group has-error";
+                                Feld_Required();
+                                is_valid = false;
+                            }
+                        }
+                        else
+                        {
+                            Txt1_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                        if (is_valid)
+                        {
+                            HandballSpieler handballSpieler = new HandballSpieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), txt3);
+                            handballSpieler.Save();
+                            Response.Redirect("~/Personenverwaltung.aspx");
+                        }
+                    }
+                    else if (RadioButtonListPersonenType.SelectedItem.Value == "Tennisspieler")
+                    {
+                        bool is_valid = true;
+                        if (Int32.TryParse(txt1, out spiele))
+                        {
+                            if (Int32.TryParse(txt2, out tore))
+                            {
+                                //nichts
+                            }
+                            else
+                            {
+                                Txt2_Container.Attributes["class"] = "form-group has-error";
+                                Feld_Required();
+                                is_valid = false;
+                            }
+                        }
+                        else
+                        {
+                            Txt1_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                        if (is_valid)
+                        {
+                            TennisSpieler tennisSpieler = new TennisSpieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2));
+                            tennisSpieler.Save();
+                            Response.Redirect("~/Personenverwaltung.aspx");
+                        }
+                    }
+                    else if (RadioButtonListPersonenType.SelectedItem.Value == "anderer Spielertyp")
+                    {
+                        bool is_valid = true;
+                        if (Int32.TryParse(txt1, out spiele))
+                        {
+                            if (Int32.TryParse(txt2, out tore))
+                            {
+                                //nichts
+                            }
+                            else
+                            {
+                                Txt2_Container.Attributes["class"] = "form-group has-error";
+                                Feld_Required();
+                                is_valid = false;
+                            }
+                        }
+                        else
+                        {
+                            Txt1_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                        if (is_valid)
+                        {
+                            Spieler spieler = new Spieler(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), Convert.ToInt32(txt2), sportart);
+                            spieler.Save();
+                            Response.Redirect("~/Personenverwaltung.aspx");
+                        }
+
+                    }
+                    else if (RadioButtonListPersonenType.SelectedItem.Value == "Physiotherapeut")
+                    {
+                        bool is_valid = true;
+                        if (Int32.TryParse(txt1, out jahre))
+                        {
+                        }
+                        else
+                        {
+                            Txt1_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                        if (is_valid)
+                        {
+                            Physiotherapeut physiotherapeut = new Physiotherapeut(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), sportart);
+                            physiotherapeut.Save();
+                            Response.Redirect("~/Personenverwaltung.aspx");
+                        }
+                    }
+                    else if (RadioButtonListPersonenType.SelectedItem.Value == "Trainer")
+                    {
+                        bool is_valid = true;
+                        if (Int32.TryParse(txt1, out vereine))
+                        {
+                        }
+                        else
+                        {
+                            Txt1_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                        if (is_valid)
+                        {
+                            Trainer trainer = new Trainer(name, vorname, datum, Geschlecht.Maenlich, Convert.ToInt32(txt1), sportart);
+                            trainer.Save();
+                            Response.Redirect("~/Personenverwaltung.aspx");
+                        }
+                    }
+                    else if (RadioButtonListPersonenType.SelectedItem.Value == "Person mit anderen Aufgaben")
+                    {
+                        Mitarbeiter mitarbeiter = new Mitarbeiter(name, vorname, datum, Geschlecht.Maenlich, txt1, sportart);
+                        mitarbeiter.Save();
+                        Response.Redirect("~/Personenverwaltung.aspx");
+                    }
+                }
+            }
+            else
+            {
+                Access_Denied();
+            }
+        }
         protected void Btn_Bearbeiten_Click(object sender, EventArgs e)
         {
             User user = new User(Session);
-            if(user.Has_Permission("admin"))
+            if (user.Has_Permission("admin"))
             {
                 long item = Convert.ToInt32(Request.QueryString["item"]);
                 Person person = new Person(item);
-                if (person.Art == "FussballSpieler")
+
+                if (Request.Form["ctl00$MainContent$Txt_Vorname"] == "")
+                {
+                    Feld_Required();
+                    Txt_Vorname_Container.Attributes["class"] = "form-group has-error";
+                }
+                else if (Request.Form["ctl00$MainContent$Txt_Name"] == "")
+                {
+                    Feld_Required();
+                    Txt_Name_Container.Attributes["class"] = "form-group has-error";
+                }
+                else if (person.Art == "FussballSpieler")
                 {
                     FussballSpieler s = new FussballSpieler(person.Art_ID);
-                    s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
-                    s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
-                    s.Position = Request.Form["ctl00$MainContent$Txt3"];
-                    s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                    s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
-                    s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
-                    s.Save();
+                    bool is_valid = true;
+                    if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt1"], out int spiele))
+                    {
+                        s.Spiele = spiele;
+                        if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt2"], out int tore))
+                        {
+                            s.Tore = tore;
+                        }
+                        else
+                        {
+                            Txt2_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                    }
+                    else
+                    {
+                        Txt1_Container.Attributes["class"] = "form-group has-error";
+                        Feld_Required();
+                        is_valid = false;
+                    }
+                    if (is_valid)
+                    {
+                        s.Position = Request.Form["ctl00$MainContent$Txt3"];
+                        s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                        s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                        s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                        s.Save();
+                        Response.Redirect("~/Personenverwaltung.aspx");
+                    }
+
                 }
                 else if (person.Art == "HandballSpieler")
                 {
                     HandballSpieler s = new HandballSpieler(person.Art_ID);
-                    s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
-                    s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
-                    s.Position = Request.Form["ctl00$MainContent$Txt3"];
-                    s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                    s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
-                    s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
-                    s.Save();
+                    bool is_valid = true;
+                    if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt1"], out int spiele))
+                    {
+                        s.Spiele = spiele;
+                        if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt2"], out int tore))
+                        {
+                            s.Tore = tore;
+                        }
+                        else
+                        {
+                            Txt2_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                    }
+                    else
+                    {
+                        Txt1_Container.Attributes["class"] = "form-group has-error";
+                        Feld_Required();
+                        is_valid = false;
+                    }
+                    if (is_valid)
+                    {
+                        s.Position = Request.Form["ctl00$MainContent$Txt3"];
+                        s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                        s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                        s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                        s.Save();
+                        Response.Redirect("~/Personenverwaltung.aspx");
+                    }
+
                 }
                 else if (person.Art == "TennisSpieler")
                 {
                     TennisSpieler s = new TennisSpieler(person.Art_ID);
-                    s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
-                    s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
-                    s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                    s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
-                    s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
-                    s.Save();
+                    bool is_valid = true;
+                    if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt1"], out int spiele))
+                    {
+                        s.Spiele = spiele;
+                        if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt2"], out int tore))
+                        {
+                            s.Tore = tore;
+                        }
+                        else
+                        {
+                            Txt2_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                    }
+                    else
+                    {
+                        Txt1_Container.Attributes["class"] = "form-group has-error";
+                        Feld_Required();
+                        is_valid = false;
+                    }
+                    if (is_valid)
+                    {
+                        s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                        s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                        s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                        s.Save();
+                        Response.Redirect("~/Personenverwaltung.aspx");
+                    }
+
                 }
                 else if (person.Art == "Spieler")
                 {
                     Spieler s = new Spieler(person.Art_ID);
-                    s.Spiele = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
-                    s.Tore = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt2"]);
-                    s.Sportart = Request.Form["ctl00$MainContent$Sportart"];
-                    s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                    s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
-                    s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
-                    s.Save();
+                    bool is_valid = true;
+                    if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt1"], out int spiele))
+                    {
+                        s.Spiele = spiele;
+                        if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt2"], out int tore))
+                        {
+                            s.Tore = tore;
+                        }
+                        else
+                        {
+                            Txt2_Container.Attributes["class"] = "form-group has-error";
+                            Feld_Required();
+                            is_valid = false;
+                        }
+                    }
+                    else
+                    {
+                        Txt1_Container.Attributes["class"] = "form-group has-error";
+                        Feld_Required();
+                        is_valid = false;
+                    }
+                    if (is_valid)
+                    {
+                        s.Sportart = Request.Form["ctl00$MainContent$Sportart"];
+                        s.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                        s.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                        s.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                        s.Save();
+                        Response.Redirect("~/Personenverwaltung.aspx");
+                    }
+
                 }
                 else if (person.Art == "Mitarbeiter")
                 {
@@ -597,30 +847,50 @@ namespace Turnierverwaltung
                     m.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
                     m.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
                     m.Save();
+                    Response.Redirect("~/Personenverwaltung.aspx");
                 }
                 else if (person.Art == "Physiotherapeut")
                 {
                     RenderPhysiotherapeutForm();
                     Physiotherapeut ph = new Physiotherapeut(person.Art_ID);
-                    ph.Jahre = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
-                    Sportart.Text = Request.Form["ctl00$MainContent$Sportart"];
-                    ph.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                    ph.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
-                    ph.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
-                    ph.Save();
+                    if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt1"], out int jahre))
+                    {
+                        ph.Jahre = jahre;
+                        Sportart.Text = Request.Form["ctl00$MainContent$Sportart"];
+                        ph.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                        ph.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                        ph.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                        ph.Save();
+                        Response.Redirect("~/Personenverwaltung.aspx");
+                    }
+                    else
+                    {
+                        Txt1_Container.Attributes["class"] = "form-group has-error";
+                        Feld_Required();
+                    }
+
                 }
                 else if (person.Art == "Trainer")
                 {
                     RenderTrainerForm();
                     Trainer t = new Trainer(person.Art_ID);
-                    t.Vereine = Convert.ToInt32(Request.Form["ctl00$MainContent$Txt1"]);
-                    t.Sportart = Request.Form["ctl00$MainContent$Sportart"];
-                    t.Name = Request.Form["ctl00$MainContent$Txt_Name"];
-                    t.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
-                    t.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
-                    t.Save();
+                    if (Int32.TryParse(Request.Form["ctl00$MainContent$Txt1"], out int vereine))
+                    {
+                        t.Vereine = vereine;
+                        t.Sportart = Request.Form["ctl00$MainContent$Sportart"];
+                        t.Name = Request.Form["ctl00$MainContent$Txt_Name"];
+                        t.Vorname = Request.Form["ctl00$MainContent$Txt_Vorname"];
+                        t.Geburtsdatum = Convert.ToDateTime(Request.Form["ctl00$MainContent$Txt_Datum"]);
+                        t.Save();
+                        Response.Redirect("~/Personenverwaltung.aspx");
+                    }
+                    else
+                    {
+                        Txt1_Container.Attributes["class"] = "form-group has-error";
+                        Feld_Required();
+                    }
                 }
-                Response.Redirect("~/Personenverwaltung.aspx");
+
             }
             else
             {
