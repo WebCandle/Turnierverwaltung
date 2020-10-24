@@ -58,6 +58,15 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.TextBox txtPunkte2;
         
         /// <summary>
+        /// Btn_Abbrechen-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Btn_Abbrechen;
+        
+        /// <summary>
         /// btnSichern-Steuerelement
         /// </summary>
         /// <remarks>

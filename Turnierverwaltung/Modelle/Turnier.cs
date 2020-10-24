@@ -123,10 +123,25 @@ namespace Turnierverwaltung
                     conn.Open();
                     using (MySqlCommand cmd = conn.CreateCommand())
                     {
-                        string qry = string.Format("INSERT INTO `turnier`(`Verein_Name`, `Adresse`, `Datum_von`, `Datum_bis`) VALUES (\"{0}\",\"{1}\",STR_TO_DATE(\"{2}\", '%d.%m.%y'),STR_TO_DATE(\"{3}\", '%d.%m.%y'))", MySqlHelper.EscapeString(VereinName), MySqlHelper.EscapeString(Adresse), MySqlHelper.EscapeString(Datum_Von.ToShortDateString()), MySqlHelper.EscapeString(Datum_Bis.ToShortDateString()));
-                        cmd.CommandText = qry;
-                        cmd.ExecuteNonQuery();
-                        Turnier_ID = cmd.LastInsertedId;
+                        string qry;
+                        if ( Turnier_ID == 0)
+                        {
+                            //insert
+                            qry = string.Format("INSERT INTO `turnier`(`Verein_Name`, `Adresse`, `Datum_von`, `Datum_bis`) VALUES (\"{0}\",\"{1}\",STR_TO_DATE(\"{2}\", '%d.%m.%y'),STR_TO_DATE(\"{3}\", '%d.%m.%y'))", MySqlHelper.EscapeString(VereinName), MySqlHelper.EscapeString(Adresse), MySqlHelper.EscapeString(Datum_Von.ToShortDateString()), MySqlHelper.EscapeString(Datum_Bis.ToShortDateString()));
+                            cmd.CommandText = qry;
+                            cmd.ExecuteNonQuery();
+                            Turnier_ID = cmd.LastInsertedId;
+                        }
+                        else
+                        {
+                            //update
+                            cmd.CommandText = string.Format("DELETE FROM `turnier_mannschaft` WHERE `turnier_id` = {0}",Turnier_ID);
+                            cmd.ExecuteNonQuery();
+                            qry = string.Format("UPDATE `turnier` SET `Verein_Name`=\"{0}\",`Adresse`=\"{1}\",`Datum_von`=STR_TO_DATE(\"{2}\", '%d.%m.%y'),`Datum_bis`=STR_TO_DATE(\"{3}\", '%d.%m.%y') WHERE  `Turnier_ID`={4} LIMIT 1", MySqlHelper.EscapeString(VereinName), MySqlHelper.EscapeString(Adresse), MySqlHelper.EscapeString(Datum_Von.ToShortDateString()), MySqlHelper.EscapeString(Datum_Bis.ToShortDateString()),Turnier_ID);
+                            cmd.CommandText = qry;
+                            cmd.ExecuteNonQuery();
+                        }
+
                         foreach (Mannschaft mannschaft in Mannschaften)
                         {
                             using (MySqlCommand cmd1 = conn.CreateCommand())

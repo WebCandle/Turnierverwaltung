@@ -15,41 +15,51 @@ namespace Turnierverwaltung
             {
                 Response.Redirect("~/Turnierverwaltung.aspx", true);
             }
-
-            if (!Page.IsPostBack)
+            User user = new User(Session);
+            if (!user.Auth)
             {
-                lstmannschaft.Items.Clear();
-                lstgegenmannschaft.Items.Clear();
-                List<Mannschaft> mannschaften = Mannschaft.GetAll();
-                foreach (Mannschaft mannschaft in mannschaften)
-                {
-                    ListItem listItem1 = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
-                    lstmannschaft.Items.Add(listItem1);
-                    ListItem listItem2 = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
-                    lstgegenmannschaft.Items.Add(listItem2);
-                }
-                if (Request.QueryString["do"] == "bearbeiten")
-                {
-                    long spiel_id = long.Parse(Request.QueryString["spiel"]);
-                    Spiel spiel = new Spiel(spiel_id);
-                    txtPunkte1.Text = spiel.Punkte.ToString();
-                    txtPunkte2.Text = spiel.Gegen_Punkte.ToString();
-                    lstmannschaft.Items.FindByValue(spiel.Mannschaft_ID.ToString()).Selected = true;
-                    lstgegenmannschaft.Items.FindByValue(spiel.Gegen_Mannschaft_ID.ToString()).Selected = true;
-                }
-                else if(Request.QueryString["do"] == "entfernen")
-                {
-                    long turnier_id = long.Parse(Request.QueryString["item"]);
-                    long spiel_id = long.Parse(Request.QueryString["spiel"]);
-                    Turnier turnier = new Turnier(turnier_id);
-                    if (turnier.Turnier_ID != 0 && spiel_id != 0)
-                    {
-                        turnier.DeleteSpiel(spiel_id);
-                    }
-                    Response.Redirect("~/Spiele.aspx?item=" + Request.QueryString["item"]);
-                }
+                Session["redirect"] = "~/Spiele.aspx?item="+Request.QueryString["item"];
+                Response.Redirect("~/Login.aspx", true);
             }
-            Render();
+            else
+            {
+                if (!Page.IsPostBack)
+                {
+                    lstmannschaft.Items.Clear();
+                    lstgegenmannschaft.Items.Clear();
+                    List<Mannschaft> mannschaften = Mannschaft.GetAll();
+                    foreach (Mannschaft mannschaft in mannschaften)
+                    {
+                        ListItem listItem1 = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
+                        lstmannschaft.Items.Add(listItem1);
+                        ListItem listItem2 = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
+                        lstgegenmannschaft.Items.Add(listItem2);
+                    }
+                    if (Request.QueryString["do"] == "bearbeiten")
+                    {
+                        long spiel_id = long.Parse(Request.QueryString["spiel"]);
+                        Spiel spiel = new Spiel(spiel_id);
+                        txtPunkte1.Text = spiel.Punkte.ToString();
+                        txtPunkte2.Text = spiel.Gegen_Punkte.ToString();
+                        lstmannschaft.Items.FindByValue(spiel.Mannschaft_ID.ToString()).Selected = true;
+                        lstgegenmannschaft.Items.FindByValue(spiel.Gegen_Mannschaft_ID.ToString()).Selected = true;
+                        Btn_Abbrechen.Visible = true;
+                    }
+                    else if (Request.QueryString["do"] == "entfernen")
+                    {
+                        long turnier_id = long.Parse(Request.QueryString["item"]);
+                        long spiel_id = long.Parse(Request.QueryString["spiel"]);
+                        Turnier turnier = new Turnier(turnier_id);
+                        if (turnier.Turnier_ID != 0 && spiel_id != 0)
+                        {
+                            turnier.DeleteSpiel(spiel_id);
+                        }
+                        Response.Redirect("~/Spiele.aspx?item=" + Request.QueryString["item"]);
+                    }
+                }
+                Render();
+            }
+
         }
 
         protected void btnSichern_Click(object sender, EventArgs e)
@@ -147,6 +157,11 @@ namespace Turnierverwaltung
 
                 Tbl.Rows.Add(row);
             }
+        }
+
+        protected void Btn_Abbrechen_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Spiele.aspx?item=" + Request.QueryString["item"], true);
         }
     }
 }

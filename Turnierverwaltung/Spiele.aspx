@@ -11,18 +11,19 @@
             </tr>
             <tr>
                 <td>
-                    <asp:DropDownList ID="lstmannschaft" runat="server" Font-Bold="True" EnableViewState="False"></asp:DropDownList></td>
+                    <asp:DropDownList ID="lstmannschaft" CssClass="form-control" runat="server" Font-Bold="True" EnableViewState="False"></asp:DropDownList></td>
                 <td>
-                    <asp:TextBox ID="txtPunkte1" Text="0" TextMode="Number" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtPunkte1" CssClass="form-control" Text="0" TextMode="Number" runat="server"></asp:TextBox>
                 </td>
                 <td>
-                    <asp:DropDownList ID="lstgegenmannschaft" runat="server" EnableViewState="False"></asp:DropDownList></td>
+                    <asp:DropDownList ID="lstgegenmannschaft" CssClass="form-control" runat="server" EnableViewState="False"></asp:DropDownList></td>
                 <td>
-                    <asp:TextBox ID="txtPunkte2" Text="0" TextMode="Number" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="txtPunkte2" CssClass="form-control" Text="0" TextMode="Number" runat="server"></asp:TextBox>
 
                 </td>
             </tr>
         </table>
+        <asp:Button ID="Btn_Abbrechen" CssClass="btn btn-secondary" runat="server" Text="Abbrechen" Visible="false" OnClick="Btn_Abbrechen_Click" />&nbsp;&nbsp;
         <asp:Button ID="btnSichern" runat="server" Text="Sichern" OnClick="btnSichern_Click" />
     </asp:Panel>
     <br /><br />

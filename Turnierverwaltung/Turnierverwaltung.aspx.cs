@@ -19,45 +19,121 @@ namespace Turnierverwaltung
             }
             else
             {
-                if (user.Has_Permission("admin"))
+                if (!Page.IsPostBack)
                 {
-                    if (!Page.IsPostBack)
+                    txtDatumVon.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    txtDatumBis.Text = DateTime.Now.AddDays(10).ToString("yyyy-MM-dd");
+                    CheckBxLstMannschaften.Items.Clear();
+                    List<Mannschaft> mannschaften = Mannschaft.GetAll();
+                    foreach (Mannschaft mannschaft in mannschaften)
                     {
-                        txtDatumVon.Text = DateTime.Now.ToShortDateString();
-                        txtDatumBis.Text = DateTime.Now.ToShortDateString();
-                        CheckBxLstMannschaften.Items.Clear();
-                        List<Mannschaft> mannschaften = Mannschaft.GetAll();
-                        foreach (Mannschaft mannschaft in mannschaften)
-                        {
-                            CheckBxLstMannschaften.Items.Add(new ListItem(mannschaft.Name, mannschaft.Mannschaft_ID.ToString()));
-                        }
-                        if (Request.QueryString["do"] == "entfernen")
+                        CheckBxLstMannschaften.Items.Add(new ListItem("&nbsp;" + mannschaft.Name, mannschaft.Mannschaft_ID.ToString()));
+                    }
+                    if (Request.QueryString["do"] == "entfernen")
+                    {
+                        if(user.Has_Permission("admin"))
                         {
                             long turnier_id = long.Parse(Request.QueryString["item"]);
                             Turnier turnier = new Turnier(turnier_id);
                             turnier.Delete();
                             Response.Redirect("~/Turnierverwaltung.aspx", true);
                         }
+                        else
+                        {
+                            Access_Denied();
+                        }
                     }
-                    Render();
+                    else if (Request.QueryString["do"] == "bearbeiten")
+                    {
+                        long turnier_id = long.Parse(Request.QueryString["item"]);
+                        Turnier turnier = new Turnier(turnier_id);
+                        txtVereinName.Text = turnier.VereinName;
+                        txtAdresse.Text = turnier.Adresse;
+                        txtDatumVon.Text = turnier.Datum_Von.ToString("yyyy-MM-dd");
+                        txtDatumBis.Text = turnier.Datum_Bis.ToString("yyyy-MM-dd");
+                        tbl_Mannschaften.Visible = false;
+                        btnAdd.Visible = false;
+                        Btn_Cancel.Visible = true;
+                        Btn_Bearbeiten.Visible = true;
+                        PnlTurniere.Visible = false;
+                    }
                 }
+                Render();
             }
                    
         }
-
+        protected void Btn_Cancel_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Turnierverwaltung.aspx",true);
+        }
+        public void Access_Denied()
+        {
+            Msg.InnerText = "Sie haben keine Berichtigung!";
+            Msg.Attributes["class"] = "alert alert-warning";
+            Msg.Visible = true;
+        }
+        public void Feld_Required()
+        {
+            Msg.InnerText = "Felder sind erforderlich!";
+            Msg.Attributes["class"] = "alert alert-warning";
+            Msg.Visible = true;
+        }
         protected void btnAdd_Click(object sender, EventArgs e)
         {
-            List<Mannschaft> mannschaften = new List<Mannschaft>();
-            foreach (ListItem item in CheckBxLstMannschaften.Items)
+            User user = new User(Session);
+            if(user.Has_Permission("admin"))
             {
-                if(item.Selected)
+                if(Request.Form["ctl00$MainContent$txtVereinName"] != "")
                 {
-                    mannschaften.Add(new Mannschaft(long.Parse(item.Value)));
+                    List<Mannschaft> mannschaften = new List<Mannschaft>();
+                    foreach (ListItem item in CheckBxLstMannschaften.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            mannschaften.Add(new Mannschaft(long.Parse(item.Value)));
+                        }
+                    }
+                    Turnier turnier = new Turnier(Request.Form["ctl00$MainContent$txtVereinName"], Convert.ToDateTime(Request.Form["ctl00$MainContent$txtDatumVon"]), Convert.ToDateTime(Request.Form["ctl00$MainContent$txtDatumBis"]), Request.Form["ctl00$MainContent$txtAdresse"], mannschaften);
+                    turnier.Save();
+                    Response.Redirect("~/Turnierverwaltung.aspx", true);
+                }
+                else
+                {
+                    Feld_Required();
+                    txtVereinName_container.Attributes["class"] = "form-group has-error";
                 }
             }
-            Turnier turnier = new Turnier(txtVereinName.Text, Convert.ToDateTime(txtDatumVon.Text), Convert.ToDateTime(txtDatumBis.Text), txtAdresse.Text,mannschaften);
-            turnier.Save();
-            Response.Redirect("~/Turnierverwaltung.aspx",true);
+            else
+            {
+                Access_Denied();
+            }
+        }
+        protected void Btn_Bearbeiten_Click(object sender, EventArgs e)
+        {
+            User user = new User(Session);
+            if (user.Has_Permission("admin"))
+            {
+                if (Request.Form["ctl00$MainContent$txtVereinName"] != "")
+                {
+                    long item = Convert.ToInt32(Request.QueryString["item"]);
+                    Turnier turnier = new Turnier(item);
+                    turnier.VereinName = Request.Form["ctl00$MainContent$txtVereinName"];
+                    turnier.Adresse = Request.Form["ctl00$MainContent$txtAdresse"];
+                    turnier.Datum_Bis = Convert.ToDateTime(Request.Form["ctl00$MainContent$txtDatumBis"]);
+                    turnier.Datum_Von = Convert.ToDateTime(Request.Form["ctl00$MainContent$txtDatumVon"]);
+                    turnier.Save();
+                    Response.Redirect("~/Turnierverwaltung.aspx", true);
+                }
+                else
+                {
+                    Feld_Required();
+                    txtVereinName_container.Attributes["class"] = "form-group has-error";
+                }
+            }
+            else
+            {
+                Access_Denied();
+            }
         }
         private void Render()
         {
@@ -82,6 +158,11 @@ namespace Turnierverwaltung
             TableHeaderCell h4 = new TableHeaderCell();
             h4.Text = "Spiele/Tabelle";
             header.Cells.Add(h4);
+
+            TableHeaderCell h50 = new TableHeaderCell();
+            h50.Text = "Bearbeiten";
+            header.Cells.Add(h50);
+
             TableHeaderCell h5 = new TableHeaderCell();
             h5.Text = "Entfernen";
             header.Cells.Add(h5);
@@ -124,9 +205,17 @@ namespace Turnierverwaltung
                 cell12.Controls.Add(link12);
                 row.Cells.Add(cell12);
 
+                HyperLink link3 = new HyperLink();
+                link3.NavigateUrl = "~/Turnierverwaltung.aspx?do=bearbeiten&item=" + turnier.Turnier_ID.ToString();
+                link3.Text = "Bearbeiten";
+
+                TableCell cell133 = new TableCell();
+                cell133.Controls.Add(link3);
+                row.Cells.Add(cell133);
+
                 HyperLink link2 = new HyperLink();
                 link2.NavigateUrl = "~/Turnierverwaltung.aspx?do=entfernen&item=" + turnier.Turnier_ID.ToString();
-                link2.Text = "X";
+                link2.Text = "Entfernen";
 
                 TableCell cell13 = new TableCell();
                 cell13.Controls.Add(link2);
