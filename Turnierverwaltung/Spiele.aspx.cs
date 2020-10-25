@@ -23,9 +23,10 @@ namespace Turnierverwaltung
             }
             else
             {
+                long turnier_id = Convert.ToInt32(Request.QueryString["item"]);
                 lstmannschaft.Items.Clear();
                 lstgegenmannschaft.Items.Clear();
-                List<Mannschaft> mannschaften = Mannschaft.GetAll();
+                List<Mannschaft> mannschaften = Turnier.FetchMannschaften(turnier_id);
                 foreach (Mannschaft mannschaft in mannschaften)
                 {
                     ListItem listItem1 = new ListItem(mannschaft.Sportart + " - " + mannschaft.Name, mannschaft.Mannschaft_ID.ToString());
@@ -49,7 +50,6 @@ namespace Turnierverwaltung
                     {
                         if(user.Has_Permission("admin"))
                         {
-                            long turnier_id = long.Parse(Request.QueryString["item"]);
                             long spiel_id = long.Parse(Request.QueryString["spiel"]);
                             Turnier turnier = new Turnier(turnier_id);
                             if (turnier.Turnier_ID != 0 && spiel_id != 0)
