@@ -13,6 +13,15 @@ namespace Turnierverwaltung {
     public partial class Spiele {
         
         /// <summary>
+        /// Msg-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Msg;
+        
+        /// <summary>
         /// Panel1-Steuerelement
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace Turnierverwaltung {
         protected global::System.Web.UI.WebControls.DropDownList lstmannschaft;
         
         /// <summary>
+        /// txtPunkte1_Container-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtPunkte1_Container;
+        
+        /// <summary>
         /// txtPunkte1-Steuerelement
         /// </summary>
         /// <remarks>
@@ -47,6 +65,15 @@ namespace Turnierverwaltung {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList lstgegenmannschaft;
+        
+        /// <summary>
+        /// txtPunkte2_Container-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txtPunkte2_Container;
         
         /// <summary>
         /// txtPunkte2-Steuerelement
